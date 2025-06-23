@@ -44,6 +44,10 @@ function Login() {
         const rol = data.tipo === 'admin' ? 'Administrador' : 'Usuario';
 
         {/*setMensaje(`Bienvenido ${rol}: ${nombre}`);*/}
+        localStorage.setItem('correoUsuario', data.user.correo);
+        localStorage.setItem('nombreUsuario', nombre);
+        localStorage.setItem('rolUsuario', rol); // opcional
+
         setEsExitoso(true);
 
         setTimeout(() => {

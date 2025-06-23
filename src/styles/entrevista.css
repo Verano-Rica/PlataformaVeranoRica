@@ -1,63 +1,118 @@
-.form-entrevista {
+.entrevista-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+  background-color: #f4f4f4;
+}
+
+.entrevista-box {
+  background-color: white;
+  border-radius: 20px;
+  padding: 30px 40px;
+  width: 100%;
+  max-width: 750px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.info-mensaje h2 {
+  color: #b51818;
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+.info-mensaje ul {
+  margin-left: 20px;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.info-mensaje li {
+  margin-bottom: 10px;
+}
+
+.info-mensaje p {
+  color: #333;
+  font-size: 15px;
+  margin-top: 8px;
+}
+
+.entrevista-linea {
   display: flex;
   flex-direction: column;
   gap: 18px;
-  max-width: 550px;
-  margin: 30px auto;
-  padding: 30px;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-top: 25px;
 }
 
-.form-entrevista select,
-.form-entrevista input[type="date"],
-.form-entrevista textarea,
-.form-entrevista input[type="file"] {
+.entrevista-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.entrevista-numero {
+  width: 35px;
+  height: 35px;
+  background-color: #b51818;
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 35px;
+  font-weight: bold;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.entrevista-campo {
+  flex-grow: 1;
+}
+
+.entrevista-campo label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.entrevista-campo select,
+.entrevista-campo input[type="date"],
+.entrevista-campo textarea,
+.entrevista-campo input[type="file"] {
+  width: 100%;
   padding: 12px;
   font-size: 16px;
-  border-radius: 8px;
+  border-radius: 10px;
   border: 1px solid #ccc;
-  width: 100%;
+  background-color: #fff;
   box-sizing: border-box;
 }
 
-.form-entrevista textarea {
+.entrevista-campo textarea {
   resize: vertical;
-  min-height: 80px;
+  min-height: 70px;
 }
 
-.cv-label {
-  font-weight: 600;
-  margin-top: 10px;
-  margin-bottom: -8px;
-}
-
-.form-entrevista small {
-  font-size: 13px;
-  color: #666;
-  margin-top: -10px;
-}
-
-.form-entrevista button {
-  margin-top: 20px;
+.btn-agendar {
+  margin-top: 30px;
   background-color: #b51818;
   color: white;
-  padding: 12px;
-  font-size: 16px;
+  padding: 14px;
+  font-size: 17px;
   border: none;
-  border-radius: 25px;
+  border-radius: 30px;
+  width: 100%;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.form-entrevista button:hover {
+.btn-agendar:hover {
   background-color: #911111;
 }
 
 .mensaje {
-  margin-top: 18px;
-  font-weight: bold;
-  color: green;
-  white-space: pre-line;
+  margin-top: 20px;
+  background-color: #e7f7e7;
+  padding: 12px;
+  border-left: 5px solid green;
+  border-radius: 8px;
+  color: #2d7038;
+  font-weight: 600;
 }
