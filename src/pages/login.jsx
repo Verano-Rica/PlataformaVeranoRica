@@ -75,7 +75,7 @@ function Login() {
       <div className="right">
         <form className="login-box" onSubmit={manejarLogin}>
           <h2 className="login-title">Bienvenido</h2>
-          <p className="login-subtitle">Ingresaa</p>
+          <p className="login-subtitle">Ingresa</p>
 
           <div className="form-group">
             <label htmlFor="correo">Ingresa tu correo</label>
