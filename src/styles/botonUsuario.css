@@ -1,0 +1,77 @@
+:root {
+  --rojo-principal: #b51818;
+  --rojo-hover: #D00000;
+  --gris-fondo: #ffffff;
+  --texto-gris: #272727;
+}
+
+.botones-principales {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  justify-content: center;
+  padding: 10px;
+}
+
+.boton-seccion {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Círculo con número */
+.circulo-numero {
+  width: 60px;
+  height: 60px;
+  box-shadow: 6px 0px 4px rgba(0, 0, 0, 0.25);
+  background: #AAAAAA;
+  color: var(--rojo-principal);
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  border-radius: 50%;
+}
+
+/* Texto debajo del círculo */
+.titulo-seccion {
+  color: var(--texto-gris);
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Rectángulo con ícono */
+.rectangulo-icono {
+  width: 200px;
+  height: 160px;
+  padding: 8px;
+  box-shadow: 0px 12px 4px rgba(0, 0, 0, 0.25);
+  background: #F7F6F6;
+  border-radius: 34px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rectangulo-icono:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 16px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Imagen del ícono */
+.icono-imagen {
+  width: 100px;
+  height: 100px;
+  background-color: transparent;
+  border-radius: 0;
+  object-fit: contain;
+}

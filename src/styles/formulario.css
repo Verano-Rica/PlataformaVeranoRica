@@ -1,0 +1,292 @@
+/* ----------------------------
+  FORMULARIO PRINCIPAL
+---------------------------- */
+.formulario-container {
+  background: #fff;
+  max-width: 700px;
+  margin: 60px auto;
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.formulario-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.formulario-logo {
+  max-width: 300px;
+  margin-bottom: 10px;
+}
+
+.formulario-form {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.campo-formulario {
+  margin-bottom: 24px;
+}
+
+.campo-etiqueta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  color: #C90000;
+  margin-bottom: 6px;
+}
+
+.campo-icono {
+  font-size: 20px;
+  color: #132F67;
+}
+
+.campo-input,
+.formulario-form select.campo-input {
+  width: 95%;
+  max-width: 700px;
+  display: block;
+  margin-left: auto;
+  padding: 10px 14px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
+}
+
+.campo-input:focus,
+.formulario-form select.campo-input:focus {
+  border-color: #b51818;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(181, 24, 24, 0.2);
+}
+
+input[name="otra_area_interes"] {
+  animation: fadeIn 0.3s ease-in-out;
+  margin-top: 8px;
+  background-color: #fffdfd;
+}
+
+.boton-formulario {
+  width: 40%;
+  background-color: white;
+  color: #b51818;
+  border: 3px solid #b51818;
+  padding: 10px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+  text-transform: uppercase;
+  display: block;
+  margin: 25px auto;
+}
+
+.boton-formulario:hover {
+  background-color: #b51818;
+  color: white;
+}
+
+/* Logo Rica dentro del formulario */
+.contenedor-logo-form {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.logo-rica-form {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+/* Íconos fuera del form */
+.iconos-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 40px auto 0;
+  max-width: 700px;
+  padding: 0 30px;
+}
+
+.icono-body {
+  width: 60px;
+  height: 60px;
+  background: #D01A14;
+  border-radius: 50%;
+  padding: 12px;
+  color: white;
+}
+
+.footer {
+  margin-top: 50px;
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+}
+
+/* ----------------------------
+  VISTA DE PROYECTOS
+---------------------------- */
+.grid-tabla {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 30px;
+  justify-items: center;
+  padding: 40px;
+}
+
+.celda-tabla {
+  width: 250px;
+  height: 300px;
+  background-image: url('../assets/icono-tabla.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.celda-tabla:hover {
+  transform: scale(1.04);
+}
+
+/* Cuadro interno dentro de la imagen */
+.recuadro-scroll {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 210px; /* 🔧 Puedes ajustar este ancho */
+  height: 100px; /* 🔧 Puedes ajustar esta altura */
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.recuadro-proyecto h2 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #b51818;
+  margin-bottom: 5px;
+}
+
+.recuadro-proyecto p {
+  font-size: 12px;
+  margin: 0;
+}
+
+/* ----------------------------
+  MODAL DE PROYECTOS
+---------------------------- */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-contenido {
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  width: 70%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+
+  /* ✨ Transición suave y profesional */
+  opacity: 0;
+  transform: scale(0.8);
+  animation: fadeZoom 0.4s ease-out forwards;
+}
+
+@keyframes fadeZoom {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.cerrar-modal {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #b51818;
+}
+
+.recuadro-proyecto {
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #333;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+.recuadro-proyecto h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #b51818;
+  margin-bottom: 15px;
+}
+
+.recuadro-proyecto h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  color: #222;
+}
+
+.recuadro-proyecto ul {
+  padding-left: 20px;
+  margin-bottom: 12px;
+}
+
+.recuadro-proyecto ul li {
+  margin-bottom: 4px;
+}
+
+.recuadro-proyecto p {
+  margin-bottom: 12px;
+}

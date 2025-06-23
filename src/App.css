@@ -1,0 +1,115 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: hsl(0, 100%, 100%);
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+/* LADO IZQUIERDO */
+.left {
+  width: 50%;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.full-image {
+  width: 120%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* LADO DERECHO */
+.right {
+  width: 50%;
+  background-color: #f2f2f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-box {
+  background-color: white;
+  border-radius: 20px;
+  padding: 60px 40px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  width: 400px;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.login-title {
+  font-size: 45px;
+  font-weight: poppins;
+  color: #b51818;
+  text-align: center;
+}
+
+.login-subtitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+}
+
+.login-box input {
+  padding: 10px;
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+}
+
+.login-box button {
+  padding: 10px;
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.login-box button:hover {
+  background-color: #b81515;
+}
+
+.register {
+  text-align: center;
+  font-size: 13px;
+}
+
+.register a {
+  color: #b81515;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}

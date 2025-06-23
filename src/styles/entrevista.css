@@ -1,0 +1,63 @@
+.form-entrevista {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 550px;
+  margin: 30px auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.form-entrevista select,
+.form-entrevista input[type="date"],
+.form-entrevista textarea,
+.form-entrevista input[type="file"] {
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-entrevista textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.cv-label {
+  font-weight: 600;
+  margin-top: 10px;
+  margin-bottom: -8px;
+}
+
+.form-entrevista small {
+  font-size: 13px;
+  color: #666;
+  margin-top: -10px;
+}
+
+.form-entrevista button {
+  margin-top: 20px;
+  background-color: #b51818;
+  color: white;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-entrevista button:hover {
+  background-color: #911111;
+}
+
+.mensaje {
+  margin-top: 18px;
+  font-weight: bold;
+  color: green;
+  white-space: pre-line;
+}

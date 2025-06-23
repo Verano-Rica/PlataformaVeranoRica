@@ -1,0 +1,167 @@
+:root {
+  --rojo-principal: #D00000;
+  --rojo-hover: #b51818;
+  --blanco: #ffffff;
+}
+
+/* Layout general */
+.panel-container {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 200px;
+  background-color: var(--rojo-principal);
+  color: white;
+  min-height: 100vh;
+  transition: transform 0.3s ease;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  z-index: 1000;
+  transform: translateX(-100%);
+}
+
+.panel-container.menu-activo .sidebar {
+  transform: translateX(0);
+}
+
+/* Opciones del menú */
+.menu-opciones {
+  padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.menu-opciones a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.menu-opciones a:hover {
+  background-color: var(--rojo-hover);
+}
+
+.account-circle-icon-1,
+.help-outline-icon-1 {
+  width: 38px;
+  height: 38px;
+  background: #FBFBFB;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.help-outline-icon-1 {
+  background: #ECECEC;
+}
+
+.icon-style {
+  font-size: 20px;
+  color: var(--rojo-principal);
+}
+
+/* Contenido principal */
+.panel-contenido {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin-left: 0;
+  width: 100%;
+  transition: margin-left 0.3s ease;
+}
+
+.panel-container.menu-activo .panel-contenido {
+  margin-left: 200px;
+}
+
+/* Header */
+.header {
+  height: 60px;
+  background-color: var(--rojo-principal);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
+
+.usuario-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hamburguesa-header {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.nombre-usuario {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.cerrar-sesion {
+  background: white;
+  color: var(--rojo-principal);
+  font-weight: bold;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Contenido visible */
+.main-contenido {
+  flex: 1;
+  padding: 30px;
+  margin-top: 60px;
+  background-color: var(--gris-fondo);
+}
+
+/* Footer */
+.footer {
+  background-color: #232323;
+  color: white;
+  text-align: center;
+  padding: 15px 20px;
+  font-size: 14px;
+  width: 100%;
+}
+/* 👇 Esto asegura que el footer se empuje abajo incluso si hay poco contenido */
+.contenido-total {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-contenido {
+  flex-grow: 1;
+}
