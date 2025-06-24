@@ -4,10 +4,10 @@ import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Footer from '../../components/Footer';
 import BotonRedondo from '../../components/BotonRedondo';
-import iconoBienvenida from '../../assets/icono-bienvenida.png';
 import { FaHome, FaArrowRight } from 'react-icons/fa';
+
 import '../../styles/proyectos.css';
-import '../../styles/botonRedondo.css'; // Asegúrate que esté creado
+import '../../styles/botonRedondo.css';
 
 const proyectos = [
   {
@@ -86,71 +86,60 @@ const VistaProyectos = () => {
   const handleLogout = () => (window.location.href = '/');
 
   return (
-    <>
-      <div className={`panel-container ${menuAbierto ? 'menu-activo' : ''}`}>
-        <Sidebar />
-        <div className="panel-contenido">
-          <Header nombre="Bienvenido(a): Larisa Moreno Zamora" toggleMenu={toggleMenu} handleLogout={handleLogout} />
+    <div className={`panel-container ${menuAbierto ? 'menu-activo' : ''}`}>
+      <Sidebar />
+      <div className="panel-contenido">
+        <Header nombre="Bienvenido(a): Larisa Moreno Zamora" toggleMenu={toggleMenu} handleLogout={handleLogout} />
 
-          <main className="main-contenido">
-            <div className="proyectos-container">
-              <img src={iconoBienvenida} alt="Bienvenida" className="imagen-bienvenida" />
-              <h2 className="titulo-seccion">Proyectos Disponibles:</h2>
-              <p className="titulo-seccion">Visualiza en qué proyecto te gustaría participar:</p>
+        <main className="main-contenido">
+          <div className="proyectos-container">
+            <h2 className="titulo-principal-proyectos">
+              Visualiza el <span className="subrayado-rojo">Proyecto</span> al que quieres participar para Verano RICA 2026
+            </h2>
 
-              <div className="proyectos-lista">
-                {proyectos.map((p, i) => (
-                  <div
-                    key={p.id}
-                    className={`proyecto-item ${i % 2 === 0 ? 'izquierda' : 'derecha'}`}
-                    onClick={() => abrirModal(p)}
-                  >
-                    <div className="texto-proyecto">
-                      <strong>Proyecto {p.id}:</strong><br />"{p.titulo}"
-                    </div>
-                    <div className="rombo"><span>{p.id}</span></div>
+            <div className="proyectos-lista">
+              {proyectos.map((p, i) => (
+                <div
+                  key={p.id}
+                  className={`proyecto-item ${i % 2 === 0 ? 'izquierda' : 'derecha'}`}
+                  onClick={() => abrirModal(p)}
+                >
+                  <div className="rombo"><span>{p.id}</span></div>
+                  <div className="texto-proyecto">
+                    <strong>Proyecto {p.id}:</strong><br />"{p.titulo}"
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {modal && proyecto && (
-              <div className="modal-overlay" onClick={cerrarModal}>
-                <div className="modal-contenido" onClick={(e) => e.stopPropagation()}>
-                  <button className="cerrar-modal" onClick={cerrarModal}>X</button>
-                  <h3>{proyecto.titulo}</h3>
-                  <p><strong>Descripción:</strong> {proyecto.descripcion}</p>
-                  <p><strong>Habilidades:</strong> {proyecto.habilidades}</p>
-                  <p><strong>Materiales:</strong> {proyecto.materiales}</p>
-                  <p><strong>Carrera:</strong> {proyecto.carrera}</p>
-                  <p><strong>Responsable:</strong> {proyecto.responsable}</p>
                 </div>
-              </div>
-            )}
-          </main>
-
-          {/* ✅ Botones redondos posicionados abajo */}
-          <div className="contenedor-botones-inferiores">
-            <div className="boton-home">
-              <BotonRedondo
-                icono={<FaHome />}
-                onClick={() => navigate('/usuario/')}
-                ariaLabel="Ir al panel"
-              />
-            </div>
-            <div className="boton-siguiente">
-              <BotonRedondo
-                icono={<FaArrowRight />}
-                onClick={() => navigate('/usuario/entrevista')}
-                ariaLabel="Ir a entrevista"
-              />
+              ))}
             </div>
           </div>
 
-          <Footer />
+          {modal && proyecto && (
+            <div className="modal-overlay" onClick={cerrarModal}>
+              <div className="modal-contenido" onClick={(e) => e.stopPropagation()}>
+                <button className="cerrar-modal" onClick={cerrarModal}>X</button>
+                <h3>{proyecto.titulo}</h3>
+                <p><strong>Descripción:</strong> {proyecto.descripcion}</p>
+                <p><strong>Habilidades:</strong> {proyecto.habilidades}</p>
+                <p><strong>Materiales:</strong> {proyecto.materiales}</p>
+                <p><strong>Carrera:</strong> {proyecto.carrera}</p>
+                <p><strong>Responsable:</strong> {proyecto.responsable}</p>
+              </div>
+            </div>
+          )}
+        </main>
+
+        <div className="contenedor-botones-inferiores">
+          <div className="boton-home">
+            <BotonRedondo icono={<FaHome />} onClick={() => navigate('/usuario/')} ariaLabel="Ir al panel" />
+          </div>
+          <div className="boton-siguiente">
+            <BotonRedondo icono={<FaArrowRight />} onClick={() => navigate('/usuario/entrevista')} ariaLabel="Ir a entrevista" />
+          </div>
         </div>
+
+        <Footer />
       </div>
-    </>
+    </div>
   );
 };
 

@@ -9,6 +9,7 @@ import VistaEntrevista from './pages/usuario/VistaEntrevista';
 import VistaResultados from './pages/usuario/VistaResultados';
 import DashboardUsuario from './pages/usuario/DashboardUsuario';
 import fasedos from './pages/usuario/VistaFase2';
+import VistaInscritos from './pages/admin/VistaInscritos';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/usuario/resultados" element={<VistaResultados />} />
         <Route path="/usuario/dashboard" element={<DashboardUsuario />} />
         <Route path="/usuario/fase2" element={<fasedos />} />
+        <Route path="/admin/inscritos" element={<VistaInscritos />} />
 
       </Routes>
     </BrowserRouter>

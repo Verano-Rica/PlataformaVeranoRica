@@ -57,7 +57,6 @@ function AdminPanel() {
             <button className="hamburguesa-header" onClick={toggleMenu}>
               <FaBars />
             </button>
-            <img src={avatar} alt="Avatar" className="avatar" />
             <span className="nombre-usuario">{nombre}</span>
           </div>
           <button className="cerrar-sesion" onClick={handleLogout}>
@@ -72,10 +71,10 @@ function AdminPanel() {
             {/* Información */}
             <div className="boton-seccion">
               <div className="circle-1">1</div>
-              <p className="informaci-n-">INFORMACIÓN:</p>
+              <p className="informaci-n-">INSCRITOS:</p>
               <div
                 className="rectangle-6"
-                onClick={() => navigate('/usuario/informacion')}
+                onClick={() => navigate('/admin/inscritos')}
               >
                 <img src={iconoInfo} alt="Información" className="assignment-icon-1" />
               </div>
@@ -96,7 +95,7 @@ function AdminPanel() {
             {/* Agendar Entrevista */}
             <div className="boton-seccion">
               <div className="circle-5">3</div>
-              <p className="agendar-entrevista-">AGENDAR ENTREVISTA:</p>
+              <p className="agendar-entrevista-">AGENDADOS:</p>
               <div
                 className="rectangle-8"
                 onClick={() => navigate('/usuario/entrevista')}
@@ -108,7 +107,7 @@ function AdminPanel() {
             {/* Resultados */}
             <div className="boton-seccion">
               <div className="circle-6">4</div>
-              <p className="resultados-">RESULTADOS:</p>
+              <p className="resultados-">ACEPTADOS:</p>
               <div
                 className="rectangle-9"
                 onClick={() => navigate('/usuario/resultados')}

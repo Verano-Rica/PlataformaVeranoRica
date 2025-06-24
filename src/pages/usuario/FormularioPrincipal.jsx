@@ -1,29 +1,25 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
-  FaUserCircle, FaCog, FaQuestionCircle, FaUser, FaUniversity,
-  FaGraduationCap, FaBook, FaEnvelope, FaPhoneAlt, FaBriefcase
+  FaUser, FaUniversity, FaGraduationCap, FaBook, FaEnvelope,
+  FaPhoneAlt, FaBriefcase, FaHome, FaArrowCircleRight
 } from 'react-icons/fa';
+
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import BotonRedondo from '../../components/BotonRedondo';
-import '../../styles/usuarioPanel.css';
-import '../../styles/formulario.css';
+
 import logoBienvenida from '../../assets/icono-bienvenida.png';
 import logoRica from '../../assets/logo-rica.png';
-import { FaHome, FaArrowRight } from 'react-icons/fa';
-import { FaArrowCircleRight } from 'react-icons/fa';
 
+import '../../styles/usuarioPanel.css';
+import '../../styles/formulario.css';
 
 const FormularioPrincipal = () => {
   const [menuAbierto, setMenuAbierto] = useState(false);
-  const [mostrarOtroArea, setMostrarOtroArea] = useState(false);
   const navigate = useNavigate();
   const nombre = 'Larisa Moreno Zamora';
-
-  const toggleMenu = () => setMenuAbierto(!menuAbierto);
-  const handleLogout = () => (window.location.href = '/');
 
   const [formData, setFormData] = useState({
     nombre: '',
@@ -38,14 +34,23 @@ const FormularioPrincipal = () => {
     otra_area_interes: ''
   });
 
+  const [mostrarOtroArea, setMostrarOtroArea] = useState(false);
+
   const areas = [
-    { id: 1, nombre: 'Tecnologías de la Información', abreviatura: 'TI' },
-    { id: 2, nombre: 'Cadena de suministro', abreviatura: 'CSUM' },
-    { id: 3, nombre: 'Recursos Humanos', abreviatura: 'RH' },
-    { id: 4, nombre: 'Finanzas', abreviatura: 'FIN' },
-    { id: 5, nombre: 'Data Analystics', abreviatura: 'DA' },
-    { id: 6, nombre: 'Otro', abreviatura: 'OTR' }
+    { id: 1, nombre: 'Dirección comercial core', abreviatura: 'DCC' },
+    { id: 2, nombre: 'Dirección comercial de negocios emergentes', abreviatura: 'DCNE' },
+    { id: 3, nombre: 'Dirección de administración', abreviatura: 'DA' },
+    { id: 4, nombre: 'Dirección de cadena de suministro', abreviatura: 'DCS' },
+    { id: 5, nombre: 'Dirección de capital humano', abreviatura: 'DCH' },
+    { id: 6, nombre: 'Dirección de desarrollo de mercado', abreviatura: 'DDM' },
+    { id: 7, nombre: 'Dirección de finanzas y administración', abreviatura: 'DFA' },
+    { id: 8, nombre: 'Dirección de tecnologías de la información', abreviatura: 'DTI' },
+    { id: 9, nombre: 'Dirección general', abreviatura: 'DG' },
+    { id: 10, nombre: 'Otro', abreviatura: 'OTR' }
   ];
+
+  const toggleMenu = () => setMenuAbierto(!menuAbierto);
+  const handleLogout = () => (window.location.href = '/');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -53,10 +58,7 @@ const FormularioPrincipal = () => {
 
   const formatearTelefono = (valor) => {
     const numeros = valor.replace(/\D/g, '').slice(0, 10);
-    const formato = numeros.replace(/(\d{3})(\d{3})(\d{0,4})/, (_, a, b, c) =>
-      c ? `${a}-${b}-${c}` : `${a}-${b}`
-    );
-    return formato;
+    return numeros.replace(/(\d{3})(\d{3})(\d{0,4})/, (_, a, b, c) => c ? `${a}-${b}-${c}` : `${a}-${b}`);
   };
 
   const handleTelefonoChange = (e) => {
@@ -67,11 +69,20 @@ const FormularioPrincipal = () => {
   const handleAreaChange = (e) => {
     const valor = e.target.value;
     setFormData({ ...formData, area_id: valor });
-    setMostrarOtroArea(valor === '6');
+    setMostrarOtroArea(parseInt(valor) === 10); // ID 10 = "Otro"
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (
+      !formData.nombre || !formData.apellido_paterno || !formData.apellido_materno ||
+      !formData.universidad || !formData.carrera || !formData.semestre ||
+      !formData.telefono || !formData.area_id
+    ) {
+      alert('Por favor completa todos los campos obligatorios.');
+      return;
+    }
 
     const datosLimpios = {
       ...formData,
@@ -84,6 +95,7 @@ const FormularioPrincipal = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datosLimpios)
       });
+
       const data = await response.json();
       alert(data.mensaje);
     } catch (error) {
@@ -106,30 +118,32 @@ const FormularioPrincipal = () => {
             </header>
 
             <form className="formulario-form" onSubmit={handleSubmit}>
-              {[ 
+              {/* Campos generales */}
+              {[
                 { name: 'nombre', label: 'Nombre(s)', icon: FaUser },
                 { name: 'apellido_paterno', label: 'Apellido Paterno', icon: FaUser },
                 { name: 'apellido_materno', label: 'Apellido Materno', icon: FaUser },
                 { name: 'universidad', label: 'Universidad', icon: FaUniversity },
                 { name: 'carrera', label: 'Carrera', icon: FaGraduationCap },
-                { name: 'correo', label: 'Correo electrónico', icon: FaEnvelope, type: 'email' },
-              ].map((campo, i) => (
-                <div className="campo-formulario" key={i}>
+                { name: 'correo', label: 'Correo electrónico', icon: FaEnvelope, type: 'email' }
+              ].map(({ name, label, icon: Icon, type = 'text' }) => (
+                <div className="campo-formulario" key={name}>
                   <div className="campo-etiqueta">
-                    <campo.icon className="campo-icono" />
-                    <span className="campo-titulo">{campo.label}</span>
+                    <Icon className="campo-icono" />
+                    <span className="campo-titulo">{label}</span>
                   </div>
                   <input
-                    type={campo.type || 'text'}
-                    name={campo.name}
-                    value={formData[campo.name]}
+                    type={type}
+                    name={name}
+                    value={formData[name]}
                     onChange={handleChange}
                     className="campo-input alineado-derecha"
-                    placeholder={`Escribe tu ${campo.label.toLowerCase()}`}
+                    placeholder={`Escribe tu ${label.toLowerCase()}`}
                   />
                 </div>
               ))}
 
+              {/* Teléfono */}
               <div className="campo-formulario">
                 <div className="campo-etiqueta">
                   <FaPhoneAlt className="campo-icono" />
@@ -141,28 +155,29 @@ const FormularioPrincipal = () => {
                   value={formData.telefono}
                   onChange={handleTelefonoChange}
                   className="campo-input alineado-derecha"
-                  placeholder="xxx-xxx-xxxx"
+                  placeholder="Ej: 772-123-4567"
                 />
               </div>
 
+              {/* Semestre (stepper) */}
               <div className="campo-formulario">
                 <div className="campo-etiqueta">
                   <FaBook className="campo-icono" />
                   <span className="campo-titulo">Semestre</span>
                 </div>
-                <select
+                <input
+                  type="number"
                   name="semestre"
+                  min="1"
+                  max="12"
                   value={formData.semestre}
                   onChange={handleChange}
                   className="campo-input"
-                >
-                  <option value="">Selecciona un semestre</option>
-                  {Array.from({ length: 12 }, (_, i) => (
-                    <option key={i + 1} value={i + 1}>{i + 1}</option>
-                  ))}
-                </select>
+                  placeholder="Del 1 al 12"
+                />
               </div>
 
+              {/* Área */}
               <div className="campo-formulario">
                 <div className="campo-etiqueta">
                   <FaBriefcase className="campo-icono" />
@@ -183,6 +198,7 @@ const FormularioPrincipal = () => {
                 </select>
               </div>
 
+              {/* Otra área si aplica */}
               {mostrarOtroArea && (
                 <div className="campo-formulario">
                   <div className="campo-etiqueta">
@@ -208,9 +224,9 @@ const FormularioPrincipal = () => {
             </form>
           </div>
 
+          {/* Navegación inferior */}
           <div className="iconos-body">
             <div className="home-body-centrado">
-              // eslint-disable-next-line react/jsx-no-undef
               <BotonRedondo icono={<FaHome />} ariaLabel="Inicio" onClick={() => navigate('/usuario/panel')} />
             </div>
             <div className="flecha-body-derecha">

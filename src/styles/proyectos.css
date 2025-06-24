@@ -4,9 +4,8 @@
   background: #ffffff;
   border-radius: 25px;
   padding: 50px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   font-family: 'Poppins', sans-serif;
-  text-align: center;
   animation: fadeIn 0.8s ease-in-out;
 }
 
@@ -15,19 +14,22 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-.imagen-bienvenida {
-  width: 300px;
-  height: 100px;
-  margin-bottom: 20px;
-}
-
-.titulo-seccion {
-  font-size: 28px;
-  color: #404040;
-  font-weight: 600;
+.titulo-principal-proyectos {
+  font-size: 20px;
+  font-weight: 700;
+  color: #272727;
   margin-bottom: 40px;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
 }
 
+.subrayado-rojo {
+  color: #b51818;
+  border-bottom: 4px solid #b51818;
+  padding-bottom: 4px;
+}
+
+/* Lista de proyectos */
 .proyectos-lista {
   display: flex;
   flex-direction: column;
@@ -35,13 +37,20 @@
   align-items: center;
 }
 
+/* Contenedor de cada proyecto */
 .proyecto-item {
   display: flex;
   align-items: center;
   gap: 25px;
   cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
+.proyecto-item:hover {
+  transform: translateY(-4px);
+}
+
+/* Alternancia de dirección */
 .proyecto-item.izquierda {
   flex-direction: row;
 }
@@ -50,72 +59,47 @@
   flex-direction: row-reverse;
 }
 
+/* Caja de texto del proyecto */
 .texto-proyecto {
-  background: #fff;
-  border: 1px solid #ccc;
-  padding: 15px 25px;
+  background: #f9f9f9;
+  border-left: 6px solid #b51818;
+  padding: 18px 25px;
   border-radius: 12px;
   font-size: 16px;
-  text-align: left;
-  box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+  font-weight: 500;
+  line-height: 1.6;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  text-align: justify;
   max-width: 500px;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  color: #333333;
 }
 
+/* Rombos con número */
 .rombo {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   background: #b51818;
   border: 3px solid #b51818;
   transform: rotate(45deg);
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
 }
 
 .rombo span {
-  transform: rotate(-45deg); /* Invierte la rotación del contenedor */
+  transform: rotate(-45deg);
   color: white;
-  font-size: 32px;
+  font-size: 26px;
   font-weight: bold;
   font-family: 'Poppins', sans-serif;
-  display: inline-block;
 }
 
-.footer-proyectos {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-top: 50px;
-}
-
-.icono-casa {
-  font-size: 28px;
-  color: #b51818;
-  margin-right: auto;
-}
-
-.btn-continuar {
-  background: linear-gradient(to right, #b51818, #5a0c0c);
-  color: #fff;
-  padding: 10px 30px;
-  border: none;
-  border-radius: 40px;
-  font-size: 18px;
-  font-weight: bold;
-  font-family: 'Poppins', sans-serif;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-  cursor: pointer;
-  text-decoration: none; /* 🔴 Esto elimina el subrayado */
-}
-
-
-.btn-continuar:hover {
-  background: #a01313;
-}
-
+/* Modal */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -137,7 +121,10 @@
   max-width: 600px;
   box-shadow: 0 12px 20px rgba(0,0,0,0.3);
   position: relative;
-  text-align: left;
+  text-align: justify;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
 }
 
 .cerrar-modal {
@@ -155,16 +142,7 @@
   cursor: pointer;
 }
 
-.contenedor-logo-form {
-  text-align: center;
-  margin: 40px 0 0;
-  width: 180px;
-  height: 120px;
-}
-.btn-continuar a {
-  text-decoration: none;
-  color: inherit;
-}
+/* Botones inferiores */
 .contenedor-botones-inferiores {
   position: relative;
   width: 100%;
@@ -172,18 +150,65 @@
   margin-top: 20px;
 }
 
-/* Casita centrada */
 .boton-home {
   position: absolute;
   left: 50%;
   bottom: 50px;
-  
   transform: translateX(-50%);
 }
 
-/* Flecha al lado derecho */
 .boton-siguiente {
   position: absolute;
   right: 40px;
   bottom: 50px;
+}
+
+/* ✅ RESPONSIVE */
+@media (max-width: 768px) {
+  .proyectos-container {
+    padding: 30px 20px;
+  }
+
+  .titulo-principal-proyectos {
+    font-size: 20px;
+  }
+
+  .rombo {
+    width: 60px;
+    height: 60px;
+  }
+
+  .rombo span {
+    font-size: 20px;
+  }
+
+  .texto-proyecto {
+    font-size: 16px;
+    padding: 15px;
+    max-width: 100%;
+    text-align: justify;
+  }
+
+  .proyecto-item {
+    flex-direction: column !important;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .modal-contenido {
+    max-width: 90%;
+    padding: 20px;
+  }
+
+  .boton-home {
+    bottom: 20px;
+    left: 20px;
+    transform: none;
+  }
+
+  .boton-siguiente {
+    bottom: 20px;
+    right: 20px;
+  }
 }

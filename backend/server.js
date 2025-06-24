@@ -10,9 +10,9 @@ app.use(express.json());
 const authRoutes = require('./routes/auth');
 const formularioRoutes = require('./routes/formulario'); 
 const entrevistaRoutes = require('./routes/entrevista');
+const aceptadosRoutes = require('./routes/aceptados');
 
-
-
+app.use('/api/aceptados', aceptadosRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/formulario', formularioRoutes);
 app.use('/api/entrevista', entrevistaRoutes);

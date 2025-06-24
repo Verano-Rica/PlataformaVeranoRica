@@ -284,10 +284,111 @@ html, body {
   justify-content: center;
 }
 .avatar {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid white;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+/* ===== RESPONSIVO: Tablets y pantallas medianas ===== */
+@media (max-width: 1024px) {
+  .panel-contenido {
+    margin-left: 0 !important;
+  }
+
+  .main-contenido {
+    padding: 20px;
+  }
+
+  .logo-central {
+    max-width: 280px;
+  }
+
+  .botones-principales {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+
+  .rectangle-6,
+  .rectangle-7,
+  .rectangle-8,
+  .rectangle-9 {
+    width: 100%;
+    height: 140px;
+  }
+
+  .assignment-icon-1 {
+    width: 90px;
+    height: 90px;
+  }
+
+  .circle-1,
+  .circle-4,
+  .circle-5,
+  .circle-6 {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+  }
+
+  .informaci-n-,
+  .proyectos-,
+  .agendar-entrevista-,
+  .resultados- {
+    font-size: 16px;
+  }
+}
+
+/* ===== RESPONSIVO: Celulares ===== */
+@media (max-width: 600px) {
+  .logo-central {
+    max-width: 220px;
+  }
+
+  .botones-principales {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    padding: 0;
+  }
+
+  .rectangle-6,
+  .rectangle-7,
+  .rectangle-8,
+  .rectangle-9 {
+    width: 100%;
+    height: 120px;
+    padding: 6px;
+  }
+
+  .assignment-icon-1 {
+    width: 70px;
+    height: 70px;
+  }
+
+  .circle-1,
+  .circle-4,
+  .circle-5,
+  .circle-6 {
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+  }
+
+  .informaci-n-,
+  .proyectos-,
+  .agendar-entrevista-,
+  .resultados- {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  .main-contenido {
+    padding: 15px;
+  }
+
+  .footer {
+    font-size: 12px;
+    padding: 10px;
+  }
 }

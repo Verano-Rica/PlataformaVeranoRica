@@ -1,141 +1,126 @@
-/* Contenedor general */
 .resultados-container {
   background-color: #f5f5f5;
   font-family: 'Poppins', sans-serif;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
-/* Encabezado rojo */
-.barra-superior {
-  background-color: #D01A14;
-  width: 100%;
-  padding: 10px 40px;
+/* Espacio para header y sidebar */
+.contenido-vista {
+  margin-left: 250px;
+  margin-top: 90px;
+  padding: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  min-height: calc(100vh - 130px);
+  box-sizing: border-box;
 }
 
-.barra-contenido {
-  width: 100%;
-  max-width: 1600px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.usuario-info {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.avatar {
-  width: 80px;
-  height: 80px;
-  background-color: #fff;
-  border: 1px solid #444;
-  border-radius: 50%;
-}
-
-.usuario-nombre {
-  color: #fff;
-  font-weight: bold;
-  font-size: 28px;
-  margin: 0;
-}
-
-.btn-cerrar {
-  background: none;
-  color: white;
-  font-size: 20px;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-}
-
-/* Contenido blanco central */
+/* Tarjeta central */
 .card-resultados {
   background-color: white;
-  border-radius: 42px;
-  border: 1px solid #000;
-  box-shadow: 16px 25px 4px rgba(0, 0, 0, 0.25);
-  padding: 40px;
-  margin: 40px auto;
-  max-width: 1100px;
+  border-radius: 30px;
+  border: 1px solid #ccc;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  padding: 30px;
+  max-width: 850px;
+  width: 100%;
   text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-.titulo-seccion {
-  font-size: 36px;
-  font-weight: bold;
-  color: #606060;
-  text-align: left;
-}
-
+/* Logo */
 .logo-bienvenida {
-  max-width: 380px;
+  max-width: 320px;
   height: auto;
-  margin: 20px 0;
+  margin: 0 auto 25px auto;
 }
 
+/* Mensajes */
 .saludo {
   color: #D01A14;
-  font-size: 36px;
-  margin-top: 20px;
+  font-size: 34px;
+  margin-bottom: 10px;
 }
 
 .mensaje-exito {
   color: #B51818;
-  font-size: 32px;
+  font-size: 28px;
   font-weight: bold;
-  margin-top: 10px;
-  line-height: 1.4;
+  margin-bottom: 25px;
 }
 
 .mensaje-indicaciones {
   font-size: 18px;
   font-weight: 500;
-  color: #000;
-  margin: 30px 0;
+  color: #333;
+  margin-bottom: 18px;
   max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
+/* Botón */
 .btn-continuar {
   background-color: #B51818;
   color: #fff;
-  border: 3px solid #C90000;
+  border: none;
   border-radius: 40px;
-  padding: 12px 40px;
-  font-size: 24px;
+  padding: 12px 35px;
+  font-size: 18px;
   font-weight: bold;
-  box-shadow: 0px 13px 4px rgba(0, 0, 0, 0.25);
   cursor: pointer;
+  box-shadow: 0px 8px 14px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease;
 }
 
-/* Icono home inferior */
-.footer-icono {
-  margin-top: 30px;
+.btn-continuar:hover {
+  background-color: #a01313;
 }
 
-.home-icono {
-  width: 122px;
-  height: 125px;
-  background-color: #D01A14;
-  border-radius: 20px;
-  margin: 0 auto;
-}
-
-/* Pie de página */
+/* Footer */
 .footer {
   width: 100%;
   background-color: #444;
   color: white;
   text-align: center;
-  padding: 10px;
+  padding: 12px;
   font-size: 14px;
-  margin-top: 40px;
+  margin-top: 20px;
+}
+
+/* Animación */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .contenido-vista {
+    margin-left: 0;
+    margin-top: 80px;
+    padding: 15px;
+  }
+
+  .card-resultados {
+    padding: 20px;
+  }
+
+  .mensaje-exito {
+    font-size: 24px;
+  }
+
+  .btn-continuar {
+    font-size: 16px;
+    padding: 10px 25px;
+  }
 }

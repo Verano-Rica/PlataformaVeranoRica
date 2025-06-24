@@ -44,10 +44,13 @@ function Login() {
         const rol = data.tipo === 'admin' ? 'Administrador' : 'Usuario';
 
         {/*setMensaje(`Bienvenido ${rol}: ${nombre}`);*/}
+        
         localStorage.setItem('correoUsuario', data.user.correo);
         localStorage.setItem('nombreUsuario', nombre);
         localStorage.setItem('rolUsuario', rol); 
         localStorage.setItem('estado', data.user.estado);
+        localStorage.setItem('userId', data.user.id); // ✅ Esto es lo que te falta
+
 
 
         setEsExitoso(true);
