@@ -46,7 +46,9 @@ function Login() {
         {/*setMensaje(`Bienvenido ${rol}: ${nombre}`);*/}
         localStorage.setItem('correoUsuario', data.user.correo);
         localStorage.setItem('nombreUsuario', nombre);
-        localStorage.setItem('rolUsuario', rol); // opcional
+        localStorage.setItem('rolUsuario', rol); 
+        localStorage.setItem('estado', data.user.estado);
+
 
         setEsExitoso(true);
 

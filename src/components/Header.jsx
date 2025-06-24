@@ -1,18 +1,18 @@
 import React from 'react';
 import { FaBars } from 'react-icons/fa';
 import avatar from '../assets/avatar.png';
- //import '../styles/usuarioPanel.css';
-  import '../styles/vistaGeneral.css';
+import '../styles/vistaGeneral.css';
 
-
-const Header = ({ nombre, toggleMenu, handleLogout }) => {
+const Header = ({ nombre = 'Usuario', toggleMenu, handleLogout }) => {
   return (
     <header className="header">
       <div className="usuario-info">
         <button className="hamburguesa-header" onClick={toggleMenu}>
           <FaBars />
         </button>
-        <img src={avatar} alt="Avatar" className="avatar" />
+        <div className="avatar-contenedor">
+          <img src={avatar} alt="Avatar" className="avatar-usuario" />
+        </div>
         <span className="nombre-usuario">{nombre}</span>
       </div>
       <button className="cerrar-sesion" onClick={handleLogout}>

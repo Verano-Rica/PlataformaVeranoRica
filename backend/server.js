@@ -9,9 +9,15 @@ app.use(express.json());
 // Rutas
 const authRoutes = require('./routes/auth');
 const formularioRoutes = require('./routes/formulario'); 
+const entrevistaRoutes = require('./routes/entrevista');
+
+
 
 app.use('/api/auth', authRoutes);
 app.use('/api/formulario', formularioRoutes);
+app.use('/api/entrevista', entrevistaRoutes);
+app.use('/uploads', express.static('uploads'));
+
 
 // Ruta de prueba
 app.get('/', (req, res) => {

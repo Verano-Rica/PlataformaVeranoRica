@@ -1,21 +1,27 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
-  FaUserCircle, FaCog, FaQuestionCircle, FaBars,
-  FaUser, FaUniversity, FaGraduationCap, FaBook,
-  FaEnvelope, FaPhoneAlt, FaBriefcase, FaHome, FaArrowCircleRight
+  FaUserCircle, FaCog, FaQuestionCircle, FaUser, FaUniversity,
+  FaGraduationCap, FaBook, FaEnvelope, FaPhoneAlt, FaBriefcase
 } from 'react-icons/fa';
+import Sidebar from '../../components/Sidebar';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
+import BotonRedondo from '../../components/BotonRedondo';
 import '../../styles/usuarioPanel.css';
 import '../../styles/formulario.css';
-import avatar from '../../assets/avatar.png';
 import logoBienvenida from '../../assets/icono-bienvenida.png';
 import logoRica from '../../assets/logo-rica.png';
+import { FaHome, FaArrowRight } from 'react-icons/fa';
+import { FaArrowCircleRight } from 'react-icons/fa';
+
 
 const FormularioPrincipal = () => {
   const [menuAbierto, setMenuAbierto] = useState(false);
   const [mostrarOtroArea, setMostrarOtroArea] = useState(false);
+  const navigate = useNavigate();
+  const nombre = 'Larisa Moreno Zamora';
 
-  const nombre = 'Bienvenido(a): Larisa Moreno Zamora';
   const toggleMenu = () => setMenuAbierto(!menuAbierto);
   const handleLogout = () => (window.location.href = '/');
 
@@ -88,23 +94,10 @@ const FormularioPrincipal = () => {
 
   return (
     <div className={`panel-container ${menuAbierto ? 'menu-activo' : ''}`}>
-      <div className="sidebar">
-        <div className="menu-opciones">
-          <Link to="/usuario/perfil"><div className="account-circle-icon-1"><FaUserCircle /></div>Perfil</Link>
-          <Link to="/usuario/configuracion"><div className="account-circle-icon-1"><FaCog /></div>Configuración</Link>
-          <Link to="/usuario/ayuda"><div className="help-outline-icon-1"><FaQuestionCircle /></div>Ayuda</Link>
-        </div>
-      </div>
+      <Sidebar toggleMenu={toggleMenu} />
 
       <div className="panel-contenido">
-        <header className="header">
-          <div className="usuario-info">
-            <button className="hamburguesa-header" onClick={toggleMenu}><FaBars /></button>
-            <img src={avatar} alt="Avatar" className="avatar" />
-            <span className="nombre-usuario">{nombre}</span>
-          </div>
-          <button className="cerrar-sesion" onClick={handleLogout}>Cerrar sesión</button>
-        </header>
+        <Header nombre={`Bienvenido(a): ${nombre}`} toggleMenu={toggleMenu} handleLogout={handleLogout} />
 
         <main className="main-contenido">
           <div className="formulario-container">
@@ -137,7 +130,6 @@ const FormularioPrincipal = () => {
                 </div>
               ))}
 
-              {/* Teléfono */}
               <div className="campo-formulario">
                 <div className="campo-etiqueta">
                   <FaPhoneAlt className="campo-icono" />
@@ -153,7 +145,6 @@ const FormularioPrincipal = () => {
                 />
               </div>
 
-              {/* Semestre */}
               <div className="campo-formulario">
                 <div className="campo-etiqueta">
                   <FaBook className="campo-icono" />
@@ -172,7 +163,6 @@ const FormularioPrincipal = () => {
                 </select>
               </div>
 
-              {/* Área */}
               <div className="campo-formulario">
                 <div className="campo-etiqueta">
                   <FaBriefcase className="campo-icono" />
@@ -193,7 +183,6 @@ const FormularioPrincipal = () => {
                 </select>
               </div>
 
-              {/* Otra área */}
               {mostrarOtroArea && (
                 <div className="campo-formulario">
                   <div className="campo-etiqueta">
@@ -221,17 +210,16 @@ const FormularioPrincipal = () => {
 
           <div className="iconos-body">
             <div className="home-body-centrado">
-              <FaHome className="icono-body" />
+              // eslint-disable-next-line react/jsx-no-undef
+              <BotonRedondo icono={<FaHome />} ariaLabel="Inicio" onClick={() => navigate('/usuario/panel')} />
             </div>
             <div className="flecha-body-derecha">
-              <FaArrowCircleRight className="icono-body" />
+              <BotonRedondo icono={<FaArrowCircleRight />} ariaLabel="Siguiente" onClick={() => navigate('/usuario/proyectos')} />
             </div>
           </div>
         </main>
 
-        <footer className="footer">
-          <p>&copy; 2026 Experiencia Verano RICA · Todos los derechos reservados</p>
-        </footer>
+        <Footer />
       </div>
     </div>
   );
