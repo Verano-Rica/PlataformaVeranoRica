@@ -39,7 +39,21 @@ const VistaResultados = () => {
   const nombreCompleto = `${datos.nombre} ${datos.apellido_paterno} ${datos.apellido_materno}`;
   const universidad = datos.universidad || '---';
   const carrera = datos.carrera || '---';
-  const area = datos.area_id === 10 ? datos.otra_area_interes : datos.area_id || '---';
+  const nombresAreas = {
+  1: 'Dirección comercial core',
+  2: 'Dirección comercial de negocios emergentes',
+  3: 'Dirección de administración',
+  4: 'Dirección de cadena de suministro',
+  5: 'Dirección de capital humano',
+  6: 'Dirección de desarrollo de mercado',
+  7: 'Dirección de finanzas y administración',
+  8: 'Dirección de tecnologías de la información',
+  9: 'Dirección general',
+  10: datos.otra_area_interes || 'Otro'
+};
+
+const areaNombre = nombresAreas[datos.area_id] || 'Área desconocida';
+ const area = areaNombre;
   const proyecto = datos.proyecto1 || '---';
   const fechaEntrevista = datos.fecha_registro
     ? new Date(datos.fecha_registro).toLocaleDateString()

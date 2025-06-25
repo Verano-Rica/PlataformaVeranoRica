@@ -11,7 +11,7 @@ import '../../styles/entrevista.css';
 
 import {
   FaCalendarAlt,
-  FaProjectDiagram,
+  // FaProjectDiagram,
   FaClock,
   FaFilePdf,
   FaRegFileAlt,
@@ -43,6 +43,9 @@ const VistaEntrevista = () => {
   });
 
   const [mensaje, setMensaje] = useState('');
+  const [tipoMensaje, setTipoMensaje] = useState('');
+  const [mostrarToast, setMostrarToast] = useState(false);
+
   const navigate = useNavigate();
 
   const toggleMenu = () => setMenuAbierto(!menuAbierto);
@@ -61,12 +64,15 @@ const VistaEntrevista = () => {
     const { proyecto1, proyecto2, otroProyecto, fecha, bloque, cvFile } = formData;
 
     if (!proyecto1 || !fecha || !bloque || !cvFile) {
-      setMensaje('⚠️ Por favor completa los campos obligatorios marcados con * y adjunta tu CV.');
+      setTipoMensaje('error');
+      setMensaje('Por favor completa los campos y adjunta tu CV');
+      setMostrarToast(true);
+      setTimeout(() => setMostrarToast(false), 3000);
       return;
     }
 
     const bloqueTexto = bloques.find(b => b.id === parseInt(bloque))?.etiqueta || '';
-    const id_usuario = 1; // ← REEMPLAZA por el ID real del usuario
+    const id_usuario = localStorage.getItem('userId');
 
     const formDataToSend = new FormData();
     formDataToSend.append('id_usuario', id_usuario);
@@ -87,10 +93,16 @@ const VistaEntrevista = () => {
       if (!res.ok) throw new Error('Error al agendar');
 
       const data = await res.json();
-      setMensaje(` Entrevista agendada`);
+      setTipoMensaje('exito');
+      setMensaje('Entrevista agendada correctamente');
+      setMostrarToast(true);
+      setTimeout(() => setMostrarToast(false), 3000);
     } catch (err) {
       console.error(err);
-      setMensaje('❌ Error al agendar la entrevista. Inténtalo más tarde.');
+      setTipoMensaje('error');
+      setMensaje('Error al agendar la entrevista. Inténtalo más tarde.');
+      setMostrarToast(true);
+      setTimeout(() => setMostrarToast(false), 3000);
     }
   };
 
@@ -231,8 +243,6 @@ const VistaEntrevista = () => {
 
               <button type="submit" className="boton-formulario">CONTINUAR</button>
             </form>
-
-            {mensaje && <p className="mensaje">{mensaje}</p>}
           </div>
         </main>
 
@@ -252,6 +262,16 @@ const VistaEntrevista = () => {
             />
           </div>
         </div>
+
+        {mostrarToast && (
+  <div className="overlay-toast">
+    <div className="toast-modal">
+      <h3>{mensaje}</h3>
+      <button className="cerrar-btn" onClick={() => setMostrarToast(false)}>Aceptar</button>
+    </div>
+  </div>
+)}
+
 
         <Footer />
       </div>

@@ -19,7 +19,9 @@ import '../../styles/formulario.css';
 const FormularioPrincipal = () => {
   const [menuAbierto, setMenuAbierto] = useState(false);
   const navigate = useNavigate();
-  const nombre = 'Larisa Moreno Zamora';
+  const usuario = JSON.parse(localStorage.getItem('usuario')) || {};
+const nombre = usuario.nombre || 'Usuario';
+
 
   const [formData, setFormData] = useState({
     nombre: '',
@@ -69,24 +71,43 @@ const FormularioPrincipal = () => {
   const handleAreaChange = (e) => {
     const valor = e.target.value;
     setFormData({ ...formData, area_id: valor });
-    setMostrarOtroArea(parseInt(valor) === 10); // ID 10 = "Otro"
+    setMostrarOtroArea(parseInt(valor) === 10);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+     console.log('User ID guardado:', localStorage.getItem('userId'));
+
+    const id_usuario = parseInt(localStorage.getItem('userId'), 10);
+    if (isNaN(id_usuario)) {
+      alert('No se ha podido identificar al usuario.');
+      return;
+    }
+
+    const area_id = parseInt(formData.area_id, 10);
+    const semestre = parseInt(formData.semestre, 10);
+
     if (
       !formData.nombre || !formData.apellido_paterno || !formData.apellido_materno ||
-      !formData.universidad || !formData.carrera || !formData.semestre ||
-      !formData.telefono || !formData.area_id
+      !formData.universidad || !formData.carrera || !semestre || !formData.telefono || !area_id
     ) {
       alert('Por favor completa todos los campos obligatorios.');
       return;
     }
 
     const datosLimpios = {
-      ...formData,
-      telefono: formData.telefono.replace(/\D/g, '')
+      id_usuario,
+      nombre: formData.nombre,
+      apellido_paterno: formData.apellido_paterno,
+      apellido_materno: formData.apellido_materno,
+      universidad: formData.universidad,
+      carrera: formData.carrera,
+      semestre,
+      correo: formData.correo || null,
+      telefono: formData.telefono.replace(/\D/g, ''),
+      area_id,
+      otra_area_interes: mostrarOtroArea ? formData.otra_area_interes : null
     };
 
     try {
@@ -98,6 +119,10 @@ const FormularioPrincipal = () => {
 
       const data = await response.json();
       alert(data.mensaje);
+
+      if (response.ok) {
+        navigate('/usuario/proyectos');
+      }
     } catch (error) {
       console.error('Error al enviar el formulario:', error);
       alert('Hubo un error al enviar el formulario');
@@ -118,8 +143,7 @@ const FormularioPrincipal = () => {
             </header>
 
             <form className="formulario-form" onSubmit={handleSubmit}>
-              {/* Campos generales */}
-              {[
+              {[ // Campos de texto general
                 { name: 'nombre', label: 'Nombre(s)', icon: FaUser },
                 { name: 'apellido_paterno', label: 'Apellido Paterno', icon: FaUser },
                 { name: 'apellido_materno', label: 'Apellido Materno', icon: FaUser },
@@ -159,7 +183,7 @@ const FormularioPrincipal = () => {
                 />
               </div>
 
-              {/* Semestre (stepper) */}
+              {/* Semestre */}
               <div className="campo-formulario">
                 <div className="campo-etiqueta">
                   <FaBook className="campo-icono" />
@@ -198,7 +222,6 @@ const FormularioPrincipal = () => {
                 </select>
               </div>
 
-              {/* Otra área si aplica */}
               {mostrarOtroArea && (
                 <div className="campo-formulario">
                   <div className="campo-etiqueta">

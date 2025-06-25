@@ -49,7 +49,9 @@ function Login() {
         localStorage.setItem('nombreUsuario', nombre);
         localStorage.setItem('rolUsuario', rol); 
         localStorage.setItem('estado', data.user.estado);
-        localStorage.setItem('userId', data.user.id); // ✅ Esto es lo que te falta
+        localStorage.setItem('usuario', JSON.stringify(data.user));
+        localStorage.setItem('userId', data.user.id); // 👈 MUY IMPORTANTE
+
 
 
 

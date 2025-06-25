@@ -4,18 +4,29 @@ const axios = require('axios');
 
 // Registro solo para trabajadores (usuarios)
 const register = (req, res) => {
-  const { nombre, correo, contraseña } = req.body;
-  const query = 'INSERT INTO usuarios (nombre, correo, contraseña) VALUES (?, ?, ?)';
-  db.query(query, [nombre, correo, contraseña], (err, result) => {
+  const { nombre, apellido_paterno, apellido_materno, correo, contraseña } = req.body;
+  const query = 'INSERT INTO usuarios (nombre, apellido_paterno, apellido_materno, correo, contraseña) VALUES (?, ?, ?, ?, ?)';
+  db.query(query, [nombre, apellido_paterno, apellido_materno, correo, contraseña], (err, result) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: 'Error al registrar usuario' });
     }
-    res.status(200).json({ message: 'Usuario registrado exitosamente' });
+
+    const newUser = {
+      id: result.insertId,
+      nombre,
+      apellido_paterno,
+      apellido_materno,
+      correo,
+      rol: 2
+    };
+
+    res.status(200).json({ message: 'Usuario registrado exitosamente', user: newUser });
   });
 };
 
-// Login con verificación de CAPTCHA
+
+// Login con CAPTCHA
 const login = async (req, res) => {
   const { correo, contraseña, token } = req.body;
 
@@ -72,7 +83,7 @@ const login = async (req, res) => {
   }
 };
 
-// ✅ Obtener el estado del usuario
+// Obtener estado del usuario
 const obtenerEstadoUsuario = (req, res) => {
   const { correo } = req.query;
 

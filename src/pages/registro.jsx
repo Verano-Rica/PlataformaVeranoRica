@@ -5,6 +5,8 @@ import ricaImg from '../assets/login-image.png';
 
 function Registro() {
   const [nombre, setNombre] = useState('');
+  const [apellidoPaterno, setApellidoPaterno] = useState('');
+  const [apellidoMaterno, setApellidoMaterno] = useState('');
   const [correo, setCorreo] = useState('');
   const [contraseña, setContraseña] = useState('');
   const [mensaje, setMensaje] = useState('');
@@ -18,19 +20,27 @@ function Registro() {
       const respuesta = await fetch('http://localhost:3001/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nombre, correo, contraseña }),
+        body: JSON.stringify({
+          nombre,
+          apellido_paterno: apellidoPaterno,
+          apellido_materno: apellidoMaterno,
+          correo,
+          contraseña
+        }),
       });
 
       const data = await respuesta.json();
 
-      if (data.message) {
-        navigate('/inicio-usuario');
+      if (data.user) {
+        localStorage.setItem('user', JSON.stringify(data.user));
+        localStorage.setItem('userId', data.user.id);
+        navigate('/usuario/panel');
       } else {
-        setMensaje(' Error al registrar usuario');
+        setMensaje(data.error || 'Error al registrar usuario');
       }
     } catch (error) {
       console.error('Error:', error);
-      setMensaje(' Error de conexión con el servidor');
+      setMensaje('Error de conexión con el servidor');
     }
   };
 
@@ -48,7 +58,7 @@ function Registro() {
           <p className="login-subtitle">Crea tu cuenta</p>
 
           <div className="form-group">
-            <label htmlFor="nombre">Nombre completo</label>
+            <label htmlFor="nombre">Nombre(s)</label>
             <input
               id="nombre"
               type="text"
@@ -59,7 +69,29 @@ function Registro() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="correo">Correo</label>
+            <label htmlFor="apellidoPaterno">Apellido paterno</label>
+            <input
+              id="apellidoPaterno"
+              type="text"
+              value={apellidoPaterno}
+              onChange={(e) => setApellidoPaterno(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="apellidoMaterno">Apellido materno</label>
+            <input
+              id="apellidoMaterno"
+              type="text"
+              value={apellidoMaterno}
+              onChange={(e) => setApellidoMaterno(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="correo">Correo electrónico</label>
             <input
               id="correo"
               type="email"
@@ -82,11 +114,11 @@ function Registro() {
 
           <button type="submit">Registrarme</button>
 
-          {mensaje && <p style={{ marginTop: '1rem' }}>{mensaje}</p>}
+          {mensaje && <p style={{ marginTop: '1rem', color: 'red' }}>{mensaje}</p>}
         </div>
       </form>
     </div>
   );
-}
+} 
 
 export default Registro;

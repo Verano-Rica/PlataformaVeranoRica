@@ -164,3 +164,77 @@ textarea.campo-input {
   right: 40px;
   bottom: 80px;
 }
+
+.overlay-toast {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(2px);
+  z-index: 9998;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: aparecerFondo 0.3s ease-in-out;
+}
+
+.toast-modal {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 30px 40px;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  animation: aparecer 0.4s ease-in-out;
+  font-family: 'Poppins', sans-serif;
+}
+
+.toast-modal h3 {
+  margin-top: 10px;
+  font-size: 20px;
+  color: #b51818;
+}
+
+.toast-modal .icono-check {
+  font-size: 40px;
+  color: #292a29f6;
+}
+
+.toast-modal .cerrar-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #2a2a2a;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.toast-modal .cerrar-btn:hover {
+  background-color: #676767;
+}
+
+@keyframes aparecer {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes aparecerFondo {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
