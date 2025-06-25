@@ -110,7 +110,7 @@ function AdminPanel() {
               <p className="resultados-">ACEPTADOS:</p>
               <div
                 className="rectangle-9"
-                onClick={() => navigate('/usuario/resultados')}
+                onClick={() => navigate('/admin/aceptar_usuarios')}
               >
                 <img src={iconoResultados} alt="Resultados" className="assignment-icon-1" />
               </div>

@@ -11,7 +11,7 @@ import '../../styles/entrevista.css';
 
 import {
   FaCalendarAlt,
-  // FaProjectDiagram,
+ FaProjectDiagram,
   FaClock,
   FaFilePdf,
   FaRegFileAlt,

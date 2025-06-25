@@ -8,17 +8,18 @@ const entrevistaController = require('../controllers/entrevistaController');
 // Configurar almacenamiento con nomenclatura personalizada
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb( 'uploads/');
+    cb(null, 'uploads/');
   },
   filename: function (req, file, cb) {
     const nombre = req.body.nombre || 'usuario';
     const apellido = req.body.apellido_paterno || '';
-    const ext = path.extname(file.originalname); // .pdf
+    const ext = path.extname(file.originalname);
 
     const nombreFinal = `${nombre}${apellido}CV${ext}`.replace(/\s+/g, '');
-    cb(nombreFinal.toLowerCase());
+    cb(null, nombreFinal.toLowerCase());
   }
 });
+
 
 const upload = multer({ storage });
 
