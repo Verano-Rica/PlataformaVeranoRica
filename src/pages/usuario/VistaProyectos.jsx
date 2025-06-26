@@ -4,7 +4,7 @@ import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Footer from '../../components/Footer';
 import BotonRedondo from '../../components/BotonRedondo';
-import { FaHome, FaArrowRight } from 'react-icons/fa';
+import { FaHome, FaArrowRight, FaArrowCircleRight } from 'react-icons/fa';
 
 import '../../styles/proyectos.css';
 import '../../styles/botonRedondo.css';
@@ -128,17 +128,16 @@ const VistaProyectos = () => {
               </div>
             </div>
           )}
+                    {/* Navegación inferior */}
+          <div className="iconos-body">
+            <div className="home-body-centrado">
+              <BotonRedondo icono={<FaHome />} ariaLabel="Inicio" onClick={() => navigate('/usuario/panel')} />
+            </div>
+            <div className="flecha-body-derecha">
+              <BotonRedondo icono={<FaArrowCircleRight />} ariaLabel="Siguiente" onClick={() => navigate('/usuario/entrevista')} />
+            </div>
+          </div>
         </main>
-
-        <div className="contenedor-botones-inferiores">
-          <div className="boton-home">
-            <BotonRedondo icono={<FaHome />} onClick={() => navigate('/usuario/')} ariaLabel="Ir al panel" />
-          </div>
-          <div className="boton-siguiente">
-            <BotonRedondo icono={<FaArrowRight />} onClick={() => navigate('/usuario/entrevista')} ariaLabel="Ir a entrevista" />
-          </div>
-        </div>
-
         <Footer />
       </div>
     </div>

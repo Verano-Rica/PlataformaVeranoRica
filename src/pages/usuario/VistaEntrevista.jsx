@@ -16,7 +16,8 @@ import {
   FaFilePdf,
   FaRegFileAlt,
   FaHome,
-  FaArrowRight
+  FaArrowRight,
+  FaArrowCircleRight
 } from 'react-icons/fa';
 
 const proyectosDisponibles = [
@@ -242,36 +243,17 @@ const VistaEntrevista = () => {
               <button type="submit" className="boton-formulario">CONTINUAR</button>
             </form>
           </div>
+                    {/* Navegación inferior */}
+          <div className="iconos-body">
+            <div className="home-body-centrado">
+              <BotonRedondo icono={<FaHome />} ariaLabel="Inicio" onClick={() => navigate('/usuario/panel')} />
+            </div>
+            <div className="flecha-body-derecha">
+              <BotonRedondo icono={<FaArrowCircleRight />} ariaLabel="Siguiente" onClick={() => navigate('/usuario/resultados')} />
+            </div>
+          </div>
         </main>
-
-        <div className="contenedor-botones-inferiores">
-          <div className="boton-home">
-            <BotonRedondo
-              icono={<FaHome />}
-              onClick={() => navigate('/usuario')}
-              ariaLabel="Ir al panel"
-            />
-          </div>
-          <div className="boton-siguiente">
-            <BotonRedondo
-              icono={<FaArrowRight />}
-              onClick={() => navigate('/usuario/resultados')}
-              ariaLabel="Ir a resultados"
-            />
-          </div>
-        </div>
-
-        {mostrarToast && (
-  <div className="overlay-toast">
-    <div className="toast-modal">
-      <h3>{mensaje}</h3>
-      <button className="cerrar-btn" onClick={() => setMostrarToast(false)}>Aceptar</button>
-    </div>
-  </div>
-)}
-
-
-        <Footer />
+        <Footer/>
       </div>
     </div>
   );

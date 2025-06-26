@@ -1,9 +1,12 @@
 html, body {
   height: 100%;
-  background-color: #ffffff;
   margin: 0;
   padding: 0;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
 }
+
 :root {
     --rojo-principal: #b51818;
     --rojo-hover: #D00000;
@@ -13,8 +16,9 @@ html, body {
 
   /* Layout general */
   .panel-container {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   }
 
   /* Sidebar */
