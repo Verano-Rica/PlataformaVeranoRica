@@ -1,11 +1,14 @@
 const express = require('express');
 const cors = require('cors');
 const db = require('./db'); // Se conecta a la base de datos
+const path = require('path'); // Importante para servir archivos correctamente
 
 const app = express();
 app.use(cors());
 app.use(express.json());
- app.use('/uploads', express.static('uploads'));
+
+//  Servir correctamente archivos como PDFs (CVs) desde la carpeta uploads
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Rutas
 const authRoutes = require('./routes/auth');
@@ -15,17 +18,24 @@ const aceptadosRoutes = require('./routes/aceptados');
 const aceptarUsuariosRoutes = require('./routes/aceptar_usuarios');
 const estadoRoutes = require('./routes/estado');
 const usuariosAdminRoutes = require('./routes/Admin/usuarios');
+const seleccionRoutes = require('./routes/Admin/seleccion');
+const agendadosRoutes = require('./routes/Admin/agendados');
+const areasRoutes = require('./routes/areas');
 
-
+// Usar rutas
+app.use('/api/areas', areasRoutes);
+app.use('/api', agendadosRoutes);
+app.use('/api/seleccion', seleccionRoutes);
 app.use('/api/admin/usuarios', usuariosAdminRoutes);
 app.use('/api/estado', estadoRoutes);
-app.use('/api/aceptar_usuarios', require('./routes/aceptar_usuarios'));
+app.use('/api/aceptar_usuarios', aceptarUsuariosRoutes);
 app.use('/api/aceptados', aceptadosRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/formulario', formularioRoutes);
 app.use('/api/entrevista', entrevistaRoutes);
-app.use('/uploads', express.static('uploads'));
 
+//  Elimina esta línea duplicada que estaba mal
+// app.use('/uploads', express.static('uploads')); ← ya no se necesita
 
 // Ruta de prueba
 app.get('/', (req, res) => {

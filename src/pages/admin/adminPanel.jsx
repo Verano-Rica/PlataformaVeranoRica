@@ -83,10 +83,10 @@ function AdminPanel() {
             {/* Proyectos */}
             <div className="boton-seccion">
               <div className="circle-4">2</div>
-              <p className="proyectos-">PROYECTOS:</p>
+              <p className="proyectos-">PROCESO DE SELECCION::</p>
               <div
                 className="rectangle-7"
-                onClick={() => navigate('/usuario/proyectos')}
+                onClick={() => navigate('/admin/proceso_seleccion')}
               >
                 <img src={iconoProyectos} alt="Proyectos" className="assignment-icon-1" />
               </div>
@@ -98,7 +98,7 @@ function AdminPanel() {
               <p className="agendar-entrevista-">AGENDADOS:</p>
               <div
                 className="rectangle-8"
-                onClick={() => navigate('/usuario/entrevista')}
+                onClick={() => navigate('/admin/usuarios-agendados')}
               >
                 <img src={iconoEntrevista} alt="Entrevista" className="assignment-icon-1" />
               </div>
@@ -107,10 +107,10 @@ function AdminPanel() {
             {/* Resultados */}
             <div className="boton-seccion">
               <div className="circle-6">4</div>
-              <p className="resultados-">PROCESO DE SELECCION:</p>
+              <p className="resultados-">ACEPTADOS:</p>
               <div
                 className="rectangle-9"
-                onClick={() => navigate('/admin/proceso_seleccion')}
+                onClick={() => navigate('/admin/aceptar_usuarios')}
               >
                 <img src={iconoResultados} alt="Resultados" className="assignment-icon-1" />
               </div>

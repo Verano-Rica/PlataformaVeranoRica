@@ -12,6 +12,7 @@ import DashboardUsuario from './pages/usuario/DashboardUsuario';
 import Aceptar_Usuarios from './pages/admin/Aceptar_Usuarios';
 import Proceso_seleccion from './pages/admin/Proceso_seleccion';
 import UsuariosRegistrados from './pages/admin/UsuariosRegistrados';
+import UsuariosAgendados from './pages/admin/UsuariosAgendados';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/admin/aceptar_usuarios" element={<Aceptar_Usuarios />} />
         <Route path="/admin/proceso_seleccion" element={<Proceso_seleccion />} />
         <Route path="/admin/usuarios-registrados" element={<UsuariosRegistrados />} />
+        <Route path="/admin/usuarios-agendados" element={<UsuariosAgendados />} />
 
       </Routes>
     </BrowserRouter>
