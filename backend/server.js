@@ -1,7 +1,9 @@
 const express = require('express');
 const cors = require('cors');
-const db = require('./db'); // Se conecta a la base de datos
+// const db = require('./db'); // Se conecta a la base de datos
 const path = require('path'); // Importante para servir archivos correctamente
+// require('./db'); // Ejecuta la conexión con la base de datos
+
 
 const app = express();
 app.use(cors());
@@ -15,7 +17,7 @@ const authRoutes = require('./routes/auth');
 const formularioRoutes = require('./routes/formulario'); 
 const entrevistaRoutes = require('./routes/entrevista');
 const aceptadosRoutes = require('./routes/aceptados');
-const aceptarUsuariosRoutes = require('./routes/aceptar_usuarios');
+// const aceptarUsuariosRoutes = require('./routes/aceptar_usuarios');
 const estadoRoutes = require('./routes/estado');
 const usuariosAdminRoutes = require('./routes/Admin/usuarios');
 const seleccionRoutes = require('./routes/Admin/seleccion');
@@ -28,7 +30,7 @@ app.use('/api', agendadosRoutes);
 app.use('/api/seleccion', seleccionRoutes);
 app.use('/api/admin/usuarios', usuariosAdminRoutes);
 app.use('/api/estado', estadoRoutes);
-app.use('/api/aceptar_usuarios', aceptarUsuariosRoutes);
+// app.use('/api/aceptar_usuarios', aceptarUsuariosRoutes);
 app.use('/api/aceptados', aceptadosRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/formulario', formularioRoutes);
