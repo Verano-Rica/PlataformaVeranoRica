@@ -12,8 +12,9 @@ const agendarEntrevista = (req, res) => {
     bloque_id,
     nombre_bloque
   } = req.body;
-console.log('ID recibido:', id_usuario);
-console.log('Archivo recibido:', req.file);
+
+  console.log('ID recibido:', id_usuario);
+  console.log('Archivo recibido:', req.file);
 
   if (!req.file) {
     return res.status(400).json({ error: 'Archivo CV no recibido' });
@@ -28,7 +29,7 @@ console.log('Archivo recibido:', req.file);
     }
 
     const { nombre, apellido_paterno } = results[0];
-    const extension = path.extname(req.file.originalname); // e.g., '.pdf'
+    const extension = path.extname(req.file.originalname);
     const nuevoNombreArchivo = `${nombre}${apellido_paterno}CV${extension}`
       .replace(/\s+/g, '')
       .toLowerCase();
@@ -62,13 +63,22 @@ console.log('Archivo recibido:', req.file);
         nuevoNombreArchivo
       ];
 
-      db.query(insertQuery, valores, (insertErr, result) => {
+      db.query(insertQuery, valores, (insertErr) => {
         if (insertErr) {
           console.error('Error al guardar entrevista:', insertErr);
           return res.status(500).json({ error: 'Error al agendar entrevista' });
         }
 
-        res.status(200).json({ mensaje: 'Entrevista agendada correctamente', archivo: nuevoNombreArchivo });
+        // ✅ Actualizar estado_proceso a FASE 2
+        const updateEstado = 'UPDATE usuarios SET estado_proceso = 2 WHERE id = ?';
+        db.query(updateEstado, [id_usuario], (estadoErr) => {
+          if (estadoErr) {
+            console.error('Error al actualizar estado_proceso:', estadoErr);
+            return res.status(500).json({ mensaje: 'Entrevista guardada pero falló actualización de estado' });
+          }
+
+          res.status(200).json({ mensaje: 'Entrevista agendada y estado actualizado a FASE 2', archivo: nuevoNombreArchivo });
+        });
       });
     });
   });

@@ -71,6 +71,8 @@ const VistaProyectos = () => {
   const [modal, setModal] = useState(false);
   const [proyecto, setProyecto] = useState(null);
   const navigate = useNavigate();
+    const usuario = JSON.parse(localStorage.getItem('usuario')) || {};
+  const nombre = usuario.nombre || 'Usuario';
 
   const abrirModal = (p) => {
     setProyecto(p);
@@ -89,7 +91,7 @@ const VistaProyectos = () => {
     <div className={`panel-container ${menuAbierto ? 'menu-activo' : ''}`}>
       <Sidebar />
       <div className="panel-contenido">
-        <Header nombre="Bienvenido(a): Larisa Moreno Zamora" toggleMenu={toggleMenu} handleLogout={handleLogout} />
+      <Header nombre={`Bienvenido(a): ${nombre}`} toggleMenu={toggleMenu} handleLogout={handleLogout} />
 
         <main className="main-contenido">
           <div className="proyectos-container">

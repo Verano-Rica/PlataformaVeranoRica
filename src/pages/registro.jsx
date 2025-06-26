@@ -32,9 +32,10 @@ function Registro() {
       const data = await respuesta.json();
 
       if (data.user) {
-        localStorage.setItem('user', JSON.stringify(data.user));
-        localStorage.setItem('userId', data.user.id);
-        navigate('/usuario/panel');
+        setMensaje('¡Registro exitoso! Redirigiendo al login...');
+        setTimeout(() => {
+          navigate('/');
+        }, 1000); // Espera 1 segundos antes de redirigir
       } else {
         setMensaje(data.error || 'Error al registrar usuario');
       }
@@ -54,7 +55,7 @@ function Registro() {
       {/* Lado Derecho */}
       <form className="right" onSubmit={manejarRegistro}>
         <div className="login-box">
-          <h2 className="login-title">📝 Registro</h2>
+          <h2 className="login-title">Registro</h2>
           <p className="login-subtitle">Crea tu cuenta</p>
 
           <div className="form-group">
@@ -114,11 +115,11 @@ function Registro() {
 
           <button type="submit">Registrarme</button>
 
-          {mensaje && <p style={{ marginTop: '1rem', color: 'red' }}>{mensaje}</p>}
+          {mensaje && <p style={{ marginTop: '1rem', color: mensaje.includes('✅') ? 'green' : 'red' }}>{mensaje}</p>}
         </div>
       </form>
     </div>
   );
-} 
+}
 
 export default Registro;

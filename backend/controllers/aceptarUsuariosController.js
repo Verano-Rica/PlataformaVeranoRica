@@ -25,6 +25,7 @@ const actualizarEstado = (req, res) => {
   }
 
   const estatus = decision === 'aceptar' ? 1 : 0;
+  const nuevoEstado = decision === 'aceptar' ? 4 : 9; // FASE 4 o Rechazado
 
   const insertQuery = `
     INSERT INTO usuarios_aceptados (
@@ -46,7 +47,17 @@ const actualizarEstado = (req, res) => {
 
   db.query(insertQuery, [estatus, id_usuario], (err) => {
     if (err) return res.status(500).json({ error: 'Error al guardar decisión' });
-    res.json({ mensaje: `Usuario ${decision} correctamente` });
+
+    // ✅ Actualiza estado_proceso en la tabla usuarios
+    const updateEstado = `UPDATE usuarios SET estado_proceso = ? WHERE id = ?`;
+    db.query(updateEstado, [nuevoEstado, id_usuario], (updateErr) => {
+      if (updateErr) {
+        console.error('Error al actualizar estado_proceso:', updateErr);
+        return res.status(500).json({ error: 'Decisión guardada pero falló estado_proceso' });
+      }
+
+      res.json({ mensaje: `Usuario ${decision} correctamente y estado actualizado` });
+    });
   });
 };
 

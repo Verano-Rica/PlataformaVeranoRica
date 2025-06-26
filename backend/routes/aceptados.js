@@ -41,28 +41,30 @@ router.post('/aceptar/:id_usuario', (req, res) => {
 
 // Ruta para consultar si un usuario fue aceptado
 router.get('/estado/:id_usuario', (req, res) => {
-  const idUsuario = req.params.id_usuario;
+  const id = req.params.id_usuario;
 
-  const query = 'SELECT * FROM usuarios_aceptados WHERE id_usuario = ?';
+  const query = 'SELECT * FROM usuarios WHERE id = ?';
 
-  db.query(query, [idUsuario], (err, result) => {
+  db.query(query, [id], (err, results) => {
     if (err) {
-      return res.status(500).json({ error: 'Error al verificar estado del usuario' });
+      return res.status(500).json({ error: 'Error al consultar estado' });
     }
 
-    if (result.length > 0) {
-      // Usuario fue aceptado
-      res.status(200).json({
-        estado: 'aceptado',
-        datos: result[0] // puedes usar los datos si quieres mostrar nombre, etc.
-      });
+    if (!results.length) {
+      return res.status(404).json({ estado: 'no_encontrado' });
+    }
+
+    const estadoProceso = Number(results[0].estado_proceso);
+
+    if (estadoProceso === 4) {
+      res.json({ estado: 'aceptado', datos: results[0] });
+    } else if (estadoProceso === 9) {
+      res.json({ estado: 'rechazado' });
     } else {
-      // Usuario no fue aceptado
-      res.status(200).json({
-        estado: 'rechazado'
-      });
+      res.json({ estado: 'pendiente' });
     }
   });
 });
+
 
 module.exports = router;

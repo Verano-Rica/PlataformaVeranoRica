@@ -74,7 +74,7 @@ function AdminPanel() {
               <p className="informaci-n-">INSCRITOS:</p>
               <div
                 className="rectangle-6"
-                onClick={() => navigate('/admin/inscritos')}
+                onClick={() => navigate('/admin/usuarios-registrados')}
               >
                 <img src={iconoInfo} alt="Información" className="assignment-icon-1" />
               </div>
@@ -107,10 +107,10 @@ function AdminPanel() {
             {/* Resultados */}
             <div className="boton-seccion">
               <div className="circle-6">4</div>
-              <p className="resultados-">ACEPTADOS:</p>
+              <p className="resultados-">PROCESO DE SELECCION:</p>
               <div
                 className="rectangle-9"
-                onClick={() => navigate('/admin/aceptar_usuarios')}
+                onClick={() => navigate('/admin/proceso_seleccion')}
               >
                 <img src={iconoResultados} alt="Resultados" className="assignment-icon-1" />
               </div>

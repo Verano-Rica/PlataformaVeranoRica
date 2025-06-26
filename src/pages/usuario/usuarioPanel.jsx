@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Footer from '../../components/Footer';
@@ -14,6 +14,9 @@ import iconoResultados from '../../assets/icono-resultados.png';
 const UsuarioPanel = () => {
   const [menuAbierto, setMenuAbierto] = useState(false);
   const navigate = useNavigate();
+  const usuario = JSON.parse(localStorage.getItem('usuario')) || {};
+  const nombre = usuario.nombre || 'Usuario';
+
 
   const toggleMenu = () => setMenuAbierto(!menuAbierto);
   const handleLogout = () => (window.location.href = '/');
@@ -22,7 +25,7 @@ const UsuarioPanel = () => {
     <div className={`panel-container ${menuAbierto ? 'menu-activo' : ''}`}>
       <Sidebar />
       <div className="panel-contenido">
-        <Header nombre="Bienvenido(a): Larisa Moreno Zamora" toggleMenu={toggleMenu} handleLogout={handleLogout} />
+        <Header nombre={`Bienvenido(a): ${nombre}`} toggleMenu={toggleMenu} handleLogout={handleLogout} />
 
         <main className="main-contenido">
           <img src={logoExperiencia} alt="Logo Experiencia" className="logo-central" />

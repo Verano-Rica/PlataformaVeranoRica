@@ -13,8 +13,12 @@ const formularioRoutes = require('./routes/formulario');
 const entrevistaRoutes = require('./routes/entrevista');
 const aceptadosRoutes = require('./routes/aceptados');
 const aceptarUsuariosRoutes = require('./routes/aceptar_usuarios');
+const estadoRoutes = require('./routes/estado');
+const usuariosAdminRoutes = require('./routes/Admin/usuarios');
 
 
+app.use('/api/admin/usuarios', usuariosAdminRoutes);
+app.use('/api/estado', estadoRoutes);
 app.use('/api/aceptar_usuarios', require('./routes/aceptar_usuarios'));
 app.use('/api/aceptados', aceptadosRoutes);
 app.use('/api/auth', authRoutes);

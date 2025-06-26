@@ -15,9 +15,7 @@ exports.guardarFormulario = (req, res) => {
     otra_area_interes
   } = req.body;
 
-  // Verifica si ya existe un formulario para ese usuario
-const verificarQuery = 'SELECT id_formulario FROM datos_formulario WHERE id_usuario = ?';
-
+  const verificarQuery = 'SELECT id_formulario FROM datos_formulario WHERE id_usuario = ?';
 
   db.query(verificarQuery, [id_usuario], (error, resultados) => {
     if (error) {
@@ -26,11 +24,9 @@ const verificarQuery = 'SELECT id_formulario FROM datos_formulario WHERE id_usua
     }
 
     if (resultados.length > 0) {
-      // Si ya existe, NO insertamos de nuevo
       return res.status(400).json({ mensaje: 'Ya existe un formulario para este usuario' });
     }
 
-    // Si no existe, insertamos el nuevo registro
     const insertarSQL = `
       INSERT INTO datos_formulario 
       (id_usuario, nombre, apellido_paterno, apellido_materno, universidad, carrera, semestre, correo, telefono, area_id, otra_area_interes)
@@ -58,7 +54,16 @@ const verificarQuery = 'SELECT id_formulario FROM datos_formulario WHERE id_usua
           return res.status(500).json({ mensaje: 'Error al guardar el formulario' });
         }
 
-        res.status(200).json({ mensaje: 'Formulario guardado exitosamente' });
+        // Actualizar estado_proceso a 1 (FASE 1)
+        const actualizarEstado = 'UPDATE usuarios SET estado_proceso = 1 WHERE id = ?';
+        db.query(actualizarEstado, [id_usuario], (updateErr) => {
+          if (updateErr) {
+            console.error('Error al actualizar estado_proceso:', updateErr);
+            return res.status(500).json({ mensaje: 'Formulario guardado pero falló actualización de estado' });
+          }
+
+          res.status(200).json({ mensaje: 'Formulario guardado y estado actualizado a FASE 1' });
+        });
       }
     );
   });
