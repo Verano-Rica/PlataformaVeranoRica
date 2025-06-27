@@ -5,8 +5,14 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import '../../styles/agendados.css';
 
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+
 const UsuariosAgendados = () => {
   const [usuarios, setUsuarios] = useState([]);
+  const [bloqueSeleccionado, setBloqueSeleccionado] = useState('');
 
   const cargarUsuarios = () => {
     axios.get('http://localhost:3001/api/usuarios/agendados')
@@ -32,14 +38,98 @@ const UsuariosAgendados = () => {
       });
   };
 
+  const usuariosFiltrados = bloqueSeleccionado
+    ? usuarios.filter(user => user.nombre_bloque === bloqueSeleccionado)
+    : usuarios;
+
+  // Exportar a Excel
+  const exportarExcel = () => {
+    const data = usuariosFiltrados.map(user => ({
+      Nombre: `${user.nombre} ${user.apellido_paterno} ${user.apellido_materno}`,
+      Correo: user.correo,
+      Fecha: new Date(user.fecha_entrevista).toLocaleDateString('es-MX'),
+      Bloque: user.nombre_bloque,
+      Proyecto1: user.proyecto1,
+      Proyecto2: user.proyecto2,
+      OtroProyecto: user.otro_proyecto || '-',
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Agendados');
+
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+    saveAs(blob, `agendados-${bloqueSeleccionado || 'todos'}.xlsx`);
+  };
+
+  // Exportar a PDF
+  const exportarPDF = () => {
+  const doc = new jsPDF();
+  doc.setFontSize(16);
+  doc.text('Reporte de Entrevistas Agendadas', 14, 20);
+
+  const columns = ["Nombre", "Correo", "Fecha", "Bloque", "Proyecto 1", "Proyecto 2", "Otro Proyecto"];
+  const rows = usuariosFiltrados.map(user => [
+    `${user.nombre} ${user.apellido_paterno} ${user.apellido_materno}`,
+    user.correo,
+    new Date(user.fecha_entrevista).toLocaleDateString('es-MX'),
+    user.nombre_bloque,
+    user.proyecto1,
+    user.proyecto2,
+    user.otro_proyecto || '-',
+  ]);
+
+  autoTable(doc, {
+    head: [columns],
+    body: rows,
+    startY: 30,
+    styles: { fontSize: 10 },
+    theme: 'striped',
+  });
+
+  doc.save(`reporte-agendados-${bloqueSeleccionado || 'todos'}.pdf`);
+};
+
+
   return (
     <div className="panel-container">
       <Sidebar />
       <div className="panel-contenido">
-        <Header nombre="Panel Administrador: Usuarios Agendados" />
+        <Header nombre="Bienvenido administrador(a)" />
 
         <main className="main-contenido">
           <h2 className="titulo-usuarios">Usuarios con Entrevista Agendada</h2>
+
+          {/* Filtro y exportación */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+            <select
+              value={bloqueSeleccionado}
+              onChange={e => setBloqueSeleccionado(e.target.value)}
+              style={{
+                padding: '8px 12px',
+                borderRadius: '8px',
+                border: '1px solid #ccc',
+                fontSize: '14px',
+                width: '250px',
+              }}
+            >
+              <option value="">-- Mostrar todos los bloques --</option>
+              <option value="9:00 AM - 11:00 AM">9:00 AM - 11:00 AM</option>
+              <option value="12:00 PM - 2:00 PM">12:00 PM - 2:00 PM</option>
+              <option value="3:00 PM - 5:00 PM">3:00 PM - 5:00 PM</option>
+            </select>
+
+            <div>
+              <button onClick={exportarExcel} className="btn-exportar" style={{ marginRight: '10px' }}>
+                Exportar a Excel
+              </button>
+              <button onClick={exportarPDF} className="btn-exportar">
+                Exportar a PDF
+              </button>
+            </div>
+          </div>
+
           <table className="tabla-usuarios">
             <thead>
               <tr>
@@ -47,20 +137,31 @@ const UsuariosAgendados = () => {
                 <th>Correo</th>
                 <th>Fecha</th>
                 <th>Bloque</th>
+                <th>Proyecto 1</th>
+                <th>Proyecto 2</th>
+                <th>Otro Proyecto</th>
                 <th>CV</th>
                 <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
-              {usuarios.map(user => (
+              {usuariosFiltrados.map(user => (
                 <tr key={user.id}>
                   <td>{user.nombre} {user.apellido_paterno} {user.apellido_materno}</td>
                   <td>{user.correo}</td>
-                  <td>{user.fecha_entrevista}</td>
+                  <td>{new Date(user.fecha_entrevista).toLocaleDateString('es-MX')}</td>
                   <td>{user.nombre_bloque}</td>
+                  <td>{user.proyecto1}</td>
+                  <td>{user.proyecto2}</td>
+                  <td>{user.otro_proyecto || '-'}</td>
                   <td>
                     {user.cv_nombre ? (
-                      <a href={`http://localhost:3001/uploads/${user.cv_nombre}`} target="_blank" rel="noopener noreferrer">
+                      <a
+                        href={`http://localhost:3001/uploads/${user.cv_nombre}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: 'blue', textDecoration: 'underline' }}
+                      >
                         Ver CV
                       </a>
                     ) : 'No disponible'}
@@ -72,6 +173,13 @@ const UsuariosAgendados = () => {
                   </td>
                 </tr>
               ))}
+              {usuariosFiltrados.length === 0 && (
+                <tr>
+                  <td colSpan="9" style={{ textAlign: 'center', padding: '1rem' }}>
+                    No hay entrevistas en este bloque.
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </main>

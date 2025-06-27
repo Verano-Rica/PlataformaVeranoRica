@@ -73,3 +73,17 @@ a {
 a:hover {
   text-decoration: underline;
 }
+.btn-exportar {
+  background-color: #b51818;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-exportar:hover {
+  background-color: #911313;
+}

@@ -16,22 +16,27 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 const authRoutes = require('./routes/auth');
 const formularioRoutes = require('./routes/formulario'); 
 const entrevistaRoutes = require('./routes/entrevista');
-const aceptadosRoutes = require('./routes/aceptados');
 // const aceptarUsuariosRoutes = require('./routes/aceptar_usuarios');
 const estadoRoutes = require('./routes/estado');
 const usuariosAdminRoutes = require('./routes/Admin/usuarios');
-const seleccionRoutes = require('./routes/Admin/seleccion');
 const agendadosRoutes = require('./routes/Admin/agendados');
 const areasRoutes = require('./routes/areas');
+const seleccionRoutes = require('./routes/Admin/seleccion');
+const seleccionadosRoutes = require('./routes/Admin/seleccionados');
+const aceptadosRoutes = require('./routes/aceptados');
+
+
 
 // Usar rutas
+app.use('/api/postulantes', require('./routes/Admin/postulantes'));
+app.use('/api/aceptados', aceptadosRoutes);
+app.use('/api/admin/seleccionados', seleccionadosRoutes);
+app.use('/api/seleccion', seleccionRoutes);
 app.use('/api/areas', areasRoutes);
 app.use('/api', agendadosRoutes);
-app.use('/api/seleccion', seleccionRoutes);
 app.use('/api/admin/usuarios', usuariosAdminRoutes);
 app.use('/api/estado', estadoRoutes);
 // app.use('/api/aceptar_usuarios', aceptarUsuariosRoutes);
-app.use('/api/aceptados', aceptadosRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/formulario', formularioRoutes);
 app.use('/api/entrevista', entrevistaRoutes);

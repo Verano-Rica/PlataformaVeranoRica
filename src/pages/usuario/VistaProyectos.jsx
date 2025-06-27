@@ -131,7 +131,7 @@ const VistaProyectos = () => {
                     {/* Navegación inferior */}
           <div className="iconos-body">
             <div className="home-body-centrado">
-              <BotonRedondo icono={<FaHome />} ariaLabel="Inicio" onClick={() => navigate('/usuario/panel')} />
+              <BotonRedondo icono={<FaHome />} ariaLabel="Inicio" onClick={() => navigate('/usuario')} />
             </div>
             <div className="flecha-body-derecha">
               <BotonRedondo icono={<FaArrowCircleRight />} ariaLabel="Siguiente" onClick={() => navigate('/usuario/entrevista')} />

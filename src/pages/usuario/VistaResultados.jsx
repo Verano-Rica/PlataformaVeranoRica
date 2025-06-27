@@ -4,7 +4,13 @@ import Sidebar from '../../components/Sidebar';
 import Footer from '../../components/Footer';
 import '../../styles/resultados.css';
 import logoBienvenida from '../../assets/icono-bienvenida.png';
-import { FaCheckCircle, FaCalendarAlt, FaTimesCircle } from 'react-icons/fa';
+import BotonRedondo from '../../components/BotonRedondo';
+import {
+  FaCheckCircle,
+  FaCalendarAlt,
+  FaTimesCircle,
+  FaHome
+} from 'react-icons/fa';
 
 const VistaResultados = () => {
   const [datos, setDatos] = useState(null);
@@ -32,11 +38,9 @@ const VistaResultados = () => {
       });
   }, [userId]);
 
-  // Funciones necesarias para el Header
   const toggleMenu = () => {};
   const handleLogout = () => (window.location.href = '/');
 
-  // Mientras carga
   if (estado === null) {
     return (
       <div className="vista-principal">
@@ -52,7 +56,6 @@ const VistaResultados = () => {
     );
   }
 
-  // Rechazado
   if (estado === 'rechazado') {
     return (
       <div className="vista-principal">
@@ -66,7 +69,7 @@ const VistaResultados = () => {
               No has sido seleccionado en esta edición <FaTimesCircle />
             </h1>
             <p className="mensaje-indicaciones">
-              Agradecemos mucho tu participación. Te invitamos a seguir preparándote y volver a intentarlo en futuras convocatorias.
+              Agradecemos mucho tu participación. Te invitamos a seguir preparándote profesionalmente.
             </p>
             <button className="btn-continuar" onClick={handleLogout}>
               Cerrar sesión
@@ -78,27 +81,13 @@ const VistaResultados = () => {
     );
   }
 
-  // Aceptado
   if (estado === 'aceptado' && datos) {
     const nombreCompleto = `${datos.nombre} ${datos.apellido_paterno} ${datos.apellido_materno}`;
     const universidad = datos.universidad || '---';
     const carrera = datos.carrera || '---';
-
-    const nombresAreas = {
-      1: 'Dirección comercial core',
-      2: 'Dirección comercial de negocios emergentes',
-      3: 'Dirección de administración',
-      4: 'Dirección de cadena de suministro',
-      5: 'Dirección de capital humano',
-      6: 'Dirección de desarrollo de mercado',
-      7: 'Dirección de finanzas y administración',
-      8: 'Dirección de tecnologías de la información',
-      9: 'Dirección general',
-      10: datos.otra_area_interes || 'Otro'
-    };
-
-    const area = nombresAreas[datos.area_id] || 'Área desconocida';
-    const proyecto = datos.proyecto1 || '---';
+    const areaFinal = datos.nombre_area_final || 'Área no asignada';
+    const subarea = datos.subarea_especifica || '---';
+    const proyectoFinal = datos.proyecto_asignado_final || '---';
     const fechaEntrevista = datos.fecha_registro
       ? new Date(datos.fecha_registro).toLocaleDateString()
       : 'Por asignar';
@@ -116,10 +105,10 @@ const VistaResultados = () => {
             </h1>
             <p className="mensaje-indicaciones">
               Bienvenido(a) <strong>{nombreCompleto.toUpperCase()}</strong>, estudiante de <strong>{carrera}</strong> en <strong>{universidad}</strong>.
-              Has sido asignado(a) al área <strong>{area}</strong>, para el proyecto <strong>{proyecto}</strong>.
+              Has sido asignado(a) al área <strong>{areaFinal}</strong>, subárea <strong>{subarea}</strong>, para el proyecto <strong>{proyectoFinal}</strong>.
             </p>
             <p className="mensaje-indicaciones">
-              Fecha de entrevista registrada: <strong><FaCalendarAlt /> {fechaEntrevista}</strong>
+             <strong><FaCalendarAlt /> Fecha de inicio 1 de Junio del 2026 </strong>
             </p>
             <p className="mensaje-indicaciones">
               Te pedimos leer cuidadosamente los siguientes pasos para completar tu proceso y comenzar esta experiencia profesional.
@@ -131,13 +120,23 @@ const VistaResultados = () => {
               IR A LOS SIGUIENTES PASOS
             </button>
           </div>
+
+          {/* Botón redondo centrado */}
+          <div className="iconos-body">
+            <div className="home-body-centrado">
+              <BotonRedondo 
+                icono={<FaHome />} 
+                ariaLabel="Inicio" 
+                onClick={() => window.location.href = '/usuario'} 
+              />
+            </div>
+          </div>
         </div>
         <Footer />
       </div>
     );
   }
 
-  // Si estado es "pendiente" o "error"
   return (
     <div className="vista-principal">
       <Header nombre={`Bienvenido(a): ${nombre}`} toggleMenu={toggleMenu} handleLogout={handleLogout} />

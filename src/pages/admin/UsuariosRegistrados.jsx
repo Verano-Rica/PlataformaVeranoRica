@@ -45,7 +45,7 @@ const UsuariosRegistrados = () => {
     <div className="panel-container">
       <Sidebar />
       <div className="panel-contenido">
-        <Header nombre="Panel Administrador: Usuarios Registrados" />
+        <Header nombre="Bienvenido administrador(a)" />
 
         <main className="main-contenido">
           <h2 className="titulo-usuarios">Lista de Usuarios Registrados</h2>

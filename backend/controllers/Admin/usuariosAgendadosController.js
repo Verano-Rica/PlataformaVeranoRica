@@ -3,8 +3,10 @@ const db = require('../../db');
 // Obtener todos los usuarios con entrevista agendada
 exports.obtenerUsuariosAgendados = (req, res) => {
   const sql = `
-    SELECT u.id, u.nombre, u.apellido_paterno, u.apellido_materno, u.correo,
-           e.fecha_entrevista, e.nombre_bloque, e.cv_nombre
+    SELECT 
+      u.id, u.nombre, u.apellido_paterno, u.apellido_materno, u.correo,
+      e.fecha_entrevista, e.nombre_bloque, e.cv_nombre,
+      e.proyecto1, e.proyecto2, e.otro_proyecto
     FROM usuarios u
     INNER JOIN entrevistas_agendadas e ON u.id = e.id_usuario;
   `;

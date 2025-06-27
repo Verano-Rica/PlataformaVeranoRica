@@ -115,7 +115,6 @@ function Registro() {
 
           <button type="submit">Registrarme</button>
 
-          {mensaje && <p style={{ marginTop: '1rem', color: mensaje.includes('✅') ? 'green' : 'red' }}>{mensaje}</p>}
         </div>
       </form>
     </div>

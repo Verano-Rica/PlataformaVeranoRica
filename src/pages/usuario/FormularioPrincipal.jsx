@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   FaUser, FaUniversity, FaGraduationCap, FaBook, FaEnvelope,
-  FaPhoneAlt, FaBriefcase, FaHome, FaArrowCircleRight
+  FaPhoneAlt, FaBriefcase, FaHome, FaArrowCircleRight, FaCheckCircle, FaTimesCircle
 } from 'react-icons/fa';
 
 import Sidebar from '../../components/Sidebar';
@@ -20,8 +20,7 @@ const FormularioPrincipal = () => {
   const [menuAbierto, setMenuAbierto] = useState(false);
   const navigate = useNavigate();
   const usuario = JSON.parse(localStorage.getItem('usuario')) || {};
-const nombre = usuario.nombre || 'Usuario';
-
+  const nombre = usuario.nombre || 'Usuario';
 
   const [formData, setFormData] = useState({
     nombre: '',
@@ -37,6 +36,9 @@ const nombre = usuario.nombre || 'Usuario';
   });
 
   const [mostrarOtroArea, setMostrarOtroArea] = useState(false);
+  const [mensaje, setMensaje] = useState('');
+  const [tipoMensaje, setTipoMensaje] = useState('');
+  const [mostrarToast, setMostrarToast] = useState(false);
 
   const areas = [
     { id: 1, nombre: 'Dirección comercial core', abreviatura: 'DCC' },
@@ -76,23 +78,22 @@ const nombre = usuario.nombre || 'Usuario';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-     console.log('User ID guardado:', localStorage.getItem('userId'));
-
     const id_usuario = parseInt(localStorage.getItem('userId'), 10);
     if (isNaN(id_usuario)) {
-      alert('No se ha podido identificar al usuario.');
+      setTipoMensaje('error');
+      setMensaje('No se ha podido identificar al usuario.');
+      setMostrarToast(true);
       return;
     }
 
     const area_id = parseInt(formData.area_id, 10);
     const semestre = parseInt(formData.semestre, 10);
 
-    if (
-      !formData.nombre || !formData.apellido_paterno || !formData.apellido_materno ||
-      !formData.universidad || !formData.carrera || !semestre || !formData.telefono || !area_id
-    ) {
-      alert('Por favor completa todos los campos obligatorios.');
+    if (!formData.nombre || !formData.apellido_paterno || !formData.apellido_materno ||
+        !formData.universidad || !formData.carrera || !semestre || !formData.telefono || !area_id) {
+      setTipoMensaje('error');
+      setMensaje('Por favor completa todos los campos obligatorios.');
+      setMostrarToast(true);
       return;
     }
 
@@ -118,21 +119,24 @@ const nombre = usuario.nombre || 'Usuario';
       });
 
       const data = await response.json();
-      alert(data.mensaje);
+      setTipoMensaje(response.ok ? 'exito' : 'error');
+      setMensaje(data.mensaje);
+      setMostrarToast(true);
 
       if (response.ok) {
-        navigate('/usuario/proyectos');
+        setTimeout(() => navigate('/usuario/proyectos'), 2000);
       }
     } catch (error) {
       console.error('Error al enviar el formulario:', error);
-      alert('Hubo un error al enviar el formulario');
+      setTipoMensaje('error');
+      setMensaje('Hubo un error al enviar el formulario');
+      setMostrarToast(true);
     }
   };
 
   return (
     <div className={`panel-container ${menuAbierto ? 'menu-activo' : ''}`}>
       <Sidebar toggleMenu={toggleMenu} />
-
       <div className="panel-contenido">
         <Header nombre={`Bienvenido(a): ${nombre}`} toggleMenu={toggleMenu} handleLogout={handleLogout} />
 
@@ -143,14 +147,19 @@ const nombre = usuario.nombre || 'Usuario';
             </header>
 
             <form className="formulario-form" onSubmit={handleSubmit}>
-              {[ // Campos de texto general
-                { name: 'nombre', label: 'Nombre(s)', icon: FaUser },
-                { name: 'apellido_paterno', label: 'Apellido Paterno', icon: FaUser },
-                { name: 'apellido_materno', label: 'Apellido Materno', icon: FaUser },
-                { name: 'universidad', label: 'Universidad', icon: FaUniversity },
-                { name: 'carrera', label: 'Carrera', icon: FaGraduationCap },
-                { name: 'correo', label: 'Correo electrónico', icon: FaEnvelope, type: 'email' }
-              ].map(({ name, label, icon: Icon, type = 'text' }) => (
+              {[{
+                name: 'nombre', label: 'Nombre(s)', icon: FaUser
+              }, {
+                name: 'apellido_paterno', label: 'Apellido Paterno', icon: FaUser
+              }, {
+                name: 'apellido_materno', label: 'Apellido Materno', icon: FaUser
+              }, {
+                name: 'universidad', label: 'Universidad', icon: FaUniversity
+              }, {
+                name: 'carrera', label: 'Carrera', icon: FaGraduationCap
+              }, {
+                name: 'correo', label: 'Correo electrónico', icon: FaEnvelope, type: 'email'
+              }].map(({ name, label, icon: Icon, type = 'text' }) => (
                 <div className="campo-formulario" key={name}>
                   <div className="campo-etiqueta">
                     <Icon className="campo-icono" />
@@ -167,7 +176,6 @@ const nombre = usuario.nombre || 'Usuario';
                 </div>
               ))}
 
-              {/* Teléfono */}
               <div className="campo-formulario">
                 <div className="campo-etiqueta">
                   <FaPhoneAlt className="campo-icono" />
@@ -183,7 +191,6 @@ const nombre = usuario.nombre || 'Usuario';
                 />
               </div>
 
-              {/* Semestre */}
               <div className="campo-formulario">
                 <div className="campo-etiqueta">
                   <FaBook className="campo-icono" />
@@ -201,7 +208,6 @@ const nombre = usuario.nombre || 'Usuario';
                 />
               </div>
 
-              {/* Área */}
               <div className="campo-formulario">
                 <div className="campo-etiqueta">
                   <FaBriefcase className="campo-icono" />
@@ -247,17 +253,31 @@ const nombre = usuario.nombre || 'Usuario';
             </form>
           </div>
 
-          {/* Navegación inferior */}
+          {mostrarToast && (
+            <div className="overlay-toast">
+              <div className="toast-modal">
+                <div className="icono-check">
+                  {tipoMensaje === 'exito' ? (
+                    <FaCheckCircle style={{ color: '#28a745', fontSize: '40px' }} />
+                  ) : (
+                    <FaTimesCircle style={{ color: '#dc3545', fontSize: '40px' }} />
+                  )}
+                </div>
+                <h3>{mensaje}</h3>
+                <button className="cerrar-btn" onClick={() => setMostrarToast(false)}>Cerrar</button>
+              </div>
+            </div>
+          )}
+
           <div className="iconos-body">
             <div className="home-body-centrado">
-              <BotonRedondo icono={<FaHome />} ariaLabel="Inicio" onClick={() => navigate('/usuario/panel')} />
+              <BotonRedondo icono={<FaHome />} ariaLabel="Inicio" onClick={() => navigate('/usuario')} />
             </div>
             <div className="flecha-body-derecha">
               <BotonRedondo icono={<FaArrowCircleRight />} ariaLabel="Siguiente" onClick={() => navigate('/usuario/proyectos')} />
             </div>
           </div>
         </main>
-
         <Footer />
       </div>
     </div>

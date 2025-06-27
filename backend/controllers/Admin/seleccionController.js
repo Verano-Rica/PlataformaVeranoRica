@@ -1,69 +1,48 @@
 const db = require('../../db');
 
-const obtenerUsuariosAceptados = (req, res) => {
+exports.obtenerUsuariosAceptados = (req, res) => {
   const query = `
     SELECT 
       ua.id_usuario,
-      u.nombre,
-      u.apellido_paterno,
-      u.apellido_materno,
+      ua.nombre,
+      ua.apellido_paterno,
+      ua.apellido_materno,
       ua.universidad,
       ua.carrera,
       ua.semestre,
-      ua.correo,
-      ua.telefono,
-      a.nombre AS area,
       ua.proyecto1,
-      su.area_final_id,
-      su.subarea,
-      su.proyecto_asignado
+      ua.area_final_id,
+      ua.subarea_especifica,
+      ua.proyecto_asignado_final
     FROM usuarios_aceptados ua
-    JOIN usuarios u ON ua.id_usuario = u.id
-    LEFT JOIN areas a ON ua.area_id = a.id
-    LEFT JOIN seleccion_usuarios su ON ua.id_usuario = su.id_usuario;
   `;
 
-  db.query(query, (err, resultados) => {
+  db.query(query, (err, results) => {
     if (err) {
-      console.error('Error al obtener usuarios aceptados:', err);
-      return res.status(500).json({ mensaje: 'Error en el servidor' });
+      console.error('Error al obtener usuarios:', err);
+      return res.status(500).json({ mensaje: 'Error en la base de datos' });
     }
-    return res.json(resultados);
+
+    res.json(results);
   });
 };
 
-const guardarAsignacionFinal = (req, res) => {
+exports.asignarAreaProyecto = (req, res) => {
+  const id_usuario = req.params.id_usuario;
   const { area_final_id, subarea, proyecto_asignado } = req.body;
-  const { id_usuario } = req.params;
-
-  if (!id_usuario || !area_final_id || !proyecto_asignado) {
-    return res.status(400).json({ mensaje: 'Faltan campos obligatorios' });
-  }
 
   const query = `
-    UPDATE seleccion_usuarios
-    SET 
-      area_final_id = ?,
-      subarea = ?,
-      proyecto_asignado = ?
+    UPDATE usuarios_aceptados
+    SET area_final_id = ?, subarea_especifica = ?, proyecto_asignado_final = ?
     WHERE id_usuario = ?
   `;
 
-  db.query(query, [area_final_id, subarea, proyecto_asignado, id_usuario], (err, result) => {
+  db.query(query, [area_final_id, subarea, proyecto_asignado, id_usuario], (err) => {
     if (err) {
-      console.error('Error al guardar selección final:', err);
-      return res.status(500).json({ mensaje: 'Error al guardar datos' });
+      console.error('Error al asignar:', err);
+      return res.status(500).json({ mensaje: 'Error al guardar asignación' });
     }
 
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ mensaje: 'Usuario no encontrado para actualizar' });
-    }
-
-    return res.json({ mensaje: 'Asignación guardada correctamente' });
+    res.json({ mensaje: '✔ Asignación guardada correctamente' });
   });
-};
-
-module.exports = {
-  obtenerUsuariosAceptados,
-  guardarAsignacionFinal
 };

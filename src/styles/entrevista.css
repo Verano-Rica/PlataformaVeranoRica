@@ -238,3 +238,47 @@ textarea.campo-input {
   }
 }
 
+.overlay-toast {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(3px);
+}
+
+.toast-mensaje {
+  padding: 25px 35px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 500;
+  color: white;
+  text-align: center;
+  max-width: 80%;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  animation: aparecer 0.3s ease-out;
+}
+
+.toast-mensaje.exito {
+  background-color: #28a745;
+}
+
+.toast-mensaje.error {
+  background-color: #dc3545;
+}
+
+@keyframes aparecer {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

@@ -37,14 +37,14 @@ const agendarEntrevista = (req, res) => {
     const rutaActual = req.file.path;
     const nuevaRuta = path.join(req.file.destination, nuevoNombreArchivo);
 
-    // Renombrar archivo
+    // Renombrar el archivo al formato personalizado
     fs.rename(rutaActual, nuevaRuta, (renameErr) => {
       if (renameErr) {
         console.error('Error al renombrar archivo:', renameErr);
         return res.status(500).json({ error: 'Error al guardar archivo' });
       }
 
-      // Insertar entrevista
+      // Insertar entrevista en la base de datos
       const insertQuery = `
         INSERT INTO entrevistas_agendadas (
           id_usuario, proyecto1, proyecto2, otro_proyecto,
@@ -69,7 +69,7 @@ const agendarEntrevista = (req, res) => {
           return res.status(500).json({ error: 'Error al agendar entrevista' });
         }
 
-        // ✅ Actualizar estado_proceso a FASE 2
+        // Paso 1: Actualizar estado_proceso a 2
         const updateEstado = 'UPDATE usuarios SET estado_proceso = 2 WHERE id = ?';
         db.query(updateEstado, [id_usuario], (estadoErr) => {
           if (estadoErr) {
@@ -77,7 +77,54 @@ const agendarEntrevista = (req, res) => {
             return res.status(500).json({ mensaje: 'Entrevista guardada pero falló actualización de estado' });
           }
 
-          res.status(200).json({ mensaje: 'Entrevista agendada y estado actualizado a FASE 2', archivo: nuevoNombreArchivo });
+          // Paso 2: Insertar en usuarios_seleccionados si aún no existe
+          const verificar = 'SELECT id FROM usuarios_seleccionados WHERE id_usuario = ?';
+          db.query(verificar, [id_usuario], (errVer, rows) => {
+            if (errVer) {
+              console.error('Error al verificar usuarios_seleccionados:', errVer);
+              return res.status(500).json({ mensaje: 'Entrevista guardada pero falló verificación de seleccionados' });
+            }
+
+            if (rows.length > 0) {
+              return res.status(200).json({
+                mensaje: 'Entrevista agendada. Usuario ya estaba registrado en seleccionados.',
+                archivo: nuevoNombreArchivo
+              });
+            }
+
+            // Insertar en usuarios_seleccionados
+            const insertarSeleccionado = `
+              INSERT INTO usuarios_seleccionados (
+                id_usuario, nombre, apellido_paterno, apellido_materno,
+                universidad, carrera, semestre, correo, telefono,
+                area_id, otra_area_interes,
+                proyecto1, proyecto2, otro_proyecto, cv_nombre,
+                estado_seleccion
+              )
+              SELECT 
+                u.id, df.nombre, df.apellido_paterno, df.apellido_materno,
+                df.universidad, df.carrera, df.semestre, df.correo, df.telefono,
+                df.area_id, df.otra_area_interes,
+                ea.proyecto1, ea.proyecto2, ea.otro_proyecto, ea.cv_nombre,
+                4
+              FROM usuarios u
+              JOIN datos_formulario df ON u.id = df.id_usuario
+              JOIN entrevistas_agendadas ea ON u.id = ea.id_usuario
+              WHERE u.id = ?
+            `;
+
+            db.query(insertarSeleccionado, [id_usuario], (errInsert) => {
+              if (errInsert) {
+                console.error('Error al insertar en seleccionados:', errInsert);
+                return res.status(500).json({ mensaje: 'Entrevista guardada pero falló inserción en seleccionados' });
+              }
+
+              res.status(200).json({
+                mensaje: 'Entrevista agendada y usuario agregado a usuarios_seleccionados',
+                archivo: nuevoNombreArchivo
+              });
+            });
+          });
         });
       });
     });

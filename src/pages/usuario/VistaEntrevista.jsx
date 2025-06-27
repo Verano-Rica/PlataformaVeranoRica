@@ -11,13 +11,14 @@ import '../../styles/entrevista.css';
 
 import {
   FaCalendarAlt,
- FaProjectDiagram,
+  FaProjectDiagram,
   FaClock,
   FaFilePdf,
   FaRegFileAlt,
   FaHome,
-  FaArrowRight,
-  FaArrowCircleRight
+  FaArrowCircleRight,
+  FaCheckCircle,
+  FaTimesCircle
 } from 'react-icons/fa';
 
 const proyectosDisponibles = [
@@ -48,7 +49,7 @@ const VistaEntrevista = () => {
   const [mostrarToast, setMostrarToast] = useState(false);
 
   const navigate = useNavigate();
-    const usuario = JSON.parse(localStorage.getItem('usuario')) || {};
+  const usuario = JSON.parse(localStorage.getItem('usuario')) || {};
   const nombre = usuario.nombre || 'Usuario';
 
   const toggleMenu = () => setMenuAbierto(!menuAbierto);
@@ -70,7 +71,6 @@ const VistaEntrevista = () => {
       setTipoMensaje('error');
       setMensaje('Por favor completa los campos y adjunta tu CV');
       setMostrarToast(true);
-      setTimeout(() => setMostrarToast(false), 3000);
       return;
     }
 
@@ -93,19 +93,29 @@ const VistaEntrevista = () => {
         body: formDataToSend
       });
 
-      if (!res.ok) throw new Error('Error al agendar');
-
       const data = await res.json();
+
+      if (!res.ok) {
+        if (data?.error?.includes("ya ha agendado")) {
+          setTipoMensaje('error');
+          setMensaje('Ya tienes una entrevista agendada. No puedes registrar otra.');
+        } else {
+          setTipoMensaje('error');
+          setMensaje('Error al agendar la entrevista. Inténtalo más tarde.');
+        }
+        setMostrarToast(true);
+        return;
+      }
+
       setTipoMensaje('exito');
       setMensaje('Entrevista agendada correctamente');
       setMostrarToast(true);
-      setTimeout(() => setMostrarToast(false), 3000);
+
     } catch (err) {
       console.error(err);
       setTipoMensaje('error');
-      setMensaje('Error al agendar la entrevista. Inténtalo más tarde.');
+      setMensaje('Error al conectar con el servidor. Inténtalo más tarde.');
       setMostrarToast(true);
-      setTimeout(() => setMostrarToast(false), 3000);
     }
   };
 
@@ -136,13 +146,15 @@ const VistaEntrevista = () => {
                       <FaCalendarAlt className="campo-icono" />
                       <span className="campo-titulo">Fecha *</span>
                     </div>
-                    <input
-                      type="date"
+                    <select
                       name="fecha"
                       value={formData.fecha}
                       onChange={handleChange}
                       className="campo-input"
-                    />
+                    >
+                      <option value="">Selecciona la fecha</option>
+                      <option value="2026-05-25">Lunes 25 de mayo de 2026</option>
+                    </select>
                   </div>
 
                   <div className="campo-formulario">
@@ -243,17 +255,37 @@ const VistaEntrevista = () => {
               <button type="submit" className="boton-formulario">CONTINUAR</button>
             </form>
           </div>
-                    {/* Navegación inferior */}
+
+          {/* Modal visual con icono y botón */}
+          {mostrarToast && (
+            <div className="overlay-toast">
+              <div className="toast-modal">
+                <div className="icono-check">
+                  {tipoMensaje === 'exito' ? (
+                    <FaCheckCircle style={{ color: '#28a745', fontSize: '40px' }} />
+                  ) : (
+                    <FaTimesCircle style={{ color: '#dc3545', fontSize: '40px' }} />
+                  )}
+                </div>
+                <h3>{mensaje}</h3>
+                <button className="cerrar-btn" onClick={() => setMostrarToast(false)}>
+                  Cerrar
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Navegación inferior */}
           <div className="iconos-body">
             <div className="home-body-centrado">
-              <BotonRedondo icono={<FaHome />} ariaLabel="Inicio" onClick={() => navigate('/usuario/panel')} />
+              <BotonRedondo icono={<FaHome />} ariaLabel="Inicio" onClick={() => navigate('/usuario')} />
             </div>
             <div className="flecha-body-derecha">
               <BotonRedondo icono={<FaArrowCircleRight />} ariaLabel="Siguiente" onClick={() => navigate('/usuario/resultados')} />
             </div>
           </div>
         </main>
-        <Footer/>
+        <Footer />
       </div>
     </div>
   );

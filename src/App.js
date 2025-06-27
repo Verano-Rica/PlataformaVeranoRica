@@ -13,6 +13,9 @@ import Aceptar_Usuarios from './pages/admin/Aceptar_Usuarios';
 import Proceso_seleccion from './pages/admin/Proceso_seleccion';
 import UsuariosRegistrados from './pages/admin/UsuariosRegistrados';
 import UsuariosAgendados from './pages/admin/UsuariosAgendados';
+import UsuariosSeleccionados from './pages/admin/UsuariosSeleccionados';
+import Postulantes from './pages/admin/Postulantes'; 
+import SeleccionIndividual from './pages/admin/SeleccionIndividual';
 
 function App() {
   return (
@@ -32,6 +35,12 @@ function App() {
         <Route path="/admin/proceso_seleccion" element={<Proceso_seleccion />} />
         <Route path="/admin/usuarios-registrados" element={<UsuariosRegistrados />} />
         <Route path="/admin/usuarios-agendados" element={<UsuariosAgendados />} />
+        <Route path="/admin/usuarios-seleccionados" element={<UsuariosSeleccionados />} />
+        <Route path="/admin/postulantes" element={<Postulantes />} />
+        <Route path="/admin/seleccion/:id" element={<SeleccionIndividual />} />
+
+
+
 
       </Routes>
     </BrowserRouter>
