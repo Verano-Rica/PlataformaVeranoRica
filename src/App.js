@@ -15,7 +15,13 @@ import UsuariosRegistrados from './pages/admin/UsuariosRegistrados';
 import UsuariosAgendados from './pages/admin/UsuariosAgendados';
 import UsuariosSeleccionados from './pages/admin/UsuariosSeleccionados';
 import Postulantes from './pages/admin/Postulantes'; 
-import SeleccionIndividual from './pages/admin/SeleccionIndividual';
+import SeleccionIndividual from './pages/admin/SeleccionIndividual'; // esta es la vista de edición por id
+import VistaPostulantes from './pages/admin/VistaPostulantes';
+
+
+
+
+
 
 function App() {
   return (
@@ -38,6 +44,7 @@ function App() {
         <Route path="/admin/usuarios-seleccionados" element={<UsuariosSeleccionados />} />
         <Route path="/admin/postulantes" element={<Postulantes />} />
         <Route path="/admin/seleccion/:id" element={<SeleccionIndividual />} />
+        <Route path="/admin/Vistapostulantes" element={<VistaPostulantes />} />
 
 
 

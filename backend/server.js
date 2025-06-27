@@ -24,10 +24,12 @@ const areasRoutes = require('./routes/areas');
 const seleccionRoutes = require('./routes/Admin/seleccion');
 const seleccionadosRoutes = require('./routes/Admin/seleccionados');
 const aceptadosRoutes = require('./routes/aceptados');
+const resumenPostuladosRoutes = require('./routes/Admin/resumenPostulados');
 
 
 
 // Usar rutas
+app.use('/api/resumen', resumenPostuladosRoutes);
 app.use('/api/postulantes', require('./routes/Admin/postulantes'));
 app.use('/api/aceptados', aceptadosRoutes);
 app.use('/api/admin/seleccionados', seleccionadosRoutes);

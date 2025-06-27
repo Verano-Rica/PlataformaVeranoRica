@@ -90,7 +90,7 @@ function AdminPanel() {
             <div className="boton-seccion">
               <div className="circle-6">{totales.seleccionados}</div>
               <p className="resultados-">PROCESO SELECCIÓN:</p>
-              <div className="rectangle-9" onClick={() => navigate('/admin/usuarios-seleccionados')}>
+              <div className="rectangle-9" onClick={() => navigate('/admin/Vistapostulantes')}>
                 <img src={iconoResultados} alt="Resultados" className="assignment-icon-1" />
               </div>
             </div>
