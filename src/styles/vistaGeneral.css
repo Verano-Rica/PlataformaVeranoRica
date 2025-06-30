@@ -114,7 +114,6 @@
   border: none;
   color: white;
   font-size: 22px;
-  cursor: pointer;
 }
 
 .avatar {
@@ -135,7 +134,7 @@
   border: none;
   padding: 6px 12px;
   border-radius: 5px;
-  cursor: pointer;
+
 }
 
 /* Contenido visible */

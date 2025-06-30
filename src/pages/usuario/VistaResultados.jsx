@@ -152,8 +152,23 @@ const VistaResultados = () => {
       <Sidebar />
       <div className="contenido-vista">
         <div className="card-resultados">
-          <h2 className="titulo-seccion">Tu proceso aún está en revisión. Por favor, vuelve a intentarlo más tarde.</h2>
+          <h2 className="titulo-seccion">Tu proceso aún está en revisión... Verifica mas tarde</h2>
         </div>
+        <button
+              className="btn-continuar"
+              onClick={() => window.location.href = '/usuario/fases'}
+            >
+              IR A LOS SIGUIENTES PASOS
+            </button>
+          </div>
+
+          <div className="iconos-body">
+            <div className="home-body-centrado">
+              <BotonRedondo 
+                icono={<FaHome />} 
+                ariaLabel="Inicio" 
+                onClick={() => window.location.href = '/usuario'} />
+            </div>
       </div>
       <Footer />
     </div>

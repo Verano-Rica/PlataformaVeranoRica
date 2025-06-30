@@ -94,7 +94,6 @@ input[name="otra_area_interes"] {
   border-radius: 20px;
   font-weight: bold;
   font-size: 14px;
-  cursor: pointer;
   transition: 0.3s;
   text-transform: uppercase;
   display: block;
@@ -165,7 +164,6 @@ input[name="otra_area_interes"] {
   background-repeat: no-repeat;
   background-position: center;
   position: relative;
-  cursor: pointer;
   transition: transform 0.2s ease;
 }
 
@@ -290,3 +288,20 @@ input[name="otra_area_interes"] {
 .recuadro-proyecto p {
   margin-bottom: 12px;
 }
+/* Sidebar */
+  .sidebar {
+    width: 200px;
+    background-color: var(--rojo-principal);
+    color: white;
+    min-height: 100vh;
+    transition: transform 0.3s ease;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    z-index: 1000;
+    transform: translateX(-100%);
+  }
+
+  .panel-container.menu-activo .sidebar {
+    transform: translateX(0);
+  }

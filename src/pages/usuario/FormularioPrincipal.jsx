@@ -136,7 +136,7 @@ const FormularioPrincipal = () => {
 
   return (
     <div className={`panel-container ${menuAbierto ? 'menu-activo' : ''}`}>
-      <Sidebar toggleMenu={toggleMenu} />
+      <Sidebar menuAbierto={menuAbierto} toggleMenu={toggleMenu} />
       <div className="panel-contenido">
          <Header
   nombre={

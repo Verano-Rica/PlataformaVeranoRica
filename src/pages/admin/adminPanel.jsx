@@ -15,7 +15,7 @@ function AdminPanel() {
   const [totales, setTotales] = useState({ registrados: 0, seleccionados: 0 });
   const navigate = useNavigate();
  const admin = JSON.parse(localStorage.getItem('admin')) || {};
-const nombre = `Bienvenido(a), ${admin.nombre || 'Administrador'}`;
+const nombre = `Bienvenido(a): ${admin.nombre || 'Administrador'}`;
 
 
   useEffect(() => {

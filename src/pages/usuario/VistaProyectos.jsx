@@ -89,8 +89,9 @@ const VistaProyectos = () => {
 
   return (
     <div className={`panel-container ${menuAbierto ? 'menu-activo' : ''}`}>
-      <Sidebar />
-      <div className="panel-contenido">
+      <Sidebar  />
+      <div className="panel-contenido"> 
+     
        <Header
   nombre={
     <span className="titulo-header-unido">
@@ -146,7 +147,9 @@ const VistaProyectos = () => {
               <BotonRedondo icono={<FaArrowCircleRight />} ariaLabel="Siguiente" onClick={() => navigate('/usuario/entrevista')} />
             </div> 
           </div>
+          
         </main>
+        
         <Footer />
       </div>
     </div>

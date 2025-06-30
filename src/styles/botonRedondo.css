@@ -5,7 +5,7 @@
   width: 60px;
   height: 60px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
+  cursor: default;
   display: flex;
   align-items: center;
   justify-content: center;
