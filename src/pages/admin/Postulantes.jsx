@@ -7,6 +7,8 @@ import { utils, writeFile } from 'xlsx';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { useNavigate } from 'react-router-dom';
+import autoTable from 'jspdf-autotable'; // ✅ correcto
+
 
 const proyectosDisponibles = [
   'Desarrollo Web', 'Relaciones Laborales', 'Control de Calidad',
@@ -55,30 +57,71 @@ const Postulantes = () => {
     writeFile(libro, 'postulantes.xlsx');
   };
 
-  const exportarPDF = () => {
-    const doc = new jsPDF();
-    doc.text('Postulantes Registrados', 14, 15);
-    const columnas = [
-      'ID', 'Nombre', 'Universidad', 'Carrera', 'Semestre', 'Correo', 'Teléfono',
-      'Área', 'Otra Área', 'Proyecto 1', 'Proyecto 2', 'Otro Proyecto'
-    ];
-    const filas = filtrados.map(p => [
-      p.id_usuario,
-      `${p.nombre} ${p.apellido_paterno} ${p.apellido_materno}`,
-      p.universidad,
-      p.carrera,
-      p.semestre,
-      p.correo,
-      p.telefono,
-      p.area_id,
-      p.otra_area_interes || '-',
-      p.proyecto1 || '-',
-      p.proyecto2 || '-',
-      p.otro_proyecto || '-'
-    ]);
-    doc.autoTable({ head: [columnas], body: filas, startY: 20 });
-    doc.save('postulantes.pdf');
-  };
+const exportarPDF = () => {
+  const doc = new jsPDF({ orientation: 'landscape', unit: 'pt', format: 'A4' });
+  doc.setFontSize(14);
+  doc.text('Postulantes Registrados', 40, 40);
+
+  const columnas = [
+    { header: 'ID', dataKey: 'id' },
+    { header: 'Nombre', dataKey: 'nombre' },
+    { header: 'Universidad', dataKey: 'universidad' },
+    { header: 'Carrera', dataKey: 'carrera' },
+    { header: 'Semestre', dataKey: 'semestre' },
+    { header: 'Correo', dataKey: 'correo' },
+    { header: 'Teléfono', dataKey: 'telefono' },
+    { header: 'Área', dataKey: 'area_id' },
+    { header: 'Otra Área', dataKey: 'otra_area' },
+    { header: 'Proyecto 1', dataKey: 'proyecto1' },
+    { header: 'Proyecto 2', dataKey: 'proyecto2' },
+    { header: 'Otro Proyecto', dataKey: 'otro_proyecto' }
+  ];
+
+  const filas = filtrados.map(p => ({
+    id: p.id_usuario,
+    nombre: `${p.nombre} ${p.apellido_paterno} ${p.apellido_materno}`,
+    universidad: p.universidad,
+    carrera: p.carrera,
+    semestre: p.semestre,
+    correo: p.correo,
+    telefono: p.telefono,
+    area_id: p.area_id,
+    otra_area: p.otra_area_interes || '-',
+    proyecto1: p.proyecto1 || '-',
+    proyecto2: p.proyecto2 || '-',
+    otro_proyecto: p.otro_proyecto || '-'
+  }));
+autoTable(doc, {
+  columns: columnas,
+  body: filas,
+  startY: 60,
+  styles: {
+    fontSize: 9,
+    cellPadding: 4,
+    valign: 'middle',
+    halign: 'left',
+    overflow: 'visible' // 🔧 evita el "linebreak" feo
+  },
+  headStyles: {
+    fillColor: [181, 24, 24],
+    textColor: 255,
+    halign: 'center',
+    fontStyle: 'bold'
+  },
+  columnStyles: {
+    nombre: { cellWidth: 140 },
+    correo: { cellWidth: 160 },
+    universidad: { cellWidth: 80 },
+    carrera: { cellWidth: 80 },
+    proyecto1: { cellWidth: 100 },
+    proyecto2: { cellWidth: 100 },
+    otro_proyecto: { cellWidth: 100 }
+  }
+});
+  doc.save('postulantes.pdf');
+};
+
+
 
   return (
     <div className="panel-container">

@@ -6,6 +6,8 @@ import Sidebar from '../../components/Sidebar';
 import BotonRedondo from '../../components/BotonRedondo';
 import iconoBienvenida from '../../assets/icono-bienvenida.png';
 
+
+
 import '../../styles/botonRedondo.css';
 import '../../styles/entrevista.css';
 
@@ -18,7 +20,7 @@ import {
   FaHome,
   FaArrowCircleRight,
   FaCheckCircle,
-  FaTimesCircle
+  FaTimesCircle, FaArrowCircleLeft
 } from 'react-icons/fa';
 
 const proyectosDisponibles = [
@@ -123,7 +125,16 @@ const VistaEntrevista = () => {
     <div className={`panel-container ${menuAbierto ? 'menu-activo' : ''}`}>
       <Sidebar />
       <div className="panel-contenido">
-        <Header nombre={`Bienvenido(a): ${nombre}`} toggleMenu={toggleMenu} handleLogout={handleLogout} />
+     <Header
+  nombre={
+    <span className="titulo-header-unido">
+      <span className="programa-normal">Programa </span>
+      <span className="verano-negritas">VERANO RICA</span>
+    </span>
+  }
+
+/>
+
 
         <main className="main-contenido">
           <div className="contenedor-encabezado-bienvenida">
@@ -277,6 +288,9 @@ const VistaEntrevista = () => {
 
           {/* Navegación inferior */}
           <div className="iconos-body">
+                      <div className="home-body-anterior">
+              <BotonRedondo icono={<FaArrowCircleLeft />} ariaLabel="Inicio" onClick={() => navigate('/usuario/proyectos')} />
+            </div>
             <div className="home-body-centrado">
               <BotonRedondo icono={<FaHome />} ariaLabel="Inicio" onClick={() => navigate('/usuario')} />
             </div>

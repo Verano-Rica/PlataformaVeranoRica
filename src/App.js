@@ -43,6 +43,7 @@ function App() {
         <Route path="/admin/usuarios-agendados" element={<UsuariosAgendados />} />
         <Route path="/admin/usuarios-seleccionados" element={<UsuariosSeleccionados />} />
         <Route path="/admin/postulantes" element={<Postulantes />} />
+        {/* 3*/}
         <Route path="/admin/seleccion/:id" element={<SeleccionIndividual />} />
         <Route path="/admin/Vistapostulantes" element={<VistaPostulantes />} />
 

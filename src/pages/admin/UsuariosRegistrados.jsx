@@ -5,6 +5,10 @@ import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import '../../styles/tablaUsuarios.css';
+import BotonRedondo from '../../components/BotonRedondo';
+import { useNavigate } from 'react-router-dom';
+import { FaHome, FaArrowRight, FaArrowCircleRight, FaArrowCircleLeft } from 'react-icons/fa';
+
 
 const nombreFase = {
   [FASES.REGISTRADO]: 'Registrado',
@@ -33,6 +37,7 @@ const colorFase = {
 };
 
 const UsuariosRegistrados = () => {
+  const navigate = useNavigate();
   const [usuarios, setUsuarios] = useState([]);
 
   useEffect(() => {
@@ -69,8 +74,20 @@ const UsuariosRegistrados = () => {
               ))}
             </tbody>
           </table>
+          {/* Navegación inferior */}
+          <div> </div>                    
+          <div className="iconos-body">
+            <div className="home-body-anterior">
+              <BotonRedondo icono={<FaArrowCircleLeft />} ariaLabel="Inicio" onClick={() => navigate('/usuario')} />
+            </div>
+            <div className="home-body-centrado">
+              <BotonRedondo icono={<FaHome />} ariaLabel="Inicio" onClick={() => navigate('/admin')} />
+            </div>
+            <div className="flecha-body-derecha">
+              <BotonRedondo icono={<FaArrowCircleRight />} ariaLabel="Siguiente" onClick={() => navigate('/usuario/entrevista')} />
+            </div> 
+          </div>
         </main>
-
         <Footer />
       </div>
     </div>

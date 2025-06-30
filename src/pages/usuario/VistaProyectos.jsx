@@ -4,7 +4,7 @@ import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Footer from '../../components/Footer';
 import BotonRedondo from '../../components/BotonRedondo';
-import { FaHome, FaArrowRight, FaArrowCircleRight } from 'react-icons/fa';
+import { FaHome, FaArrowRight, FaArrowCircleRight, FaArrowCircleLeft } from 'react-icons/fa';
 
 import '../../styles/proyectos.css';
 import '../../styles/botonRedondo.css';
@@ -91,7 +91,13 @@ const VistaProyectos = () => {
     <div className={`panel-container ${menuAbierto ? 'menu-activo' : ''}`}>
       <Sidebar />
       <div className="panel-contenido">
-      <Header nombre={`Bienvenido(a): ${nombre}`} toggleMenu={toggleMenu} handleLogout={handleLogout} />
+       <Header
+  nombre={
+    <span className="titulo-header-unido">
+      <span className="programa-normal">Programa </span>
+      <span className="verano-negritas">VERANO RICA</span>
+    </span>
+  } />
 
         <main className="main-contenido">
           <div className="proyectos-container">
@@ -130,12 +136,15 @@ const VistaProyectos = () => {
           )}
                     {/* Navegación inferior */}
           <div className="iconos-body">
+            <div className="home-body-anterior">
+              <BotonRedondo icono={<FaArrowCircleLeft />} ariaLabel="Inicio" onClick={() => navigate('/usuario/formulario')} />
+            </div>
             <div className="home-body-centrado">
               <BotonRedondo icono={<FaHome />} ariaLabel="Inicio" onClick={() => navigate('/usuario')} />
             </div>
             <div className="flecha-body-derecha">
               <BotonRedondo icono={<FaArrowCircleRight />} ariaLabel="Siguiente" onClick={() => navigate('/usuario/entrevista')} />
-            </div>
+            </div> 
           </div>
         </main>
         <Footer />

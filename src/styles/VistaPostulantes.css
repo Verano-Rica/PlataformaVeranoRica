@@ -1,0 +1,70 @@
+.titulo-principal {
+  text-align: center;
+  color: #b51818;
+  font-weight: bold;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.botones-exportar {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.boton-pdf, .boton-excel {
+  background-color: #b51818;
+  border: none;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease;
+}
+
+.boton-pdf:hover {
+  background-color: #a01414;
+}
+
+.boton-excel {
+  background-color: #1b8d1b;
+}
+
+.boton-excel:hover {
+  background-color: #156e15;
+}
+
+.tabla-contenedor {
+  overflow-x: auto;
+  padding: 1rem;
+}
+
+.tabla-postulantes {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.tabla-postulantes thead {
+  background-color: #b51818;
+  color: white;
+  text-align: left;
+}
+
+.tabla-postulantes th, .tabla-postulantes td {
+  padding: 0.8rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.tabla-postulantes tr:hover {
+  background-color: #f9f9f9;
+}

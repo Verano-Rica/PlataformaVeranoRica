@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaBars } from 'react-icons/fa';
-import avatar from '../assets/avatar.png';
+import formandoestrellas from '../assets/logo-formandoestrellas.png';
 import '../styles/vistaGeneral.css';
 
 const Header = ({ nombre = 'Usuario', toggleMenu, handleLogout }) => {
@@ -11,7 +11,7 @@ const Header = ({ nombre = 'Usuario', toggleMenu, handleLogout }) => {
           <FaBars />
         </button>
         <div className="avatar-contenedor">
-          <img src={avatar} alt="Avatar" className="avatar-usuario" />
+          <img src={formandoestrellas} alt="formandoestrellas" className="formandoestrellas-usuario" />
         </div>
         <span className="nombre-usuario">{nombre}</span>
       </div>

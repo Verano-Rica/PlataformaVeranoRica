@@ -61,9 +61,10 @@
   transform: translateX(-50%);
 }
 
-/* Flecha al lado derecho */
-.boton-siguiente {
+/* Flecha al lado izquierdo */
+.boton-atras {
   position: absolute;
-  right: 40px;
+  left: 40px;
   bottom: 80px;
 }
+

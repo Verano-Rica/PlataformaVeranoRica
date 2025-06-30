@@ -5,6 +5,8 @@ import Footer from '../../components/Footer';
 import '../../styles/resultados.css';
 import logoBienvenida from '../../assets/icono-bienvenida.png';
 import BotonRedondo from '../../components/BotonRedondo';
+import '../../styles/vistaGeneral.css';
+
 import {
   FaCheckCircle,
   FaCalendarAlt,
@@ -18,6 +20,14 @@ const VistaResultados = () => {
   const userId = localStorage.getItem('userId');
   const usuario = JSON.parse(localStorage.getItem('usuario')) || {};
   const nombre = usuario.nombre || 'Usuario';
+
+  // ✅ Título personalizado para el Header
+  const tituloPersonalizado = (
+    <span className="titulo-header-unido">
+      <span className="programa-normal">Programa </span>
+      <span className="verano-negritas">VERANO RICA</span>
+    </span>
+  );
 
   useEffect(() => {
     fetch(`http://localhost:3001/api/aceptados/estado/${userId}`)
@@ -44,7 +54,7 @@ const VistaResultados = () => {
   if (estado === null) {
     return (
       <div className="vista-principal">
-        <Header nombre={`Bienvenido(a): ${nombre}`} toggleMenu={toggleMenu} handleLogout={handleLogout} />
+        <Header nombre={tituloPersonalizado} toggleMenu={toggleMenu} handleLogout={handleLogout} />
         <Sidebar />
         <div className="contenido-vista">
           <div className="card-resultados">
@@ -59,7 +69,7 @@ const VistaResultados = () => {
   if (estado === 'rechazado') {
     return (
       <div className="vista-principal">
-        <Header nombre={`Bienvenido(a): ${nombre}`} toggleMenu={toggleMenu} handleLogout={handleLogout} />
+        <Header nombre={tituloPersonalizado} toggleMenu={toggleMenu} handleLogout={handleLogout} />
         <Sidebar />
         <div className="contenido-vista">
           <div className="card-resultados">
@@ -94,7 +104,7 @@ const VistaResultados = () => {
 
     return (
       <div className="vista-principal">
-        <Header nombre={`Bienvenido(a): ${nombre}`} toggleMenu={toggleMenu} handleLogout={handleLogout} />
+        <Header nombre={tituloPersonalizado} toggleMenu={toggleMenu} handleLogout={handleLogout} />
         <Sidebar />
         <div className="contenido-vista">
           <div className="card-resultados">
@@ -121,7 +131,6 @@ const VistaResultados = () => {
             </button>
           </div>
 
-          {/* Botón redondo centrado */}
           <div className="iconos-body">
             <div className="home-body-centrado">
               <BotonRedondo 
@@ -139,7 +148,7 @@ const VistaResultados = () => {
 
   return (
     <div className="vista-principal">
-      <Header nombre={`Bienvenido(a): ${nombre}`} toggleMenu={toggleMenu} handleLogout={handleLogout} />
+      <Header nombre={tituloPersonalizado} toggleMenu={toggleMenu} handleLogout={handleLogout} />
       <Sidebar />
       <div className="contenido-vista">
         <div className="card-resultados">

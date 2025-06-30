@@ -102,7 +102,7 @@ const UsuariosSeleccionados = () => {
                       />
                     </td>
                     <td>
-                      <button className="btn-aceptar" onClick={() => guardarCambios(u, 4)}><FaCheckCircle /> Aceptarrr</button>
+                      <button className="btn-aceptar" onClick={() => guardarCambios(u, 4)}><FaCheckCircle /> Aceptar</button>
                       <button className="btn-rechazar" onClick={() => guardarCambios(u, 9)}><FaTimesCircle /> Rechazar</button>
                     </td>
                   </tr>

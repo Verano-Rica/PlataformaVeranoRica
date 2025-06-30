@@ -13,7 +13,6 @@ function Login() {
   const [tokenCaptcha, setTokenCaptcha] = useState('');
 
   const navigate = useNavigate();
-
   const siteKey = process.env.REACT_APP_SITE_KEY;
 
   const manejarCaptcha = (token) => {
@@ -25,10 +24,10 @@ function Login() {
     e.preventDefault();
 
     if (!captchaValido) {
-      <center>setMensaje('Por favor completa el captcha.'); </center>
+      setMensaje('Por favor completa el captcha.');
       setEsExitoso(false);
       return;
-    } 
+    }
 
     try {
       const respuesta = await fetch('http://localhost:3001/api/auth/login', {
@@ -43,17 +42,21 @@ function Login() {
         const nombre = data.user.nombre_admin || data.user.nombre_usuario;
         const rol = data.tipo === 'admin' ? 'Administrador' : 'Usuario';
 
-        {/*setMensaje(`Bienvenido ${rol}: ${nombre}`);*/}
-        
         localStorage.setItem('correoUsuario', data.user.correo);
         localStorage.setItem('nombreUsuario', nombre);
-        localStorage.setItem('rolUsuario', rol); 
+        localStorage.setItem('rolUsuario', rol);
         localStorage.setItem('estado', data.user.estado);
         localStorage.setItem('usuario', JSON.stringify(data.user));
-        localStorage.setItem('userId', data.user.id); // 👈 MUY IMPORTANTE
+        localStorage.setItem('userId', data.user.id);
 
-
-
+        // ✅ NUEVO: guardar info adicional solo si es admin
+        if (data.tipo === 'admin') {
+          localStorage.setItem('admin', JSON.stringify({
+            id: data.user.id,
+            nombre: data.user.nombre_admin || 'Administrador',
+            correo: data.user.correo
+          }));
+        }
 
         setEsExitoso(true);
 
@@ -114,9 +117,10 @@ function Login() {
 
           {/* Captcha visible */}
           <div className="form-group recaptcha-container">
-          <ReCAPTCHA
-          sitekey={siteKey}
-          onChange={manejarCaptcha}/>
+            <ReCAPTCHA
+              sitekey={siteKey}
+              onChange={manejarCaptcha}
+            />
           </div>
 
           <button type="submit">Entrar</button>

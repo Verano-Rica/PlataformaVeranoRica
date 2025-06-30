@@ -178,3 +178,30 @@
   align-items: center;
   justify-content: center;
 }
+
+.formandoestrellas-usuario {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  /* padding: 1px; */
+  object-fit: contain;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+.titulo-header-unido {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  color: white;
+  white-space: nowrap;
+}
+
+.programa-normal {
+  font-weight: 400;
+}
+
+.verano-negritas {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+

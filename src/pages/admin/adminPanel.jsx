@@ -14,7 +14,9 @@ function AdminPanel() {
   const [menuAbierto, setMenuAbierto] = useState(false);
   const [totales, setTotales] = useState({ registrados: 0, seleccionados: 0 });
   const navigate = useNavigate();
-  const nombre = 'Bienvenido administrador(a)';
+ const admin = JSON.parse(localStorage.getItem('admin')) || {};
+const nombre = `Bienvenido(a), ${admin.nombre || 'Administrador'}`;
+
 
   useEffect(() => {
     axios.get('http://localhost:3001/api/postulantes/totales')
@@ -79,7 +81,7 @@ function AdminPanel() {
 
             {/* Registrados */}
             <div className="boton-seccion">
-              <div className="circle-5">{totales.registrados}</div>
+              <div className="circle-5">3</div>
               <p className="proyectos-">POSTULANTES REGISTRADOS:</p>
               <div className="rectangle-8" onClick={() => navigate('/admin/postulantes')}>
                 <img src={iconoProyectos} alt="Proyectos" className="assignment-icon-1" />
@@ -88,7 +90,7 @@ function AdminPanel() {
 
             {/* Selección */}
             <div className="boton-seccion">
-              <div className="circle-6">{totales.seleccionados}</div>
+              <div className="circle-6">4</div>
               <p className="resultados-">PROCESO SELECCIÓN:</p>
               <div className="rectangle-9" onClick={() => navigate('/admin/Vistapostulantes')}>
                 <img src={iconoResultados} alt="Resultados" className="assignment-icon-1" />

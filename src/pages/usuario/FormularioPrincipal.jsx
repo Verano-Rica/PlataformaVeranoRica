@@ -138,7 +138,13 @@ const FormularioPrincipal = () => {
     <div className={`panel-container ${menuAbierto ? 'menu-activo' : ''}`}>
       <Sidebar toggleMenu={toggleMenu} />
       <div className="panel-contenido">
-        <Header nombre={`Bienvenido(a): ${nombre}`} toggleMenu={toggleMenu} handleLogout={handleLogout} />
+         <Header
+  nombre={
+    <span className="titulo-header-unido">
+      <span className="programa-normal">Programa </span>
+      <span className="verano-negritas">VERANO RICA</span>
+    </span>
+  } />
 
         <main className="main-contenido">
           <div className="formulario-container">
