@@ -95,3 +95,4 @@ const UsuariosRegistrados = () => {
 };
 
 export default UsuariosRegistrados;
+

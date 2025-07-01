@@ -7,9 +7,11 @@ import '../../styles/VistaPostulantes.css';
 import { FaFilePdf, FaFileExcel } from 'react-icons/fa';
 
 import * as XLSX from 'xlsx';
+
 import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+
 
 const VistaPostulantes = () => {
   const [usuarios, setUsuarios] = useState([]);

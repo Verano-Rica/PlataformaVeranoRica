@@ -205,4 +205,5 @@ const SeleccionIndividual = () => {
   );
 };
 
+
 export default SeleccionIndividual;

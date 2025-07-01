@@ -17,7 +17,7 @@ exports.obtenerUsuariosAceptados = (req, res) => {
       ua.proyecto_asignado_final
     FROM usuarios_aceptados ua
   `;
-
+  
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error al obtener usuarios:', err);
