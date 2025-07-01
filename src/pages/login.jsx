@@ -37,37 +37,42 @@ function Login() {
       });
 
       const data = await respuesta.json();
+if (data.user) {
+  let nombre = data.user.nombre_usuario;
 
-      if (data.user) {
-        const nombre = data.user.nombre_admin || data.user.nombre_usuario;
-        const rol = data.tipo === 'admin' ? 'Administrador' : 'Usuario';
+  if (data.tipo === 'admin') {
+    nombre = `${data.user.nombre_admin} ${data.user.apellido_paterno || ''} ${data.user.apellido_materno || ''}`.trim();
+  }
 
-        localStorage.setItem('correoUsuario', data.user.correo);
-        localStorage.setItem('nombreUsuario', nombre);
-        localStorage.setItem('rolUsuario', rol);
-        localStorage.setItem('estado', data.user.estado);
-        localStorage.setItem('usuario', JSON.stringify(data.user));
-        localStorage.setItem('userId', data.user.id);
+  const rol = data.tipo === 'admin' ? 'Administrador' : 'Usuario';
 
-        // ✅ NUEVO: guardar info adicional solo si es admin
-        if (data.tipo === 'admin') {
-          localStorage.setItem('admin', JSON.stringify({
-            id: data.user.id,
-            nombre: data.user.nombre_admin || 'Administrador',
-            correo: data.user.correo
-          }));
-        }
+  localStorage.setItem('correoUsuario', data.user.correo);
+  localStorage.setItem('nombreUsuario', nombre);
+  localStorage.setItem('rolUsuario', rol);
+  localStorage.setItem('estado', data.user.estado);
+  localStorage.setItem('usuario', JSON.stringify(data.user));
+  localStorage.setItem('userId', data.user.id);
 
-        setEsExitoso(true);
+  if (data.tipo === 'admin') {
+    localStorage.setItem('admin', JSON.stringify({
+      id: data.user.id,
+      nombre,
+      correo: data.user.correo
+    }));
+  }
 
-        setTimeout(() => {
-          if (data.tipo === 'admin') {
-            navigate('/admin');
-          } else {
-            navigate('/usuario');
-          }
-        }, 1500);
-      } else {
+  setEsExitoso(true);
+
+  setTimeout(() => {
+    if (data.tipo === 'admin') {
+      navigate('/admin');
+    } else {
+      navigate('/usuario');
+    }
+  }, 1500);
+}
+
+      else {
         setMensaje('Credenciales incorrectas');
         setEsExitoso(false);
       }

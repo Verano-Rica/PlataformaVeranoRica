@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../../db');
 
-// INSERTAR un usuario a la tabla usuarios_seleccionados (cuando el admin lo acepta)
+// INSERTAR un usuario a la tabla usuarios_seleccionados
 router.post('/insertar/:id_usuario', (req, res) => {
   const id = req.params.id_usuario;
 
@@ -35,8 +35,8 @@ router.post('/insertar/:id_usuario', (req, res) => {
   });
 });
 
-// OBTENER todos los usuarios seleccionados para mostrar en la tabla del admin
-router.get('/usuarios', (req, res) => {
+// OBTENER todos los usuarios seleccionados
+router.get('/', (req, res) => {
   const query = `
     SELECT 
       ua.id_usuario,
@@ -46,42 +46,63 @@ router.get('/usuarios', (req, res) => {
       ua.universidad,
       ua.carrera,
       ua.semestre,
+      ua.correo,
+      ua.telefono,
+      ua.area_id,
+      a.nombre AS nombre_area_formulario,
+      ua.otra_area_interes,
       ua.proyecto1,
+      ua.proyecto2,
+      ua.otro_proyecto,
+      ua.cv_nombre,
       ua.area_final_id,
       ua.subarea_especifica,
-      ua.proyecto_asignado_final
+      ua.proyecto_asignado_final,
+      ua.estado_proceso
     FROM usuarios_seleccionados ua
+    LEFT JOIN areas a ON ua.area_id = a.id
   `;
 
   db.query(query, (err, results) => {
     if (err) {
-      console.error('Error al obtener usuarios:', err);
-      return res.status(500).json({ error: 'Error al obtener usuarios' });
+      console.error('Error al obtener usuarios seleccionados:', err);
+      return res.status(500).json({ error: 'Error al obtener usuarios seleccionados' });
     }
-
     res.json(results);
   });
 });
 
-// ACTUALIZAR asignación final de un usuario seleccionado
-router.put('/asignar/:id_usuario', (req, res) => {
+// ACTUALIZAR decisión final y asignación
+router.put('/actualizar/:id_usuario', (req, res) => {
   const id = req.params.id_usuario;
-  const { area_final_id, subarea_especifica, proyecto_asignado_final } = req.body;
+  const {
+    area_final_id,
+    subarea_especifica,
+    proyecto_asignado_final,
+    estado_seleccion // 4 = aceptado, 9 = rechazado
+  } = req.body;
 
-  const updateQuery = `
+  const query = `
     UPDATE usuarios_seleccionados
-    SET area_final_id = ?, subarea_especifica = ?, proyecto_asignado_final = ?
+    SET 
+      area_final_id = ?,
+      subarea_especifica = ?,
+      proyecto_asignado_final = ?,
+      estado_proceso = ?
     WHERE id_usuario = ?
   `;
 
-  db.query(updateQuery, [area_final_id, subarea_especifica, proyecto_asignado_final, id], (err, result) => {
-    if (err) {
-      console.error('Error al actualizar asignación:', err);
-      return res.status(500).json({ error: 'Error al actualizar asignación' });
+  db.query(
+    query,
+    [area_final_id, subarea_especifica, proyecto_asignado_final, estado_seleccion, id],
+    (err, result) => {
+      if (err) {
+        console.error('Error al actualizar usuario seleccionado:', err);
+        return res.status(500).json({ mensaje: 'Error al actualizar usuario', error: err });
+      }
+      res.json({ mensaje: 'Usuario actualizado correctamente' });
     }
-
-    res.json({ mensaje: 'Asignación actualizada correctamente' });
-  });
+  );
 });
 
 module.exports = router;

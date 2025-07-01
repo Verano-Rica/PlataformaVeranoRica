@@ -15,7 +15,8 @@ const UsuarioPanel = () => {
   const [menuAbierto, setMenuAbierto] = useState(false);
   const navigate = useNavigate();
 const usuario = JSON.parse(localStorage.getItem('usuario')) || {};
-const nombre = usuario.nombre_usuario || usuario.nombre || 'Usuario';
+const nombre = `${usuario.nombre_usuario || usuario.nombre || ''} ${usuario.apellido_paterno || ''} ${usuario.apellido_materno || ''}`.trim() || 'Usuario';
+
 
 
 

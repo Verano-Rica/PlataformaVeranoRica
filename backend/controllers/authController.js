@@ -74,6 +74,8 @@ const login = async (req, res) => {
           user: {
             id: admin.id,
             nombre_admin: admin.nombre,
+            apellido_paterno: admin.apellido_paterno,
+            apellido_materno: admin.apellido_materno,
             correo: admin.correo
           }
         });
@@ -94,6 +96,8 @@ const login = async (req, res) => {
             user: {
               id: user.id,
               nombre_usuario: user.nombre,
+              apellido_paterno: user.apellido_paterno,
+              apellido_materno: user.apellido_materno,
               correo: user.correo,
               estado: user.estado_proceso
             }

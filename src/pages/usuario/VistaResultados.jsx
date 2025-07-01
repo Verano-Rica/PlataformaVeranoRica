@@ -125,7 +125,7 @@ const VistaResultados = () => {
             </p>
             <button
               className="btn-continuar"
-              onClick={() => window.location.href = '/usuario/fases'}
+              onClick={() => window.location.href = '/usuario/confirmacion-final'}
             >
               IR A LOS SIGUIENTES PASOS
             </button>
@@ -154,12 +154,6 @@ const VistaResultados = () => {
         <div className="card-resultados">
           <h2 className="titulo-seccion">Tu proceso aún está en revisión... Verifica mas tarde</h2>
         </div>
-        <button
-              className="btn-continuar"
-              onClick={() => window.location.href = '/usuario/fases'}
-            >
-              IR A LOS SIGUIENTES PASOS
-            </button>
           </div>
 
           <div className="iconos-body">

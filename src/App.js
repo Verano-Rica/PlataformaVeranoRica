@@ -17,7 +17,8 @@ import UsuariosSeleccionados from './pages/admin/UsuariosSeleccionados';
 import Postulantes from './pages/admin/Postulantes'; 
 import SeleccionIndividual from './pages/admin/SeleccionIndividual'; // esta es la vista de edición por id
 import VistaPostulantes from './pages/admin/VistaPostulantes';
-
+import confirmacion_final from './pages/usuario/ConfirmacionFinal';
+import EvaluacionEntrevista from './pages/admin/EvaluacionEntrevista'; // Asegúrate de que esta ruta sea correcta
 
 
 
@@ -43,9 +44,12 @@ function App() {
         <Route path="/admin/usuarios-agendados" element={<UsuariosAgendados />} />
         <Route path="/admin/usuarios-seleccionados" element={<UsuariosSeleccionados />} />
         <Route path="/admin/postulantes" element={<Postulantes />} />
-        {/* 3*/}
+        {/* 3.1*/}
         <Route path="/admin/seleccion/:id" element={<SeleccionIndividual />} />
         <Route path="/admin/Vistapostulantes" element={<VistaPostulantes />} />
+        <Route path="/usuario/confirmacion-final" element={<confirmacion_final />} />
+        <Route path="/admin/evaluacion/:id" element={<EvaluacionEntrevista />} />
+        {/* Ruta para la fase final */}
 
 
 

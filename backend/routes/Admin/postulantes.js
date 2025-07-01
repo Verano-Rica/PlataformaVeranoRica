@@ -5,4 +5,3 @@ const { obtenerPostulantes } = require('../../controllers/Admin/postulantesContr
 router.get('/', obtenerPostulantes);
 
 module.exports = router;
-

@@ -15,6 +15,7 @@
 }
 
 .titulo-principal-proyectos {
+  display: inline-block;
   font-size: 20px;
   font-weight: 700;
   color: #272727;
@@ -66,14 +67,20 @@
   border-radius: 12px;
   font-size: 16px;
   font-weight: 500;
-  line-height: 1.6;
+  line-height: 1.5;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  text-align: justify;
+  text-align: center;
   max-width: 500px;
-  width: 100%;
+  width: 500px; /* ✅ Fijar ancho para evitar saltos */
+  height: 110px; /* ✅ Fijar altura */
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-family: 'Poppins', sans-serif;
-  color: #333333;
+  color: #333;
 }
+
+
 
 /* Rombos con número */
 .rombo {
@@ -209,4 +216,38 @@
     bottom: 20px;
     right: 20px;
   }
+}
+.datos-responsable {
+  margin-top: 8px;
+  padding-left: 10px;
+  line-height: 1.8;
+}
+
+.icono-resp {
+  color: #b51818;
+  margin-right: 8px;
+}
+
+.link-correo {
+  color: #0056b3;
+  text-decoration: none;
+  margin-left: 5px;
+  font-weight: 500;
+}
+
+.link-correo:hover {
+  text-decoration: underline;
+}
+.modal-contenido h3 {
+  margin-top: 35px; /* o incluso 40px si quieres más separación */
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+}
+.cerrar-modal {
+  top: 10px;
+  right: 10px;
+  width: 35px;
+  height: 35px;
+  font-size: 22px;
 }

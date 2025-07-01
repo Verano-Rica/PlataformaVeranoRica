@@ -3,13 +3,9 @@ const db = require('../db');
 exports.guardarFormulario = (req, res) => {
   const {
     id_usuario,
-    nombre,
-    apellido_paterno,
-    apellido_materno,
     universidad,
     carrera,
     semestre,
-    correo,
     telefono,
     area_id,
     otra_area_interes
@@ -29,21 +25,17 @@ exports.guardarFormulario = (req, res) => {
 
     const insertarSQL = `
       INSERT INTO datos_formulario 
-      (id_usuario, nombre, apellido_paterno, apellido_materno, universidad, carrera, semestre, correo, telefono, area_id, otra_area_interes)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      (id_usuario, universidad, carrera, semestre, telefono, area_id, otra_area_interes)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
 
     db.query(
       insertarSQL,
       [
         id_usuario,
-        nombre,
-        apellido_paterno,
-        apellido_materno,
         universidad,
         carrera,
         semestre,
-        correo,
         telefono,
         area_id,
         otra_area_interes || null
@@ -62,7 +54,7 @@ exports.guardarFormulario = (req, res) => {
             return res.status(500).json({ mensaje: 'Formulario guardado pero falló actualización de estado' });
           }
 
-          res.status(200).json({ mensaje: 'Formulario guardado y estado actualizado a FASE 1' });
+          res.status(200).json({ success: true, mensaje: 'Formulario guardado y estado actualizado a FASE 1' });
         });
       }
     );

@@ -12,12 +12,13 @@ const SeleccionIndividual = () => {
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState(undefined);
   const [areas, setAreas] = useState([]);
+  const [motivoRechazo, setMotivoRechazo] = useState('');
+  const [mostrarMotivo, setMostrarMotivo] = useState(false);
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/api/admin/seleccionados`)
+    axios.get(`http://localhost:3001/api/admin/seleccionados/${id}`)
       .then(res => {
-        const encontrado = res.data.find(u => u.id_usuario == id);
-        setUsuario(encontrado || null);
+        setUsuario(res.data);
       })
       .catch(err => {
         console.error('Error al cargar usuario:', err);
@@ -34,7 +35,6 @@ const SeleccionIndividual = () => {
   };
 
   const guardarCambios = (estadoFinal) => {
-    // Convertir campos vacíos a null
     let area_final_id = usuario.area_final_id || null;
     let subarea_especifica = usuario.subarea_especifica?.trim() || null;
     let proyecto_asignado_final = usuario.proyecto_asignado_final?.trim() || null;
@@ -45,7 +45,10 @@ const SeleccionIndividual = () => {
         return;
       }
     } else if (estadoFinal === 9) {
-      // Si es rechazo, campos vacíos
+      if (!motivoRechazo) {
+        alert('Por favor selecciona un motivo de rechazo');
+        return;
+      }
       area_final_id = null;
       subarea_especifica = null;
       proyecto_asignado_final = null;
@@ -55,17 +58,19 @@ const SeleccionIndividual = () => {
       area_final_id,
       subarea_especifica,
       proyecto_asignado_final,
-      estado_seleccion: estadoFinal
+      estado_seleccion: estadoFinal,
+      motivo_rechazo: estadoFinal === 9 ? motivoRechazo : null
     })
       .then(() => {
-        const msg = estadoFinal === 4 ? '✔ Usuario aceptado correctamente' : '✖ Usuario rechazado correctamente';
+        const msg = estadoFinal === 4
+          ? '✔ Usuario aceptado correctamente'
+          : '✖ Usuario rechazado correctamente';
         alert(msg);
-        navigate('/admin/usuarios-seleccionados'); // redireccionar de vuelta
+        navigate('/admin/postulantes');
       })
       .catch(() => alert('❌ Error al guardar cambios'));
   };
 
-  // Mostrar mientras carga
   if (usuario === undefined) {
     return (
       <div className="panel-contenido">
@@ -74,7 +79,6 @@ const SeleccionIndividual = () => {
     );
   }
 
-  // Mostrar si el usuario no existe
   if (usuario === null) {
     return (
       <div className="admin-panel">
@@ -87,7 +91,7 @@ const SeleccionIndividual = () => {
               El usuario con ID <strong>{id}</strong> no existe o no ha sido registrado aún.
             </p>
             <div style={{ textAlign: 'center', marginTop: '20px' }}>
-              <button className="btn-rechazar" onClick={() => navigate('/admin/usuarios-seleccionados')}>
+              <button className="btn-rechazar" onClick={() => navigate('/admin/postulantes')}>
                 <FaArrowLeft style={{ marginRight: '6px' }} /> Regresar
               </button>
             </div>
@@ -103,7 +107,6 @@ const SeleccionIndividual = () => {
       <Sidebar />
       <div className="contenido-principal">
         <Header titulo="Seleccionar Usuario" />
-
         <div className="tabla-contenedor">
           <h2 className="titulo-seccion">Decisión Final del Postulante</h2>
 
@@ -159,6 +162,22 @@ const SeleccionIndividual = () => {
                   />
                 </td>
               </tr>
+              {mostrarMotivo && (
+                <tr>
+                  <td>Motivo del rechazo:</td>
+                  <td>
+                    <select
+                      value={motivoRechazo}
+                      onChange={(e) => setMotivoRechazo(e.target.value)}
+                    >
+                      <option value="">Selecciona un motivo</option>
+                      <option value="No cumplió con el perfil">No cumplió con el perfil</option>
+                      <option value="No asistió a la entrevista">No asistió a la entrevista</option>
+                      <option value="Otro">Otro</option>
+                    </select>
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
 
@@ -166,12 +185,20 @@ const SeleccionIndividual = () => {
             <button className="btn-aceptar" onClick={() => guardarCambios(4)}>
               <FaCheckCircle /> Aceptar
             </button>
-            <button className="btn-rechazar" onClick={() => guardarCambios(9)}>
+            <button
+              className="btn-rechazar"
+              onClick={() => setMostrarMotivo(true)}
+              style={{ marginLeft: '10px' }}
+            >
               <FaTimesCircle /> Rechazar
             </button>
+            {mostrarMotivo && (
+              <button className="btn-rechazar" onClick={() => guardarCambios(9)} style={{ marginLeft: '10px' }}>
+                Confirmar Rechazo
+              </button>
+            )}
           </div>
         </div>
-
         <Footer />
       </div>
     </div>

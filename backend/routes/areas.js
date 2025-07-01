@@ -4,7 +4,7 @@ const db = require('../db');
 
 // GET /api/areas - Obtener todas las áreas
 router.get('/', (req, res) => {
-  const query = 'SELECT id, nombre FROM areas';
+  const query = 'SELECT id, nombre, abreviatura FROM areas';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error al obtener áreas:', err);

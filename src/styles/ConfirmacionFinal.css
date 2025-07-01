@@ -1,0 +1,96 @@
+/* ConfirmacionFinal.css */
+.contenedor-confirmacion {
+  max-width: 900px;
+  margin: auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  font-family: 'Poppins', sans-serif;
+}
+
+h2 {
+  text-align: center;
+  color: #b51818;
+  margin-bottom: 2rem;
+}
+
+.linea-fases {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.fase {
+  width: 60px;
+  height: 60px;
+  background-color: #ccc;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  z-index: 1;
+}
+
+.fase.activa {
+  background-color: #b51818;
+}
+
+.bloque-form {
+  margin-bottom: 2rem;
+  background-color: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.bloque-form h3 {
+  margin-bottom: 1rem;
+  color: #b51818;
+}
+
+.campo-upload {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.campo-upload label {
+  min-width: 160px;
+  font-weight: 500;
+}
+
+select, input[type="file"], input[type="checkbox"] {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.btn-confirmar {
+  width: 100%;
+  background-color: #b51818;
+  color: white;
+  font-weight: bold;
+  font-size: 1.1rem;
+  padding: 1rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-confirmar:hover {
+  background-color: #940e0e;
+}
+
+a {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: #b51818;
+  font-weight: 500;
+}

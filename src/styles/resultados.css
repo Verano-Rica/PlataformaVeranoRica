@@ -132,3 +132,24 @@
     padding: 10px 25px;
   }
 }
+.contenedor-boton-proyectos {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.boton-seleccionar-proyectos {
+  background-color: var(--rojo-principal);
+  color: white;
+  font-size: 1.1rem;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.boton-seleccionar-proyectos:hover {
+  background-color: var(--rojo-hover);
+}

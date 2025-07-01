@@ -7,8 +7,7 @@ import { utils, writeFile } from 'xlsx';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { useNavigate } from 'react-router-dom';
-import autoTable from 'jspdf-autotable'; // ✅ correcto
-
+import autoTable from 'jspdf-autotable';
 
 const proyectosDisponibles = [
   'Desarrollo Web', 'Relaciones Laborales', 'Control de Calidad',
@@ -25,7 +24,7 @@ const Postulantes = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:3001/api/postulantes')
+    fetch('http://localhost:3001/api/admin/postulantes')
       .then(res => res.json())
       .then(data => {
         setPostulantes(data);
@@ -51,77 +50,89 @@ const Postulantes = () => {
   }, [filtroArea, filtroProyecto, postulantes]);
 
   const exportarExcel = () => {
-    const hoja = utils.json_to_sheet(filtrados);
+    const hoja = utils.json_to_sheet(filtrados.map(p => ({
+      ID: p.id_usuario,
+      Nombre: `${p.nombre} ${p.apellido_paterno} ${p.apellido_materno}`,
+      Universidad: p.universidad,
+      Carrera: p.carrera,
+      Semestre: p.semestre,
+      Correo: p.correo,
+      Teléfono: p.telefono,
+      Area: p.nombre_area || `ID: ${p.area_id}`,
+      Otra_Area: p.otra_area_interes || '-',
+      Proyecto_1: p.proyecto1 || '-',
+      Proyecto_2: p.proyecto2 || '-',
+      Otro_Proyecto: p.otro_proyecto || '-'
+    })));
     const libro = utils.book_new();
     utils.book_append_sheet(libro, hoja, 'Postulantes');
     writeFile(libro, 'postulantes.xlsx');
   };
 
-const exportarPDF = () => {
-  const doc = new jsPDF({ orientation: 'landscape', unit: 'pt', format: 'A4' });
-  doc.setFontSize(14);
-  doc.text('Postulantes Registrados', 40, 40);
+  const exportarPDF = () => {
+    const doc = new jsPDF({ orientation: 'landscape', unit: 'pt', format: 'A4' });
+    doc.setFontSize(14);
+    doc.text('Postulantes Registrados', 40, 40);
 
-  const columnas = [
-    { header: 'ID', dataKey: 'id' },
-    { header: 'Nombre', dataKey: 'nombre' },
-    { header: 'Universidad', dataKey: 'universidad' },
-    { header: 'Carrera', dataKey: 'carrera' },
-    { header: 'Semestre', dataKey: 'semestre' },
-    { header: 'Correo', dataKey: 'correo' },
-    { header: 'Teléfono', dataKey: 'telefono' },
-    { header: 'Área', dataKey: 'area_id' },
-    { header: 'Otra Área', dataKey: 'otra_area' },
-    { header: 'Proyecto 1', dataKey: 'proyecto1' },
-    { header: 'Proyecto 2', dataKey: 'proyecto2' },
-    { header: 'Otro Proyecto', dataKey: 'otro_proyecto' }
-  ];
+    const columnas = [
+      { header: 'ID', dataKey: 'id' },
+      { header: 'Nombre', dataKey: 'nombre' },
+      { header: 'Universidad', dataKey: 'universidad' },
+      { header: 'Carrera', dataKey: 'carrera' },
+      { header: 'Semestre', dataKey: 'semestre' },
+      { header: 'Correo', dataKey: 'correo' },
+      { header: 'Teléfono', dataKey: 'telefono' },
+      { header: 'Area', dataKey: 'area' },
+      { header: 'Otra Área', dataKey: 'otra_area' },
+      { header: 'Proyecto 1', dataKey: 'proyecto1' },
+      { header: 'Proyecto 2', dataKey: 'proyecto2' },
+      { header: 'Otro Proyecto', dataKey: 'otro_proyecto' }
+    ];
 
-  const filas = filtrados.map(p => ({
-    id: p.id_usuario,
-    nombre: `${p.nombre} ${p.apellido_paterno} ${p.apellido_materno}`,
-    universidad: p.universidad,
-    carrera: p.carrera,
-    semestre: p.semestre,
-    correo: p.correo,
-    telefono: p.telefono,
-    area_id: p.area_id,
-    otra_area: p.otra_area_interes || '-',
-    proyecto1: p.proyecto1 || '-',
-    proyecto2: p.proyecto2 || '-',
-    otro_proyecto: p.otro_proyecto || '-'
-  }));
-autoTable(doc, {
-  columns: columnas,
-  body: filas,
-  startY: 60,
-  styles: {
-    fontSize: 9,
-    cellPadding: 4,
-    valign: 'middle',
-    halign: 'left',
-    overflow: 'visible' // 🔧 evita el "linebreak" feo
-  },
-  headStyles: {
-    fillColor: [181, 24, 24],
-    textColor: 255,
-    halign: 'center',
-    fontStyle: 'bold'
-  },
-  columnStyles: {
-    nombre: { cellWidth: 140 },
-    correo: { cellWidth: 160 },
-    universidad: { cellWidth: 80 },
-    carrera: { cellWidth: 80 },
-    proyecto1: { cellWidth: 100 },
-    proyecto2: { cellWidth: 100 },
-    otro_proyecto: { cellWidth: 100 }
-  }
-});
-  doc.save('postulantes.pdf');
-};
+    const filas = filtrados.map(p => ({
+      id: p.id_usuario,
+      nombre: `${p.nombre} ${p.apellido_paterno} ${p.apellido_materno}`,
+      universidad: p.universidad,
+      carrera: p.carrera,
+      semestre: p.semestre,
+      correo: p.correo,
+      telefono: p.telefono,
+      area: p.nombre_area || `ID: ${p.area_id}`,
+      otra_area: p.otra_area_interes || '-',
+      proyecto1: p.proyecto1 || '-',
+      proyecto2: p.proyecto2 || '-',
+      otro_proyecto: p.otro_proyecto || '-'
+    }));
 
-
+    autoTable(doc, {
+      columns: columnas,
+      body: filas,
+      startY: 60,
+      styles: {
+        fontSize: 9,
+        cellPadding: 4,
+        valign: 'middle',
+        halign: 'left',
+        overflow: 'visible'
+      },
+      headStyles: {
+        fillColor: [181, 24, 24],
+        textColor: 255,
+        halign: 'center',
+        fontStyle: 'bold'
+      },
+      columnStyles: {
+        nombre: { cellWidth: 140 },
+        correo: { cellWidth: 160 },
+        universidad: { cellWidth: 80 },
+        carrera: { cellWidth: 80 },
+        proyecto1: { cellWidth: 100 },
+        proyecto2: { cellWidth: 100 },
+        otro_proyecto: { cellWidth: 100 }
+      }
+    });
+    doc.save('postulantes.pdf');
+  };
 
   return (
     <div className="panel-container">
@@ -162,7 +173,7 @@ autoTable(doc, {
                     <th>Semestre</th>
                     <th>Correo</th>
                     <th>Teléfono</th>
-                    <th>Área (ID)</th>
+                    <th>Área</th>
                     <th>Otra Área</th>
                     <th>Proyecto 1</th>
                     <th>Proyecto 2</th>
@@ -187,7 +198,7 @@ autoTable(doc, {
                       <td>{u.semestre}</td>
                       <td>{u.correo}</td>
                       <td>{u.telefono}</td>
-                      <td>{u.area_id}</td>
+                      <td>{u.nombre_area || `ID: ${u.area_id}`}</td>
                       <td>{u.otra_area_interes || '-'}</td>
                       <td>{u.proyecto1 || '-'}</td>
                       <td>{u.proyecto2 || '-'}</td>

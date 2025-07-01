@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaHome } from 'react-icons/fa';
-import '../styles/vistaGeneral.css'; // Debe tener el CSS con sidebar
+import '../styles/vistaGeneral.css';
 
-const Sidebar = () => {
+const Sidebar = ({ menuAbierto, toggleMenu }) => {
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${menuAbierto ? 'abierto' : ''}`}>
       <div className="menu-opciones">
-        <Link to="/usuario">
+        <Link to="/usuario" onClick={toggleMenu}>
           <div className="account-circle-icon-1">
             <FaHome className="icon-style" />
           </div>

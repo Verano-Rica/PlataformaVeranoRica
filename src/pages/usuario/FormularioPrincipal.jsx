@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   FaUser, FaUniversity, FaGraduationCap, FaBook, FaEnvelope,
@@ -18,18 +18,11 @@ import '../../styles/formulario.css';
 
 const FormularioPrincipal = () => {
   const [menuAbierto, setMenuAbierto] = useState(false);
-  const navigate = useNavigate();
-  const usuario = JSON.parse(localStorage.getItem('usuario')) || {};
-  const nombre = usuario.nombre || 'Usuario';
-
+  const [areas, setAreas] = useState([]);
   const [formData, setFormData] = useState({
-    nombre: '',
-    apellido_paterno: '',
-    apellido_materno: '',
     universidad: '',
     carrera: '',
     semestre: '',
-    correo: '',
     telefono: '',
     area_id: '',
     otra_area_interes: ''
@@ -39,22 +32,23 @@ const FormularioPrincipal = () => {
   const [mensaje, setMensaje] = useState('');
   const [tipoMensaje, setTipoMensaje] = useState('');
   const [mostrarToast, setMostrarToast] = useState(false);
+  const navigate = useNavigate();
 
-  const areas = [
-    { id: 1, nombre: 'Dirección comercial core', abreviatura: 'DCC' },
-    { id: 2, nombre: 'Dirección comercial de negocios emergentes', abreviatura: 'DCNE' },
-    { id: 3, nombre: 'Dirección de administración', abreviatura: 'DA' },
-    { id: 4, nombre: 'Dirección de cadena de suministro', abreviatura: 'DCS' },
-    { id: 5, nombre: 'Dirección de capital humano', abreviatura: 'DCH' },
-    { id: 6, nombre: 'Dirección de desarrollo de mercado', abreviatura: 'DDM' },
-    { id: 7, nombre: 'Dirección de finanzas y administración', abreviatura: 'DFA' },
-    { id: 8, nombre: 'Dirección de tecnologías de la información', abreviatura: 'DTI' },
-    { id: 9, nombre: 'Dirección general', abreviatura: 'DG' },
-    { id: 10, nombre: 'Otro', abreviatura: 'OTR' }
-  ];
+  const usuario = JSON.parse(localStorage.getItem('usuario')) || {};
+  const nombreCompleto = `${usuario.nombre_usuario || usuario.nombre || ''} ${usuario.apellido_paterno || ''} ${usuario.apellido_materno || ''}`.trim();
+
+  useEffect(() => {
+    fetch('http://localhost:3001/api/areas')
+      .then(res => res.json())
+      .then(data => setAreas(data))
+      .catch(err => console.error('Error al obtener áreas:', err));
+  }, []);
 
   const toggleMenu = () => setMenuAbierto(!menuAbierto);
-  const handleLogout = () => (window.location.href = '/');
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.href = '/';
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -73,12 +67,15 @@ const FormularioPrincipal = () => {
   const handleAreaChange = (e) => {
     const valor = e.target.value;
     setFormData({ ...formData, area_id: valor });
-    setMostrarOtroArea(parseInt(valor) === 10);
+    setMostrarOtroArea(parseInt(valor) === 10); // 'Otro'
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const id_usuario = parseInt(localStorage.getItem('userId'), 10);
+    const area_id = parseInt(formData.area_id, 10);
+    const semestre = parseInt(formData.semestre, 10);
+
     if (isNaN(id_usuario)) {
       setTipoMensaje('error');
       setMensaje('No se ha podido identificar al usuario.');
@@ -86,11 +83,7 @@ const FormularioPrincipal = () => {
       return;
     }
 
-    const area_id = parseInt(formData.area_id, 10);
-    const semestre = parseInt(formData.semestre, 10);
-
-    if (!formData.nombre || !formData.apellido_paterno || !formData.apellido_materno ||
-        !formData.universidad || !formData.carrera || !semestre || !formData.telefono || !area_id) {
+    if (!formData.universidad || !formData.carrera || !semestre || !formData.telefono || !area_id) {
       setTipoMensaje('error');
       setMensaje('Por favor completa todos los campos obligatorios.');
       setMostrarToast(true);
@@ -99,13 +92,9 @@ const FormularioPrincipal = () => {
 
     const datosLimpios = {
       id_usuario,
-      nombre: formData.nombre,
-      apellido_paterno: formData.apellido_paterno,
-      apellido_materno: formData.apellido_materno,
       universidad: formData.universidad,
       carrera: formData.carrera,
       semestre,
-      correo: formData.correo || null,
       telefono: formData.telefono.replace(/\D/g, ''),
       area_id,
       otra_area_interes: mostrarOtroArea ? formData.otra_area_interes : null
@@ -138,13 +127,16 @@ const FormularioPrincipal = () => {
     <div className={`panel-container ${menuAbierto ? 'menu-activo' : ''}`}>
       <Sidebar menuAbierto={menuAbierto} toggleMenu={toggleMenu} />
       <div className="panel-contenido">
-         <Header
-  nombre={
-    <span className="titulo-header-unido">
-      <span className="programa-normal">Programa </span>
-      <span className="verano-negritas">VERANO RICA</span>
-    </span>
-  } />
+        <Header
+          nombre={
+            <span className="titulo-header-unido">
+              <span className="programa-normal">Programa </span>
+              <span className="verano-negritas">VERANO RICA</span>
+            </span>
+          }
+          toggleMenu={toggleMenu}
+          handleLogout={handleLogout}
+        />
 
         <main className="main-contenido">
           <div className="formulario-container">
@@ -153,47 +145,61 @@ const FormularioPrincipal = () => {
             </header>
 
             <form className="formulario-form" onSubmit={handleSubmit}>
-              {[{
-                name: 'nombre', label: 'Nombre(s)', icon: FaUser
-              }, {
-                name: 'apellido_paterno', label: 'Apellido Paterno', icon: FaUser
-              }, {
-                name: 'apellido_materno', label: 'Apellido Materno', icon: FaUser
-              }, {
-                name: 'universidad', label: 'Universidad', icon: FaUniversity
-              }, {
-                name: 'carrera', label: 'Carrera', icon: FaGraduationCap
-              }, {
-                name: 'correo', label: 'Correo electrónico', icon: FaEnvelope, type: 'email'
-              }].map(({ name, label, icon: Icon, type = 'text' }) => (
-                <div className="campo-formulario" key={name}>
-                  <div className="campo-etiqueta">
-                    <Icon className="campo-icono" />
-                    <span className="campo-titulo">{label}</span>
-                  </div>
-                  <input
-                    type={type}
-                    name={name}
-                    value={formData[name]}
-                    onChange={handleChange}
-                    className="campo-input alineado-derecha"
-                    placeholder={`Escribe tu ${label.toLowerCase()}`}
-                  />
-                </div>
-              ))}
-
+              {/* Datos no editables */}
               <div className="campo-formulario">
                 <div className="campo-etiqueta">
-                  <FaPhoneAlt className="campo-icono" />
-                  <span className="campo-titulo">Número telefónico</span>
+                  <FaUser className="campo-icono" />
+                  <span className="campo-titulo">Nombre completo</span>
                 </div>
                 <input
                   type="text"
-                  name="telefono"
-                  value={formData.telefono}
-                  onChange={handleTelefonoChange}
-                  className="campo-input alineado-derecha"
-                  placeholder="Ej: 772-123-4567"
+                  value={nombreCompleto}
+                  readOnly
+                  className="campo-input"
+                />
+              </div>
+
+              <div className="campo-formulario">
+                <div className="campo-etiqueta">
+                  <FaEnvelope className="campo-icono" />
+                  <span className="campo-titulo">Correo electrónico</span>
+                </div>
+                <input
+                  type="email"
+                  value={usuario.correo}
+                  readOnly
+                  className="campo-input"
+                />
+              </div>
+
+              {/* Campos editables */}
+              <div className="campo-formulario">
+                <div className="campo-etiqueta">
+                  <FaUniversity className="campo-icono" />
+                  <span className="campo-titulo">Universidad</span>
+                </div>
+                <input
+                  type="text"
+                  name="universidad"
+                  value={formData.universidad}
+                  onChange={handleChange}
+                  className="campo-input"
+                  placeholder="Escribe tu universidad"
+                />
+              </div>
+
+              <div className="campo-formulario">
+                <div className="campo-etiqueta">
+                  <FaGraduationCap className="campo-icono" />
+                  <span className="campo-titulo">Carrera</span>
+                </div>
+                <input
+                  type="text"
+                  name="carrera"
+                  value={formData.carrera}
+                  onChange={handleChange}
+                  className="campo-input"
+                  placeholder="Escribe tu carrera"
                 />
               </div>
 
@@ -216,6 +222,21 @@ const FormularioPrincipal = () => {
 
               <div className="campo-formulario">
                 <div className="campo-etiqueta">
+                  <FaPhoneAlt className="campo-icono" />
+                  <span className="campo-titulo">Número telefónico</span>
+                </div>
+                <input
+                  type="text"
+                  name="telefono"
+                  value={formData.telefono}
+                  onChange={handleTelefonoChange}
+                  className="campo-input"
+                  placeholder="Ej: 772-123-4567"
+                />
+              </div>
+
+              <div className="campo-formulario">
+                <div className="campo-etiqueta">
                   <FaBriefcase className="campo-icono" />
                   <span className="campo-titulo">Área a desempeñar</span>
                 </div>
@@ -228,7 +249,7 @@ const FormularioPrincipal = () => {
                   <option value="">Selecciona un área</option>
                   {areas.map(area => (
                     <option key={area.id} value={area.id}>
-                      {area.nombre} ({area.abreviatura})
+                      {area.nombre}
                     </option>
                   ))}
                 </select>

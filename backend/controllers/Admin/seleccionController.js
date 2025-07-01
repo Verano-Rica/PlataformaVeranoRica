@@ -1,3 +1,4 @@
+//este ya no se usa
 const db = require('../../db');
 
 exports.obtenerUsuariosAceptados = (req, res) => {

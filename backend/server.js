@@ -25,12 +25,21 @@ const seleccionRoutes = require('./routes/Admin/seleccion');
 const seleccionadosRoutes = require('./routes/Admin/seleccionados');
 const aceptadosRoutes = require('./routes/aceptados');
 const resumenPostuladosRoutes = require('./routes/Admin/resumenPostulados');
+const proyectosRoutes = require('./routes/proyectos');
+const confirmacionFinalRoutes = require('./routes/confirmacionFinalRoutes');
+const evaluacionRoutes = require('./routes/Admin/evaluacion');
+const postulantesRouter = require('./routes/Admin/postulantes');
+
 
 
 
 // Usar rutas
+app.use('/api/admin/postulantes', postulantesRouter);
+app.use('/api/evaluacion', evaluacionRoutes);
+app.use('/api/fase-final', confirmacionFinalRoutes);
+app.use('/api/proyectos', proyectosRoutes);
 app.use('/api/resumen', resumenPostuladosRoutes);
-app.use('/api/postulantes', require('./routes/Admin/postulantes'));
+// app.use('/api/postulantes', require('./routes/Admin/postulantes'));
 app.use('/api/aceptados', aceptadosRoutes);
 app.use('/api/admin/seleccionados', seleccionadosRoutes);
 app.use('/api/seleccion', seleccionRoutes);
@@ -43,8 +52,6 @@ app.use('/api/auth', authRoutes);
 app.use('/api/formulario', formularioRoutes);
 app.use('/api/entrevista', entrevistaRoutes);
 
-//  Elimina esta línea duplicada que estaba mal
-// app.use('/uploads', express.static('uploads')); ← ya no se necesita
 
 // Ruta de prueba
 app.get('/', (req, res) => {

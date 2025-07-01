@@ -98,16 +98,12 @@ const VistaEntrevista = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        if (data?.error?.includes("ya ha agendado")) {
-          setTipoMensaje('error');
-          setMensaje('Ya tienes una entrevista agendada. No puedes registrar otra.');
-        } else {
-          setTipoMensaje('error');
-          setMensaje('Error al agendar la entrevista. Inténtalo más tarde.');
-        }
-        setMostrarToast(true);
-        return;
-      }
+  setTipoMensaje('error');
+  setMensaje(data?.error || data?.mensaje || 'Entrevista ya agendada');
+  setMostrarToast(true);
+  return;
+}
+
 
       setTipoMensaje('exito');
       setMensaje('Entrevista agendada correctamente');
@@ -262,7 +258,6 @@ const VistaEntrevista = () => {
                   </div>
                 </div>
               </div>
-
               <button type="submit" className="boton-formulario">CONTINUAR</button>
             </form>
           </div>

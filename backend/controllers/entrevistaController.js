@@ -60,11 +60,15 @@ const agendarEntrevista = (req, res) => {
 
       db.query(insertQuery, valores, (insertErr) => {
         if (insertErr) {
-          console.error('Error al guardar entrevista:', insertErr);
-          return res.status(500).json({ error: 'Error al agendar entrevista' });
-        }
+  console.error('Error al guardar entrevista:', insertErr);
 
-        // Paso 1: Actualizar estado_proceso = 2
+  if (insertErr.code === 'ER_DUP_ENTRY') {
+    return res.status(400).json({ error: 'Entrevista ya agendada' });
+  }
+  return res.status(500).json({ error: 'Error al agendar entrevista' });
+}
+
+
         const updateEstado = 'UPDATE usuarios SET estado_proceso = 2 WHERE id = ?';
         db.query(updateEstado, [id_usuario], (estadoErr) => {
           if (estadoErr) {
@@ -72,7 +76,6 @@ const agendarEntrevista = (req, res) => {
             return res.status(500).json({ mensaje: 'Entrevista guardada pero falló actualización de estado' });
           }
 
-          // Paso 2: Insertar en usuarios_seleccionados si no existe (estado_seleccion = 2)
           const verificar = 'SELECT id FROM usuarios_seleccionados WHERE id_usuario = ?';
           db.query(verificar, [id_usuario], (errVer, rows) => {
             if (errVer) {
@@ -87,6 +90,7 @@ const agendarEntrevista = (req, res) => {
               });
             }
 
+            // CORREGIDO: columnas movidas de df. a u.
             const insertarSeleccionado = `
               INSERT INTO usuarios_seleccionados (
                 id_usuario, nombre, apellido_paterno, apellido_materno,
@@ -96,8 +100,8 @@ const agendarEntrevista = (req, res) => {
                 estado_seleccion
               )
               SELECT 
-                u.id, df.nombre, df.apellido_paterno, df.apellido_materno,
-                df.universidad, df.carrera, df.semestre, df.correo, df.telefono,
+                u.id, u.nombre, u.apellido_paterno, u.apellido_materno,
+                df.universidad, df.carrera, df.semestre, u.correo, df.telefono,
                 df.area_id, df.otra_area_interes,
                 ea.proyecto1, ea.proyecto2, ea.otro_proyecto, ea.cv_nombre,
                 2
