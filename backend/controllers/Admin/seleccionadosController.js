@@ -29,7 +29,7 @@ exports.obtenerTodosSeleccionados = (req, res) => {
   });
 };
 
-// Obtener un usuario seleccionado por ID
+// Obtener un usuario seleccionado por ID (con datos de entrevista también)
 exports.obtenerSeleccionadoPorId = (req, res) => {
   const idUsuario = req.params.id;
 
@@ -46,10 +46,17 @@ exports.obtenerSeleccionadoPorId = (req, res) => {
       us.area_final_id,
       us.subarea_especifica,
       us.proyecto_asignado_final,
-      us.motivo_rechazo
+      us.motivo_rechazo,
+      ea.proyecto1,
+      ea.proyecto2,
+      ea.otro_proyecto,
+      ea.cv_nombre,
+      ea.nombre_bloque,
+      ea.fecha_entrevista
     FROM usuarios u
     JOIN datos_formulario df ON u.id = df.id_usuario
     JOIN areas a ON df.area_id = a.id
+    JOIN entrevistas_agendadas ea ON u.id = ea.id_usuario
     LEFT JOIN usuarios_seleccionados us ON u.id = us.id_usuario
     WHERE u.id = ?
   `;
@@ -61,6 +68,7 @@ exports.obtenerSeleccionadoPorId = (req, res) => {
     }
 
     if (results.length === 0) {
+      console.log('⚠ Usuario no encontrado con ID:', idUsuario);
       return res.status(404).json({ mensaje: 'Usuario no encontrado' });
     }
 

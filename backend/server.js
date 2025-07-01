@@ -32,8 +32,8 @@ const postulantesRouter = require('./routes/Admin/postulantes');
 
 
 
-
 // Usar rutas
+
 app.use('/api/admin/postulantes', postulantesRouter);
 app.use('/api/evaluacion', evaluacionRoutes);
 app.use('/api/fase-final', confirmacionFinalRoutes);

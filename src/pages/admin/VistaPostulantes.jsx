@@ -5,13 +5,10 @@ import Sidebar from '../../components/Sidebar';
 import Footer from '../../components/Footer';
 import '../../styles/VistaPostulantes.css';
 import { FaFilePdf, FaFileExcel } from 'react-icons/fa';
-
 import * as XLSX from 'xlsx';
-
 import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-
 
 const VistaPostulantes = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -26,14 +23,14 @@ const VistaPostulantes = () => {
     const datos = usuarios.map(u => ({
       Nombre: u.nombre,
       Correo: u.correo,
-      Teléfono: u.telefono,
-      Carrera: u.carrera,
-      Universidad: u.universidad,
-      'CV': u.cv_nombre || '-',
+      Estado: u.estado_seleccion || '-',
+      Teléfono: u.telefono || '-',
+      Carrera: u.carrera || '-',
+      Universidad: u.universidad || '-',
+      CV: u.cv_nombre || '-',
       'Área Final': u.area_final || '-',
       Subárea: u.subarea_especifica || '-',
-      'Proyecto Final': u.proyecto_asignado_final || '-',
-      Estado: u.estado_seleccion || '-'
+      'Proyecto Final': u.proyecto_asignado_final || '-'
     }));
 
     const hoja = XLSX.utils.json_to_sheet(datos);
@@ -49,21 +46,21 @@ const VistaPostulantes = () => {
     doc.text('Resumen de Postulantes', 14, 15);
 
     const columnas = [
-      'Nombre', 'Correo', 'Teléfono', 'Carrera', 'Universidad',
-      'CV', 'Área Final', 'Subárea', 'Proyecto Final', 'Estado'
+      'Nombre', 'Correo', 'Estado', 'Teléfono', 'Carrera',
+      'Universidad', 'CV', 'Área Final', 'Subárea', 'Proyecto Final'
     ];
 
     const filas = usuarios.map(u => [
       u.nombre,
       u.correo,
+      u.estado_seleccion || '-',
       u.telefono || '-',
       u.carrera || '-',
       u.universidad || '-',
       u.cv_nombre || '-',
       u.area_final || '-',
       u.subarea_especifica || '-',
-      u.proyecto_asignado_final || '-',
-      u.estado_seleccion || '-'
+      u.proyecto_asignado_final || '-'
     ]);
 
     autoTable(doc, {
@@ -106,7 +103,6 @@ const VistaPostulantes = () => {
                     <th>Área Final</th>
                     <th>Subárea</th>
                     <th>Proyecto Final</th>
-                    
                   </tr>
                 </thead>
                 <tbody>
@@ -114,6 +110,9 @@ const VistaPostulantes = () => {
                     <tr key={index}>
                       <td>{u.nombre}</td>
                       <td>{u.correo}</td>
+                      <td className={u.estado_seleccion === 'Aceptado' ? 'estado-verde' : 'estado-rojo'}>
+                        {u.estado_seleccion}
+                      </td>
                       <td>{u.telefono}</td>
                       <td>{u.carrera}</td>
                       <td>{u.universidad}</td>
@@ -132,9 +131,6 @@ const VistaPostulantes = () => {
                       <td>{u.area_final}</td>
                       <td>{u.subarea_especifica}</td>
                       <td>{u.proyecto_asignado_final}</td>
-                      <td className={u.estado_seleccion === 'Aceptado' ? 'estado-verde' : 'estado-rojo'}>
-                        {u.estado_seleccion}
-                      </td>
                     </tr>
                   ))}
                 </tbody>
