@@ -69,6 +69,7 @@ const agendarEntrevista = (req, res) => {
 }
 
 
+
         const updateEstado = 'UPDATE usuarios SET estado_proceso = 2 WHERE id = ?';
         db.query(updateEstado, [id_usuario], (estadoErr) => {
           if (estadoErr) {

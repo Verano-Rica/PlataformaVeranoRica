@@ -6,27 +6,25 @@ import Sidebar from '../../components/Sidebar';
 import BotonRedondo from '../../components/BotonRedondo';
 import iconoBienvenida from '../../assets/icono-bienvenida.png';
 
-
-
 import '../../styles/botonRedondo.css';
 import '../../styles/entrevista.css';
 
 import {
   FaCalendarAlt,
-  FaProjectDiagram,
   FaClock,
   FaFilePdf,
   FaRegFileAlt,
   FaHome,
   FaArrowCircleRight,
   FaCheckCircle,
-  FaTimesCircle, FaArrowCircleLeft
+  FaTimesCircle,
+  FaArrowCircleLeft
 } from 'react-icons/fa';
 
 const proyectosDisponibles = [
-  'Desarrollo Web', 'Relaciones Laborales', 'Control de Calidad',
-  'Innovación de Productos', 'Sustentabilidad', 'Finanzas Rurales',
-  'Logística', 'Automatización'
+  'Proyecto: 1', 'Proyecto: 2', 'Proyecto: 3',
+  'Proyecto: 4', 'Proyecto: 5', 'Proyecto: 6',    
+  'Proyecto: 7', 'Proyecto: 8'
 ];
 
 const bloques = [
@@ -98,12 +96,11 @@ const VistaEntrevista = () => {
       const data = await res.json();
 
       if (!res.ok) {
-  setTipoMensaje('error');
-  setMensaje(data?.error || data?.mensaje || 'Entrevista ya agendada');
-  setMostrarToast(true);
-  return;
-}
-
+        setTipoMensaje('error');
+        setMensaje(data?.error || data?.mensaje || 'Entrevista ya agendada');
+        setMostrarToast(true);
+        return;
+      }
 
       setTipoMensaje('exito');
       setMensaje('Entrevista agendada correctamente');
@@ -117,20 +114,25 @@ const VistaEntrevista = () => {
     }
   };
 
+  const cerrarModal = () => {
+    setMostrarToast(false);
+    if (tipoMensaje === 'exito') {
+      navigate('/usuario/resultados');
+    }
+  };
+
   return (
     <div className={`panel-container ${menuAbierto ? 'menu-activo' : ''}`}>
       <Sidebar />
       <div className="panel-contenido">
-     <Header
-  nombre={
-    <span className="titulo-header-unido">
-      <span className="programa-normal">Programa </span>
-      <span className="verano-negritas">VERANO RICA</span>
-    </span>
-  }
-
-/>
-
+        <Header
+          nombre={
+            <span className="titulo-header-unido">
+              <span className="programa-normal">Programa </span>
+              <span className="verano-negritas">VERANO RICA</span>
+            </span>
+          }
+        />
 
         <main className="main-contenido">
           <div className="contenedor-encabezado-bienvenida">
@@ -258,11 +260,14 @@ const VistaEntrevista = () => {
                   </div>
                 </div>
               </div>
+
               <button type="submit" className="boton-formulario">CONTINUAR</button>
             </form>
           </div>
 
-          {/* Modal visual con icono y botón */}
+
+
+          {/* Modal visual */}
           {mostrarToast && (
             <div className="overlay-toast">
               <div className="toast-modal">
@@ -274,7 +279,7 @@ const VistaEntrevista = () => {
                   )}
                 </div>
                 <h3>{mensaje}</h3>
-                <button className="cerrar-btn" onClick={() => setMostrarToast(false)}>
+                <button className="cerrar-btn" onClick={cerrarModal}>
                   Cerrar
                 </button>
               </div>
@@ -283,10 +288,10 @@ const VistaEntrevista = () => {
 
           {/* Navegación inferior */}
           <div className="iconos-body">
-                      <div className="home-body-anterior">
-              <BotonRedondo icono={<FaArrowCircleLeft />} ariaLabel="Inicio" onClick={() => navigate('/usuario/proyectos')} />
+            <div className="boton-izquierda">
+              <BotonRedondo icono={<FaArrowCircleLeft />} ariaLabel="Anterior" onClick={() => navigate('/usuario/proyectos')} />
             </div>
-            <div className="home-body-centrado">
+            <div className="boton-centro2">
               <BotonRedondo icono={<FaHome />} ariaLabel="Inicio" onClick={() => navigate('/usuario')} />
             </div>
             <div className="flecha-body-derecha">

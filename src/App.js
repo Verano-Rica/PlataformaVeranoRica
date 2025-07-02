@@ -19,6 +19,7 @@ import SeleccionIndividual from './pages/admin/SeleccionIndividual'; // esta es 
 import VistaPostulantes from './pages/admin/VistaPostulantes';
 import confirmacion_final from './pages/usuario/ConfirmacionFinal';
 import EvaluacionEntrevista from './pages/admin/EvaluacionEntrevista'; // Asegúrate de que esta ruta sea correcta
+import VistaEvaluaciones from './pages/admin/VistaEvaluaciones';
 
 
 
@@ -49,6 +50,9 @@ function App() {
         <Route path="/admin/Vistapostulantes" element={<VistaPostulantes />} />
         <Route path="/usuario/confirmacion-final" element={<confirmacion_final />} />
         <Route path="/admin/evaluacion/:id" element={<EvaluacionEntrevista />} />
+        <Route path="/admin/evaluaciones" element={<VistaEvaluaciones />} />
+        
+
         {/* Ruta para la fase final */}
 
 

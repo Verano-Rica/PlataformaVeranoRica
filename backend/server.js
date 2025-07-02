@@ -27,15 +27,20 @@ const aceptadosRoutes = require('./routes/aceptados');
 const resumenPostuladosRoutes = require('./routes/Admin/resumenPostulados');
 const proyectosRoutes = require('./routes/proyectos');
 const confirmacionFinalRoutes = require('./routes/confirmacionFinalRoutes');
-const evaluacionRoutes = require('./routes/Admin/evaluacion');
 const postulantesRouter = require('./routes/Admin/postulantes');
+const evaluacionRoutes = require('./routes/Admin/evaluacion');
+// const evaluacionesVistaRoutes = require('./routes/Admin/evaluacioneVista');
+// const vistaEvaluaciones = require('./routes/Admin/vistaEvaluaciones');
+const evaluacionesVistaRoutes = require('./routes/Admin/evaluacionesVista');
 
 
 
-// Usar rutas
 
+// Usar rutasapp.use('/api/admin/evaluaciones-vista', evaluacionesVistaRoutes);
+app.use('/api/admin/evaluaciones-vista', evaluacionesVistaRoutes);
+// app.use('/api/admin/vista-evaluaciones', vistaEvaluaciones);
+app.use('/api/admin/evaluacion', evaluacionRoutes);
 app.use('/api/admin/postulantes', postulantesRouter);
-app.use('/api/evaluacion', evaluacionRoutes);
 app.use('/api/fase-final', confirmacionFinalRoutes);
 app.use('/api/proyectos', proyectosRoutes);
 app.use('/api/resumen', resumenPostuladosRoutes);

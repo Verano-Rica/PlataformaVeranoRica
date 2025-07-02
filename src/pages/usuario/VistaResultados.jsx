@@ -21,7 +21,6 @@ const VistaResultados = () => {
   const usuario = JSON.parse(localStorage.getItem('usuario')) || {};
   const nombre = usuario.nombre || 'Usuario';
 
-  // ✅ Título personalizado para el Header
   const tituloPersonalizado = (
     <span className="titulo-header-unido">
       <span className="programa-normal">Programa </span>
@@ -98,9 +97,6 @@ const VistaResultados = () => {
     const areaFinal = datos.nombre_area_final || 'Área no asignada';
     const subarea = datos.subarea_especifica || '---';
     const proyectoFinal = datos.proyecto_asignado_final || '---';
-    const fechaEntrevista = datos.fecha_registro
-      ? new Date(datos.fecha_registro).toLocaleDateString()
-      : 'Por asignar';
 
     return (
       <div className="vista-principal">
@@ -118,7 +114,7 @@ const VistaResultados = () => {
               Has sido asignado(a) al área <strong>{areaFinal}</strong>, subárea <strong>{subarea}</strong>, para el proyecto <strong>{proyectoFinal}</strong>.
             </p>
             <p className="mensaje-indicaciones">
-             <strong><FaCalendarAlt /> Fecha de inicio 1 de Junio del 2026 </strong>
+              <strong><FaCalendarAlt /> Fecha de inicio 1 de Junio del 2026 </strong>
             </p>
             <p className="mensaje-indicaciones">
               Te pedimos leer cuidadosamente los siguientes pasos para completar tu proceso y comenzar esta experiencia profesional.
@@ -146,14 +142,31 @@ const VistaResultados = () => {
     );
   }
 
-  return (
-    <div className="vista-principal">
-      <Header nombre={tituloPersonalizado} toggleMenu={toggleMenu} handleLogout={handleLogout} />
-      <Sidebar />
-      <div className="contenido-vista">
-        <div className="card-resultados">
-          <h2 className="titulo-seccion">Tu proceso aún está en revisión... Verifica mas tarde</h2>
-        </div>
+  if (estado === 'pendiente') {
+    return (
+      <div className="vista-principal">
+        <Header nombre={tituloPersonalizado} toggleMenu={toggleMenu} handleLogout={handleLogout} />
+        <Sidebar />
+        <div className="contenido-vista">
+          <div className="card-resultados">
+            <img src={logoBienvenida} alt="Verano Rica" className="logo-bienvenida" />
+            <h2 className="saludo">¡Excelente!</h2>
+            <h1 className="mensaje-exito">
+              Has ingresado tus datos personales y agendado una cita con éxito <FaCheckCircle />
+            </h1>
+            <p className="mensaje-indicaciones">
+              Preséntate en la planta el día <strong>25 de junio de 2026</strong> en la siguiente ubicación:
+            </p>
+            <p className="mensaje-indicaciones">
+              <strong>Embotelladora Las Margaritas</strong>:<br />
+              Dirección: Cam. a Pozos Téllez km 1.5, 42186 Pachuca de Soto, Hgo.
+            </p>
+            <p className="mensaje-indicaciones">
+              Presenta tu <strong>CV impreso</strong> y no olvides tu <strong>IDENTIFICACIÓN OFICIAL</strong>.
+            </p>
+            <button className="btn-continuar" onClick={handleLogout}>
+              Cerrar sesión
+            </button>
           </div>
 
           <div className="iconos-body">
@@ -161,12 +174,17 @@ const VistaResultados = () => {
               <BotonRedondo 
                 icono={<FaHome />} 
                 ariaLabel="Inicio" 
-                onClick={() => window.location.href = '/usuario'} />
+                onClick={() => window.location.href = '/usuario'} 
+              />
             </div>
+          </div>
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
-  );
+    );
+  }
+
+  return null;
 };
 
 export default VistaResultados;

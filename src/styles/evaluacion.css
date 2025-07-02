@@ -1,88 +1,272 @@
-.evaluacion-container {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 40px;
-  background-color: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+/* ----------------------------
+  CONTENEDOR GENERAL
+---------------------------- */
+.panel-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.main-content {
+  padding: 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+ /* 🔴 deja espacio para el header */
+  background-color: #f4f4f4;
+}
+
+/* ----------------------------
+  CONTENIDO DE EVALUACIÓN
+---------------------------- */
+.contenido-evaluacion {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 50px 40px;
+  border-radius: 20px;
+  box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.08);
   font-family: 'Poppins', sans-serif;
-  animation: fadeIn 0.5s ease;
+  animation: fadeIn 0.6s ease-out;
+  flex: 1;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.evaluacion-container h2 {
+.titulo {
   text-align: center;
-  color: #b51818;
-  margin-bottom: 25px;
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 700;
+  color: #b51818;
+  margin-bottom: 30px;
+  font-family: 'Poppins', sans-serif;
 }
 
-.datos-usuario {
-  margin-bottom: 25px;
-  padding: 15px;
-  background-color: #f6f6f6;
-  border-left: 5px solid #b51818;
-  border-radius: 8px;
+.buscador {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 30px;
 }
 
-.datos-usuario p {
-  margin: 5px 0;
-  font-size: 16px;
-  color: #333;
+.buscador input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  width: 60%;
+}
+
+.buscador button {
+  background-color: #b51818;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  font-weight: bold;
+  border-radius: 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.buscador button:hover {
+  background-color: #931212;
+}
+
+/* ----------------------------
+  DATOS DEL POSTULANTE
+---------------------------- */
+.datos-postulante {
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 40px;
+  font-size: 14px;
+  color: #444;
+}
+
+.datos-postulante h3 {
+  color: #b51818;
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+/* ----------------------------
+  FORMULARIO DE EVALUACIÓN
+---------------------------- */
+.formulario-evaluacion .campo {
+  margin-bottom: 24px;
 }
 
 .formulario-evaluacion label {
-  font-weight: 600;
-  margin-top: 20px;
-  margin-bottom: 6px;
   display: block;
-  color: #333;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #b51818;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
 }
 
-.formulario-evaluacion textarea,
-.formulario-evaluacion input[type="text"],
-.formulario-evaluacion select {
+.formulario-evaluacion textarea {
   width: 100%;
   padding: 12px;
-  border-radius: 10px;
+  border-radius: 12px;
   border: 1px solid #ccc;
-  font-size: 15px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
   resize: vertical;
-  background-color: #fefefe;
-  transition: border 0.3s;
+  min-height: 80px;
+  background-color: #f9f9f9;
 }
 
-.formulario-evaluacion textarea:focus,
-.formulario-evaluacion input:focus,
-.formulario-evaluacion select:focus {
+.formulario-evaluacion textarea:focus {
   border-color: #b51818;
   outline: none;
+  box-shadow: 0 0 0 2px rgba(181, 24, 24, 0.2);
 }
 
-.formulario-evaluacion input[type="checkbox"] {
-  margin-right: 8px;
-  transform: scale(1.2);
-}
-
+/* ----------------------------
+  BOTÓN GUARDAR
+---------------------------- */
 .btn-guardar {
-  margin-top: 30px;
-  padding: 14px 24px;
-  background-color: #b51818;
-  color: #ffffff;
-  border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 600;
+  width: 60%;
+  background-color: white;
+  color: #b51818;
+  border: 3px solid #b51818;
+  padding: 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 14px;
+  transition: 0.3s;
+  text-transform: uppercase;
+  display: block;
+  margin: 40px auto 0;
   cursor: pointer;
-  transition: 0.3s ease;
 }
 
 .btn-guardar:hover {
-  background-color: #8a1313;
-  transform: scale(1.02);
+  background-color: #b51818;
+  color: white;
+}
+
+/* ----------------------------
+  ANIMACIÓN
+---------------------------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ----------------------------
+  RESPONSIVO
+---------------------------- */
+@media (max-width: 768px) {
+  .contenido-evaluacion {
+    margin: 20px 10px;
+    padding: 20px;
+  }
+
+  .buscador input {
+    width: 100%;
+  }
+
+  .btn-guardar {
+    width: 90%;
+  }
+}
+/* Contenedor general más amplio */
+.contenido-evaluacion {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  font-family: 'Poppins', sans-serif;
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Nueva presentación en tabla o recuadro */
+.datos-postulante {
+  background: #fdfdfd;
+  padding: 25px 30px;
+  margin-bottom: 40px;
+  border-radius: 14px;
+  border: 1px solid #ddd;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.datos-postulante h3 {
+  margin-bottom: 20px;
+  color: #b51818;
+  font-size: 1.4rem;
+  font-weight: 700;
+  border-bottom: 2px solid #b51818;
+  padding-bottom: 8px;
+}
+
+/* Estilo tipo tabla */
+.datos-postulante .fila {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.datos-postulante .etiqueta {
+  width: 200px;
+  font-weight: bold;
+  color: #333;
+}
+
+.datos-postulante .valor {
+  flex: 1;
+  color: #555;
+}
+.footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-size: 14px;
+  width: 100%;
+  margin-top: auto;
+}
+.contenido-evaluacion {
+  margin-bottom: 50px;
+}
+.titulo-header-unido {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  color: white;
+  white-space: nowrap;
+}
+
+.programa-normal {
+  font-weight: 400;
+}
+
+.verano-negritas {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.campo-error {
+  border: 2px solid red;
+}
+
+.mensaje-error {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+.iconos-body {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem 0; /* mucho más compacto */
+  margin-top: 1rem;
 }

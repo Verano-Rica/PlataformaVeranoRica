@@ -121,3 +121,18 @@
 .btn-exportar:hover {
   background-color: #991414;
 }
+.titulo-header-unido {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  color: white;
+  white-space: nowrap;
+}
+
+.programa-normal {
+  font-weight: 400;
+}
+
+.verano-negritas {
+  font-weight: 700;
+  text-transform: uppercase;
+}

@@ -93,6 +93,14 @@ const nombre = `Bienvenido(a): ${admin.nombre || 'Administrador'}`;
             {/* Selección */}
             <div className="boton-seccion">
               <div className="circle-6">4</div>
+              <p className="resultados-">REPORTE EVALUACIONES:</p>
+              <div className="rectangle-9" onClick={() => navigate('/admin/evaluaciones')}>
+                <img src={iconoResultados} alt="Resultados" className="assignment-icon-1" />
+              </div>
+            </div>
+            {/* Selección */}
+            <div className="boton-seccion">
+              <div className="circle-6">5</div>
               <p className="resultados-">RESUMEN POSTULANTES:</p>
               <div className="rectangle-9" onClick={() => navigate('/admin/Vistapostulantes')}>
                 <img src={iconoResultados} alt="Resultados" className="assignment-icon-1" />

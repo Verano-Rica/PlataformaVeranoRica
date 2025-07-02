@@ -1,0 +1,56 @@
+.titulo-principal {
+  text-align: center;
+  color: #b51818;
+  font-weight: bold;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.tabla-evaluaciones {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+}
+
+.tabla-evaluaciones th,
+.tabla-evaluaciones td {
+  border: 1px solid #ccc;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.tabla-evaluaciones th {
+  background-color: #b51818;
+  color: white;
+}
+
+.tabla-evaluaciones tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+.tabla-scroll {
+  overflow-x: auto;
+  margin-top: 1.5rem;
+}
+
+.tabla-evaluaciones {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.tabla-evaluaciones th,
+.tabla-evaluaciones td {
+  border: 1px solid #ccc;
+  padding: 0.6rem;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.tabla-evaluaciones th {
+  background-color: #b51818;
+  color: white;
+}
+
+.tabla-evaluaciones tr:nth-child(even) {
+  background-color: #f9f9f9;
+}

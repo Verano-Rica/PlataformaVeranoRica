@@ -5,7 +5,10 @@ import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Footer from '../../components/Footer';
 import '../../styles/proceso_seleccion.css';
+import BotonRedondo from '../../components/BotonRedondo';
+import { FaHome, FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
 import { FaCheckCircle, FaTimesCircle, FaArrowLeft } from 'react-icons/fa';
+
 
 const SeleccionIndividual = () => {
   const { id } = useParams();
@@ -198,7 +201,14 @@ const SeleccionIndividual = () => {
               </button>
             )}
           </div>
+                                                    {/* ✅ Botones flotantes */}
+        <div className="iconos-body">
+          <div className="home-body-centrado">
+            <BotonRedondo icono={<FaHome />} ariaLabel="Inicio" onClick={() => navigate('/admin/postulantes')} />
+          </div>
         </div>
+        </div>
+
         <Footer />
       </div>
     </div>

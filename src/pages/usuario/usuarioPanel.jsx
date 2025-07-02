@@ -35,7 +35,7 @@ const nombre = `${usuario.nombre_usuario || usuario.nombre || ''} ${usuario.apel
           <div className="botones-principales">
             <div className="boton-seccion">
               <div className="circle-1">1</div>
-              <p className="informaci-n-">INFORMACIÓN:</p>
+              <p className="informaci-n-">INGRESA TUS DATOS:</p>
               <div className="rectangle-6" onClick={() => navigate('/usuario/formulario')}>
                 <img src={iconoInfo} alt="Información" className="assignment-icon-1" />
               </div>
@@ -43,7 +43,7 @@ const nombre = `${usuario.nombre_usuario || usuario.nombre || ''} ${usuario.apel
 
             <div className="boton-seccion">
               <div className="circle-4">2</div>
-              <p className="proyectos-">PROYECTOS:</p>
+              <p className="proyectos-">INFORMATE DE LOS PROYECTOS:</p>
               <div className="rectangle-7" onClick={() => navigate('/usuario/proyectos')}>
                 <img src={iconoProyectos} alt="Proyectos" className="assignment-icon-1" />
               </div>

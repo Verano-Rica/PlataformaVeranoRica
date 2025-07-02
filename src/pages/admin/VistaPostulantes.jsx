@@ -9,9 +9,13 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import BotonRedondo from '../../components/BotonRedondo';
+import { FaHome, FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const VistaPostulantes = () => {
   const [usuarios, setUsuarios] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('http://localhost:3001/api/resumen/resumen-postulados')
@@ -21,7 +25,7 @@ const VistaPostulantes = () => {
 
   const exportarExcel = () => {
     const datos = usuarios.map(u => ({
-      Nombre: u.nombre,
+      Nombre: `${u.nombre} ${u.apellido_paterno || ''} ${u.apellido_materno || ''}`,
       Correo: u.correo,
       Estado: u.estado_seleccion || '-',
       Teléfono: u.telefono || '-',
@@ -51,7 +55,7 @@ const VistaPostulantes = () => {
     ];
 
     const filas = usuarios.map(u => [
-      u.nombre,
+      `${u.nombre} ${u.apellido_paterno || ''} ${u.apellido_materno || ''}`,
       u.correo,
       u.estado_seleccion || '-',
       u.telefono || '-',
@@ -77,7 +81,14 @@ const VistaPostulantes = () => {
     <div className="panel-container">
       <Sidebar />
       <div className="panel-contenido">
-        <Header />
+                <Header
+  nombre={
+    <span className="titulo-header-unido">
+      <span className="programa-normal">Programa </span>
+      <span className="verano-negritas">VERANO RICA</span>
+    </span>
+  }
+/>
 
         <main className="main-contenido">
           <div className="tabla-box">
@@ -108,7 +119,7 @@ const VistaPostulantes = () => {
                 <tbody>
                   {usuarios.map((u, index) => (
                     <tr key={index}>
-                      <td>{u.nombre}</td>
+                      <td>{`${u.nombre} ${u.apellido_paterno || ''} ${u.apellido_materno || ''}`}</td>
                       <td>{u.correo}</td>
                       <td className={u.estado_seleccion === 'Aceptado' ? 'estado-verde' : 'estado-rojo'}>
                         {u.estado_seleccion}
@@ -137,9 +148,18 @@ const VistaPostulantes = () => {
               </table>
             </div>
           </div>
+          <div> 
+              <br />
+  <br />
+   <br />
+            </div> 
+           <div className="home-body-centrado">
+            <BotonRedondo icono={<FaHome />} ariaLabel="Inicio" onClick={() => navigate('/admin')} />
+          </div>
         </main>
 
-        <Footer />
+        <Footer 
+        />
       </div>
     </div>
   );

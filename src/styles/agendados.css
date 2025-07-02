@@ -87,3 +87,10 @@ a:hover {
 .btn-exportar:hover {
   background-color: #911313;
 }
+.iconos-body {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 80px; /* empuja los botones hacia abajo después de la tabla */
+  margin-bottom: 40px; /* espacio antes del footer */
+}

@@ -1,54 +1,26 @@
-const db = require('../db');
+const db = require('../../db');
 
-exports.guardarEvaluacion = (req, res) => {
-  const {
-    id_usuario,
-    motivacion,
-    habilidades,
-    softwares,
-    certificaciones,
-    domicilio,
-    transporte,
-    vision_5_anos,
-    disponibilidad_horaria,
-    area_interes_entrevista,
-    detalles_adicionales,
-    nivel_comunicacion,
-    experiencia_destacada,
-    nivel_expresion_oral,
-    actitud,
-    nivel_idioma,
-    observaciones,
-    recomendacion
-  } = req.body;
+exports.obtenerEvaluacionPorUsuario = (req, res) => {
+  const idUsuario = req.params.id;
 
-  const verificarQuery = 'SELECT * FROM entrevistas_agendadas WHERE id_usuario = ?';
-  db.query(verificarQuery, [id_usuario], (err, results) => {
-    if (err) return res.status(500).json({ error: 'Error al verificar entrevista' });
-    if (results.length === 0) return res.status(400).json({ error: 'Este usuario no tiene entrevista agendada' });
+  const query = `
+    SELECT e.*, u.nombre, u.apellido_paterno, u.apellido_materno, u.correo
+    FROM evaluaciones e
+    JOIN usuarios u ON u.id = e.id_usuario
+    WHERE e.id_usuario = ?
+  `;
 
-    const insertQuery = `
-      INSERT INTO evaluaciones_entrevista (
-        id_usuario, motivacion, habilidades, softwares, certificaciones, domicilio, transporte,
-        vision_5_anos, disponibilidad_horaria, area_interes_entrevista, detalles_adicionales,
-        nivel_comunicacion, experiencia_destacada, nivel_expresion_oral, actitud, nivel_idioma,
-        observaciones, recomendacion
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
+  db.query(query, [idUsuario], (err, results) => {
+    if (err) {
+      console.error('Error al obtener evaluación:', err);
+      return res.status(500).json({ error: 'Error del servidor' });
+    }
 
-    const valores = [
-      id_usuario, motivacion, habilidades, softwares, certificaciones, domicilio, transporte,
-      vision_5_anos, disponibilidad_horaria, area_interes_entrevista, detalles_adicionales,
-      nivel_comunicacion, experiencia_destacada, nivel_expresion_oral, actitud, nivel_idioma,
-      observaciones, recomendacion
-    ];
+    if (results.length === 0) {
+      return res.status(404).json({ error: 'Evaluación no encontrada' });
+    }
 
-    db.query(insertQuery, valores, (err) => {
-      if (err) {
-        console.error('Error al guardar evaluación:', err);
-        return res.status(500).json({ error: 'Error al guardar evaluación' });
-      }
-      res.json({ mensaje: 'Evaluación guardada correctamente' });
-    });
+    res.json(results[0]);
   });
 };
+

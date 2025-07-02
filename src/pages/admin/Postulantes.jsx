@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Footer from '../../components/Footer';
+import BotonRedondo from '../../components/BotonRedondo';
+import { FaHome, FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
 import '../../styles/adminTabla.css';
 import { utils, writeFile } from 'xlsx';
 import jsPDF from 'jspdf';
@@ -10,9 +12,9 @@ import { useNavigate } from 'react-router-dom';
 import autoTable from 'jspdf-autotable';
 
 const proyectosDisponibles = [
-  'Desarrollo Web', 'Relaciones Laborales', 'Control de Calidad',
-  'Innovación de Productos', 'Sustentabilidad', 'Finanzas Rurales',
-  'Logística', 'Automatización'
+  'Proyecto: 1', 'Proyecto: 2', 'Proyecto: 3',
+  'Proyecto: 4', 'Proyecto: 5', 'Proyecto: 6',
+  'Proyecto: 7', 'Proyecto: 8'
 ];
 
 const Postulantes = () => {
@@ -138,10 +140,17 @@ const Postulantes = () => {
     <div className="panel-container">
       <Sidebar />
       <div className="panel-contenido">
-        <Header nombre='Bienvenido administrador(a)' />
+        <Header
+          nombre={
+            <span className="titulo-header-unido">
+              <span className="programa-normal">Programa </span>
+              <span className="verano-negritas">VERANO RICA</span>
+            </span>
+          }
+        />
         <main className="main-contenido">
           <div className="tabla-box">
-            <h2 className="titulo-tabla">📋 Postulantes Registrados</h2>
+            <h2 className="titulo-tabla">Postulantes Registrados</h2>
 
             <div className="filtros">
               <select value={filtroArea} onChange={e => setFiltroArea(e.target.value)}>
@@ -162,63 +171,87 @@ const Postulantes = () => {
               <button className="btn-exportar" onClick={exportarExcel}>Exportar Excel</button>
             </div>
 
-            <div className="tabla-responsive">
-              <table className="tabla-admin">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Universidad</th>
-                    <th>Carrera</th>
-                    <th>Semestre</th>
-                    <th>Correo</th>
-                    <th>Teléfono</th>
-                    <th>Área</th>
-                    <th>Otra Área</th>
-                    <th>Proyecto 1</th>
-                    <th>Proyecto 2</th>
-                    <th>Otro Proyecto</th>
-                    <th>CV</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filtrados.map((u) => (
-                    <tr key={u.id_usuario}>
-                      <td>{u.id_usuario}</td>
-                      <td>
-                        <button
-                          className="btn-ver"
-                          onClick={() => navigate(`/admin/seleccion/${u.id_usuario}`)}
-                        >
-                          {`${u.nombre} ${u.apellido_paterno} ${u.apellido_materno}`}
-                        </button>
-                      </td>
-                      <td>{u.universidad}</td>
-                      <td>{u.carrera}</td>
-                      <td>{u.semestre}</td>
-                      <td>{u.correo}</td>
-                      <td>{u.telefono}</td>
-                      <td>{u.nombre_area || `ID: ${u.area_id}`}</td>
-                      <td>{u.otra_area_interes || '-'}</td>
-                      <td>{u.proyecto1 || '-'}</td>
-                      <td>{u.proyecto2 || '-'}</td>
-                      <td>{u.otro_proyecto || '-'}</td>
-                      <td>
-                        {u.cv_nombre ? (
-                          <a
-                            className="btn-ver"
-                            href={`http://localhost:3001/uploads/${u.cv_nombre}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            Ver CV
-                          </a>
-                        ) : ('-')}
-                      </td>
+            <div className="tabla-wrapper tabla-box">
+              <div className="tabla-responsive">
+                <table className="tabla-admin">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Nombre</th>
+                      <th>Universidad</th>
+                      <th>Carrera</th>
+                      <th>Semestre</th>
+                      <th>Correo</th>
+                      <th>Teléfono</th>
+                      <th>Área</th>
+                      <th>Otra Área</th>
+                      <th>Proyecto 1</th>
+                      <th>Proyecto 2</th>
+                      <th>Otro Proyecto</th>
+                      <th>CV</th>
+                      <th>Datos Entrevista</th> {/* ✅ NUEVA COLUMNA */}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {filtrados.map((u) => (
+                      <tr key={u.id_usuario}>
+                        <td>{u.id_usuario}</td>
+                        <td>
+                          <button
+                            className="btn-ver"
+                            onClick={() => navigate(`/admin/seleccion/${u.id_usuario}`)}
+                          >
+                            {`${u.nombre} ${u.apellido_paterno} ${u.apellido_materno}`}
+                          </button>
+                        </td>
+                        <td>{u.universidad}</td>
+                        <td>{u.carrera}</td>
+                        <td>{u.semestre}</td>
+                        <td>{u.correo}</td>
+                        <td>{u.telefono}</td>
+                        <td>{u.nombre_area || `ID: ${u.area_id}`}</td>
+                        <td>{u.otra_area_interes || '-'}</td>
+                        <td>{u.proyecto1 || '-'}</td>
+                        <td>{u.proyecto2 || '-'}</td>
+                        <td>{u.otro_proyecto || '-'}</td>
+                        <td>
+                          {u.cv_nombre ? (
+                            <a
+                              className="btn-ver"
+                              href={`http://localhost:3001/uploads/${u.cv_nombre}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              Ver CV
+                            </a>
+                          ) : ('-')}
+                        </td>
+                        <td>
+                          <button
+                            className="btn-ver"
+                            onClick={() => navigate(`/admin/entrevista/${u.id_usuario}`)}
+                          >
+                            Ver
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          {/* ✅ Botones flotantes */}
+          <div className="iconos-body">
+            <div className="flecha-body-izquierda">
+              <BotonRedondo icono={<FaArrowCircleLeft />} ariaLabel="Volver" onClick={() => navigate('/admin/evaluacion/:id')} />
+            </div>
+            <div className="home-body-centrado">
+              <BotonRedondo icono={<FaHome />} ariaLabel="Inicio" onClick={() => navigate('/admin')} />
+            </div>
+            <div className="flecha-body-derecha">
+              <BotonRedondo icono={<FaArrowCircleRight />} ariaLabel="Siguiente" onClick={() => navigate('/admin/Vistapostulantes')} />
             </div>
           </div>
         </main>
