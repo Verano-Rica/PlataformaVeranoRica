@@ -4,7 +4,7 @@ import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Footer from '../../components/Footer';
 import BotonRedondo from '../../components/BotonRedondo';
-import { FaHome, FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
+import { FaHome } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/evaluacion.css';
 
@@ -13,7 +13,7 @@ const VistaEvaluaciones = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:3001/api/admin/evaluaciones-vista')
+    axios.get('http://localhost:3001/api/admin/reporte-evaluaciones')
       .then(res => setEvaluaciones(res.data))
       .catch(err => console.error('Error al cargar evaluaciones:', err));
   }, []);
@@ -21,6 +21,7 @@ const VistaEvaluaciones = () => {
   return (
     <div className="panel-container">
       <Sidebar />
+
       <div className="panel-contenido">
         <Header
           nombre={
@@ -30,6 +31,7 @@ const VistaEvaluaciones = () => {
             </span>
           }
         />
+
         <div className="main-contenido">
           <h2 className="titulo-principal">Reporte completo de Evaluaciones</h2>
           <div className="tabla-contenedor">
@@ -50,10 +52,10 @@ const VistaEvaluaciones = () => {
                   <th>Nivel Idiomas</th>
                   <th>Detalles Adicionales</th>
                   <th>Experiencia Destacada</th>
-                  <th>Expresión Oral</th>
+                  <th>Nivel de Expresión</th>
                   <th>Actitud</th>
                   <th>Observaciones</th>
-                  <th>Recomendación Final</th>
+                  <th>Recomendación</th>
                   <th>Fecha Evaluación</th>
                 </tr>
               </thead>
@@ -74,25 +76,26 @@ const VistaEvaluaciones = () => {
                     <td>{ev.nivel_idiomas}</td>
                     <td>{ev.detalles_adicionales}</td>
                     <td>{ev.experiencia_destacada}</td>
-                    <td>{ev.expresion_oral}</td>
+                    <td>{ev.nivel_expresion}</td>
                     <td>{ev.actitud}</td>
                     <td>{ev.observaciones}</td>
-                    <td>{ev.recomendacion_final}</td>
+                    <td>{ev.recomendacion}</td>
                     <td>{new Date(ev.fecha_evaluacion).toLocaleDateString()}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          
-        {/* ✅ Botones flotantes al fondo */}
-        <div className="iconos-body">
+                  <div className="iconos-body">
           <div className="home-body-centrado">
-            <BotonRedondo icono={<FaHome />} ariaLabel="Inicio" onClick={() => navigate('/admin')} />
+            <BotonRedondo
+              icono={<FaHome />}
+              ariaLabel="Inicio"
+              onClick={() => navigate('/admin')}
+            />
           </div>
         </div>
         </div>
-
 
         <Footer />
       </div>

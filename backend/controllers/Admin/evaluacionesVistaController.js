@@ -1,4 +1,3 @@
-// backend/controllers/Admin/evaluacionesVistaController.js
 const db = require('../../db');
 
 exports.obtenerEvaluacionesVista = (req, res) => {
@@ -6,9 +5,10 @@ exports.obtenerEvaluacionesVista = (req, res) => {
 
   db.query(query, (err, results) => {
     if (err) {
-      console.error('❌ Error al obtener las evaluaciones desde la vista:', err);
-      return res.status(500).json({ error: 'Error al consultar las evaluaciones' });
+      console.error('Error al obtener evaluaciones:', err);
+      return res.status(500).json({ error: 'Error al obtener evaluaciones' });
     }
     res.json(results);
   });
 };
+

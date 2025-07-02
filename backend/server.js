@@ -28,15 +28,21 @@ const resumenPostuladosRoutes = require('./routes/Admin/resumenPostulados');
 const proyectosRoutes = require('./routes/proyectos');
 const confirmacionFinalRoutes = require('./routes/confirmacionFinalRoutes');
 const postulantesRouter = require('./routes/Admin/postulantes');
-const evaluacionRoutes = require('./routes/Admin/evaluacion');
 // const evaluacionesVistaRoutes = require('./routes/Admin/evaluacioneVista');
 // const vistaEvaluaciones = require('./routes/Admin/vistaEvaluaciones');
 const evaluacionesVistaRoutes = require('./routes/Admin/evaluacionesVista');
+const evaluacionRoutes = require('./routes/Admin/evaluacion');
+const reporteEvaluacionesRoutes = require('./routes/Admin/reporteEvaluaciones');
 
 
 
+app.use('/api/admin/reporte-evaluaciones', reporteEvaluacionesRoutes);
+
+
+app.use('/api/evaluacion', require('./routes/Admin/evaluacion'));
 
 // Usar rutasapp.use('/api/admin/evaluaciones-vista', evaluacionesVistaRoutes);
+app.use('/api/busqueda-entrevistas', require('./routes/Admin/busquedaEntrevista'));
 app.use('/api/admin/evaluaciones-vista', evaluacionesVistaRoutes);
 // app.use('/api/admin/vista-evaluaciones', vistaEvaluaciones);
 app.use('/api/admin/evaluacion', evaluacionRoutes);

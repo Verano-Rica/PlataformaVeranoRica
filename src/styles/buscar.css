@@ -1,0 +1,57 @@
+.input-busqueda {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.postulante {
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #f7f7f7;
+}
+
+.postulante.seleccionado {
+  background: #e8f0fe;
+  border: 2px solid #4285f4;
+}
+
+.formulario-evaluacion {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.campo-evaluacion label {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.campo-evaluacion textarea, .campo-evaluacion select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  resize: vertical;
+  font-family: 'Poppins', sans-serif;
+}
+
+.btn-guardar {
+  padding: 12px;
+  background-color: #b51818;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-guardar:hover {
+  background-color: #971414;
+}
