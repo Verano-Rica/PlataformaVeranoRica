@@ -1,25 +1,32 @@
+
 import React from 'react';
-import './lineaTiempo.css';
+import '../styles/lineaTiempo.css';
+import { FASES, FASES_TEXTO } from '../utils/constantes';
 
-const fases = [
-  { id: 1, nombre: 'Fase 1', estado: 'completado' },
-  { id: 2, nombre: 'Fase 2', estado: 'actual' },
-  { id: 3, nombre: 'Fase 3', estado: 'pendiente' },
-  { id: 4, nombre: 'Fase 4', estado: 'pendiente' },
-];
+const LineaTiempo = ({ estadoProceso }) => {
+  const fases = [
+    { nombre: 'Fase 1', descripcion: 'Documentos', estado: FASES.FASE1 },
+    { nombre: 'Fase 2', descripcion: 'Talla', estado: FASES.FASE2 },
+    { nombre: 'Fase 3', descripcion: 'Disponibilidad', estado: FASES.FASE3 },
+    { nombre: 'Fase 4', descripcion: 'Psicométricos', estado: FASES.FASE4 }
+  ];
 
-const LineaTiempo = () => {
   return (
-    <div className="linea-tiempo">
-      {fases.map((fase, i) => (
-        <div className="fase" key={fase.id}>
-          <div className={`circulo ${fase.estado}`}></div>
-          <span className="nombre-fase">{fase.nombre}</span>
-          {i < fases.length - 1 && <div className="linea" />}
-        </div>
-      ))}
+    <div className="linea-tiempo-contenedor">
+      {fases.map((fase, index) => {
+        const completada = estadoProceso >= fase.estado;
+        return (
+          <div className="fase" key={index}>
+            <div className={`circulo ${completada ? 'completado' : ''}`}>{index + 1}</div>
+            <div className="nombre-fase">{fase.nombre}</div>
+            <div className="descripcion-fase">{fase.descripcion}</div>
+            {index < fases.length - 1 && (
+              <div className={`linea ${estadoProceso >= fases[index + 1].estado ? 'linea-activa' : ''}`} />
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };
-
 export default LineaTiempo;

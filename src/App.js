@@ -20,7 +20,8 @@ import VistaPostulantes from './pages/admin/VistaPostulantes';
 import confirmacion_final from './pages/usuario/ConfirmacionFinal';
 import EvaluacionEntrevista from './pages/admin/EvaluacionEntrevista'; // Asegúrate de que esta ruta sea correcta
 import VistaEvaluaciones from './pages/admin/VistaEvaluaciones';
-import BuscarEntrevistas from './pages/admin/BuscarEntrevistas'; // ✅ Importar tu vista
+import BuscarEntrevistas from './pages/admin/BuscarEntrevistas'; // Importar tu vista
+import FasesProceso from './pages/usuario/FasesProceso';
 
 
 
@@ -53,8 +54,7 @@ function App() {
         <Route path="/admin/evaluaciones" element={<VistaEvaluaciones />} />
         <Route path="/admin/buscar-evaluacion" element={<BuscarEntrevistas />} />
         
-
-        {/* Ruta para la fase final */}
+        <Route path="/usuario/fases-proceso" element={<FasesProceso/>} />
 
 
 

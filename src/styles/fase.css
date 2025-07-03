@@ -1,0 +1,72 @@
+.fase {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  margin: 30px auto;
+  max-width: 600px;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.fase h3 {
+  color: #b51818;
+  margin-bottom: 25px;
+}
+
+.fase input[type="text"],
+.fase input[type="date"],
+.fase select {
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  transition: border 0.3s ease;
+}
+
+.fase input:focus,
+.fase select:focus {
+  border-color: #b51818;
+  outline: none;
+}
+
+.fase button {
+  background-color: #b51818;
+  color: #fff;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 25px;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: background 0.3s ease;
+}
+
+.fase button:hover {
+  background-color: #991414;
+}
+.boton-icono {
+  background-color: #b51818;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.boton-icono:hover {
+  background-color: #991414;
+  transform: scale(1.03);
+}
+
+.boton-icono i {
+  font-size: 18px;
+}

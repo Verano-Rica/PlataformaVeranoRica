@@ -35,10 +35,8 @@ const evaluacionRoutes = require('./routes/Admin/evaluacion');
 const reporteEvaluacionesRoutes = require('./routes/Admin/reporteEvaluaciones');
 
 
-
+app.use('/api/fase-final', require('./routes/faseFinal'));
 app.use('/api/admin/reporte-evaluaciones', reporteEvaluacionesRoutes);
-
-
 app.use('/api/evaluacion', require('./routes/Admin/evaluacion'));
 
 // Usar rutasapp.use('/api/admin/evaluaciones-vista', evaluacionesVistaRoutes);

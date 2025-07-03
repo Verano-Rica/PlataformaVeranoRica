@@ -118,7 +118,7 @@ const EvaluacionEntrevista = () => {
                   { name: 'domicilio' },
                   { name: 'transporte' },
                   { name: 'disponibilidad_horaria' },
-                  { name: 'vision_5_anios', type: 'textarea' },
+                  { name: 'vision_5_años', type: 'textarea' },
                   { name: 'nivel_idiomas' },
                   { name: 'detalles_adicionales', type: 'textarea' },
                   { name: 'experiencia_destacada', type: 'textarea' },
