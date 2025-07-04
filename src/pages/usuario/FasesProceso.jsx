@@ -1,43 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import LineaTiempo from '../../components/LineaTiempo';
 import { FASES, FASES_TEXTO } from '../../utils/constantes';
 import Fase1Documentos from '../../components/Fases/Fase1Documentos';
 import Fase2Talla from '../../components/Fases/Fase2Talla';
 import Fase3Disponibilidad from '../../components/Fases/Fase3Disponibilidad';
 import Fase4Psicometrico from '../../components/Fases/Fase4Psicometrico';
+import axios from 'axios';
+import '../../styles/fasesProceso.css';
 
 const FasesProceso = () => {
   const idUsuario = localStorage.getItem('userId');
-  const [estado, setEstado] = useState(0);
+  const [estado, setEstado] = useState(5); // Por defecto empieza en Fase1
   const [datos, setDatos] = useState({});
+useEffect(() => {
+  const fetchEstadoYDatos = async () => {
+    try {
+      const resEstado = await axios.get(`http://localhost:3001/api/estado/${idUsuario}`);
+      const estadoActual = resEstado.data.estado_proceso;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const resUser = await axios.get(`http://localhost:3001/api/usuarios/${idUsuario}`);
-        let estadoBD = resUser.data.estado_proceso;
-
-        // 🔄 Si está aceptado, se inicia Fase1 (internamente usamos estado 5)
-        if (estadoBD === 4) {
-          estadoBD = 5;
-          await axios.put(`http://localhost:3001/api/usuarios/actualizar-estado`, {
-            id: idUsuario,
-            nuevoEstado: 5,
-          });
-        }
-
-        setEstado(estadoBD);
-
-        const resFase = await axios.get(`http://localhost:3001/api/fase-final/${idUsuario}`);
-        setDatos(resFase.data || {});
-      } catch (error) {
-        console.error('Error al obtener estado de fases:', error);
+      // Si apenas fue aceptado (estado 4), lo mostramos en la FASE 1
+      if (estadoActual === 4) {
+        setEstado(FASES.FASE1); // Mostramos componente de Documentos
+      } else {
+        setEstado(estadoActual); // Muestra FASE2, 3, etc. si ya avanzó
       }
-    };
 
-    fetchData();
-  }, [idUsuario]);
+      const resDatos = await axios.get(`http://localhost:3001/api/fase-final/${idUsuario}`);
+      setDatos(resDatos.data);
+    } catch (error) {
+      console.error('Error al obtener datos del proceso:', error);
+    }
+  };
+
+  if (idUsuario) fetchEstadoYDatos();
+}, [idUsuario]);
+
 
   const actualizarDatos = (nuevo) => {
     setDatos(prev => ({ ...prev, ...nuevo }));
@@ -45,7 +42,7 @@ const FasesProceso = () => {
 
   return (
     <div className="contenedor-fases">
-      <h2>Seguimiento de Fases</h2>
+      <h2>Seguimiento de Fases Finales</h2>
       <LineaTiempo estadoProceso={estado} />
       <p className="texto-fase">
         Estado actual: <strong>{FASES_TEXTO[estado]}</strong>
