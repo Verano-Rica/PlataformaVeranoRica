@@ -12,6 +12,15 @@ app.use(express.json());
 //  Servir correctamente archivos como PDFs (CVs) desde la carpeta uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+const fs = require('fs');
+
+// Verifica que exista uploads/fase_final, si no la crea
+const uploadsPath = path.join(__dirname, 'uploads', 'fase_final');
+if (!fs.existsSync(uploadsPath)) {
+  fs.mkdirSync(uploadsPath, { recursive: true });
+}
+
+
 // Rutas
 const authRoutes = require('./routes/auth');
 const formularioRoutes = require('./routes/formulario'); 
@@ -35,7 +44,7 @@ const evaluacionRoutes = require('./routes/Admin/evaluacion');
 const reporteEvaluacionesRoutes = require('./routes/Admin/reporteEvaluaciones');
 
 
-app.use('/api/fase-final', require('./routes/faseFinal'));
+app.use('/api/fasefinal', require('./routes/faseFinal'));
 app.use('/api/admin/reporte-evaluaciones', reporteEvaluacionesRoutes);
 app.use('/api/evaluacion', require('./routes/Admin/evaluacion'));
 

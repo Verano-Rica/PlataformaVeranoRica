@@ -53,6 +53,7 @@ router.post('/', upload.fields(campos), (req, res) => {
       evaluaciones_completadas = VALUES(evaluaciones_completadas);
   `;
 
+  
   const values = [
     id_usuario,
     talla,

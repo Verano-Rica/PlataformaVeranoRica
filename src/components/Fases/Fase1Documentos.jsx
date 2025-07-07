@@ -1,78 +1,86 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
-import axios from 'axios';
 import '../../styles/fasesProceso.css';
 
-const Fase1Documentos = ({ datos, actualizar, idUsuario }) => {
-  const [archivos, setArchivos] = useState({
-    ine_nombre: null,
-    curp_nombre: null,
-    acta_nombre: null,
-    comprobante_domicilio_nombre: null
+const Fase1Documentos = ({ idUsuario }) => {
+  const [documentos, setDocumentos] = useState({
+    cv: null,
+    ine: null,
+    curp: null,
+    acta: null,
+    comprobante: null
   });
 
-  const handleArchivo = (e) => {
-    const { name, files } = e.target;
-    setArchivos({ ...archivos, [name]: files[0] });
+  const handleChange = (e, campo) => {
+    setDocumentos({ ...documentos, [campo]: e.target.files[0] });
   };
 
-  const handleGuardar = async () => {
+  const handleSubmit = async () => {
+    const hayAlMenosUno = Object.values(documentos).some(doc => doc);
+    if (!hayAlMenosUno) {
+      Swal.fire('Advertencia', 'Debes subir al menos un documento', 'warning');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('id_usuario', idUsuario);
-    Object.entries(archivos).forEach(([clave, archivo]) => {
+    Object.entries(documentos).forEach(([clave, archivo]) => {
       if (archivo) formData.append(clave, archivo);
     });
 
     try {
-      const res = await axios.post('http://localhost:3001/api/fase-final/documentos', formData);
-      Swal.fire('¡Éxito!', 'Documentos guardados correctamente', 'success');
-      actualizar(res.data); // actualiza los datos en pantalla
-    } catch (err) {
-      console.error(err);
-      Swal.fire('Error', 'No se pudieron guardar los documentos', 'error');
+      const res = await fetch('http://localhost:3001/api/fasefinal/guardar', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        Swal.fire('Éxito', 'Documentos guardados correctamente', 'success');
+      } else {
+        Swal.fire('Error', data.error || 'No se pudieron guardar los documentos', 'error');
+      }
+    } catch (error) {
+      Swal.fire('Error', 'Fallo en la petición al servidor', 'error');
     }
   };
 
   return (
     <div className="contenedor-fase">
-      <h3 className="titulo-fase">Fase 1 - Subir Documentos</h3>
+      <h3 className="titulo-fase">Subir documentos</h3>
 
-      <div className="linea-progreso">
-        <div className="punto activo" />
-        <div className="linea-activa" />
-        <div className="punto" />
-        <div className="linea" />
-        <div className="punto" />
-        <div className="linea" />
-        <div className="punto" />
+      <div className="grupo-campo">
+        <div className="numero-circulo">1</div>
+        <label className="label-documento">CV:</label>
+        <input className="input-documento" type="file" onChange={e => handleChange(e, 'cv')} />
       </div>
 
-      <div className="formulario-fase">
-        <div className="campo-documento">
-          <div className="circle-rojo">1</div>
-          <label>CV:</label>
-          <input type="file" name="ine_nombre" onChange={handleArchivo} />
-        </div>
-        <div className="campo-documento">
-          <div className="circle-rojo">2</div>
-          <label>Identificación:</label>
-          <input type="file" name="curp_nombre" onChange={handleArchivo} />
-        </div>
-        <div className="campo-documento">
-          <div className="circle-rojo">3</div>
-          <label>CURP:</label>
-          <input type="file" name="acta_nombre" onChange={handleArchivo} />
-        </div>
-        <div className="campo-documento">
-          <div className="circle-rojo">4</div>
-          <label>Acta de nacimiento:</label>
-          <input type="file" name="comprobante_domicilio_nombre" onChange={handleArchivo} />
-        </div>
+      <div className="grupo-campo">
+        <div className="numero-circulo">2</div>
+        <label className="label-documento">IDENTIFICACIÓN:</label>
+        <input className="input-documento" type="file" onChange={e => handleChange(e, 'ine')} />
       </div>
 
-      <div className="boton-siguiente">
-        <button onClick={handleGuardar}>Siguiente</button>
+      <div className="grupo-campo">
+        <div className="numero-circulo">3</div>
+        <label className="label-documento">CURP:</label>
+        <input className="input-documento" type="file" onChange={e => handleChange(e, 'curp')} />
       </div>
+
+      <div className="grupo-campo">
+        <div className="numero-circulo">4</div>
+        <label className="label-documento">ACTA DE NACIMIENTO:</label>
+        <input className="input-documento" type="file" onChange={e => handleChange(e, 'acta')} />
+      </div>
+
+      <div className="grupo-campo">
+        <div className="numero-circulo">5</div>
+        <label className="label-documento">COMPROBANTE DE DOMICILIO:</label>
+        <input className="input-documento" type="file" onChange={e => handleChange(e, 'comprobante')} />
+      </div>
+
+      <button className="boton-siguiente" onClick={handleSubmit}>Siguiente</button>
     </div>
   );
 };
