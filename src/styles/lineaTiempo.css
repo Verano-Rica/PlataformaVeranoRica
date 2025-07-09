@@ -1,73 +1,98 @@
-.linea-tiempo-contenedor {
+.linea-tiempo-proceso {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   margin: 40px 0;
   position: relative;
-  gap: 50px;
+  flex-wrap: nowrap;
 }
 
-.fase {
+.fase-con-linea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contenedor-circulo-linea {
+  display: flex;
+  align-items: center;
   position: relative;
-  text-align: center;
 }
 
 .circulo {
-  width: 60px;
-  height: 60px;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
-  background-color: #ccc;
-  color: white;
+  background-color: #d4ffd4;
+  border: 4px solid #00cc00;
+  z-index: 2;
   font-weight: bold;
   font-size: 22px;
+  color: black;
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 2;
+  justify-content: center;
   transition: background-color 0.3s ease;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
 }
 
 .circulo.completado {
-  background-color: #4cd964;
+  background-color: #55ff00;
 }
 
-.descripcion-fase {
-  margin-top: 12px;
-  font-size: 14px;
-  font-weight: bold;
-  color: #333;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
-}
-
-.linea {
-  position: absolute;
-  top: 27px;
-  left: 60px;
-  width: 50px;
-  height: 6px;
+.linea-horizontal {
+  height: 12px;
+  width: 180px;
   background-color: #ccc;
   z-index: 1;
-  transition: background-color 0.3s ease;
+  margin-left: -4px;
+  margin-right: -4px;
+  border: none;
+  padding: 0;
 }
 
-.linea.linea-activa {
-  background-color: #4cd964;
+.linea-horizontal.completado {
+  background-color: #55ff00;
 }
-.numero-circulo {
-  width: 42px;
-  height: 90px;
-  background: red;
-  color: white;
+
+.nombre-fase {
+  margin-top: 8px;
   font-weight: bold;
-  font-size: 34px;
-  border-radius: 25px;
-  border: 3px solid white;
-  box-shadow:
-    0px 0px 0px 8px white,     /* borde blanco alrededor */
-    0 10px 25px rgba(0, 0, 0, 0.35);  /* sombra externa inferior */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Arial Black', sans-serif;
+  font-size: 18px;
+  text-align: center;
+  display: inline-block;
+  width: 100%; /* ocupa todo el ancho del padre */
+  transform: translateX(-35%);
+  position: relative;
+  right: 0%;
 }
+
+
+/* RESPONSIVO: para pantallas pequeñas */
+@media (max-width: 768px) {
+  .linea-tiempo-proceso {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .fase-con-linea {
+    margin-bottom: 20px;
+  }
+
+  .linea-horizontal {
+    width: 80px; /* línea más corta en móvil */
+  }
+
+  .circulo {
+    width: 45px;
+    height: 45px;
+    font-size: 18px;
+  }
+
+  .nombre-fase {
+    font-size: 14px;
+    width: 45px;
+  }
+}
+
+
+

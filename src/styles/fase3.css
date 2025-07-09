@@ -1,0 +1,105 @@
+.fase3-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.fase3-content {
+  width: 100%;
+  max-width: 1200px;
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.titulo-izquierda {
+  text-align: left;
+  margin-bottom: 30px;
+}
+
+.titulo-izquierda h2 {
+  font-size: 42px;
+  font-weight: 700;
+  color: #444;
+}
+
+.contenido-formulario {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+}
+
+.pregunta {
+  font-size: 32px;
+  color: #333;
+  font-weight: 600;
+  text-align: center;
+}
+
+.select-disponibilidad-moqups {
+  width: 350px;
+  height: 65px;
+  background-color: #CD0000;     /* fondo rojo */
+  color: white;                  /* texto blanco */
+  font-weight: bold;
+  font-size: 24px;
+  border: 2px solid #C90000;
+  border-radius: 17px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  padding: 10px;
+  text-align: center;
+  appearance: none;
+  position: relative;
+  z-index: 1;
+}
+
+.select-disponibilidad-moqups:focus {
+  outline: none;
+}
+
+@media screen and (max-height: 500px) {
+  .select-disponibilidad-moqups {
+    overflow-y: auto;
+  }
+}
+
+.select-disponibilidad-moqups option {
+  background-color: white;     /* fondo blanco al abrir */
+  color: #232323;              /* texto gris oscuro */
+}
+
+.texto-aclaracion {
+  font-size: 18px;
+  color: #666;
+  max-width: 1000px;
+  text-align: justify;
+  margin-top: -5px;
+}
+
+.comentarios {
+  width: 100%;
+  max-width: 1000px;
+  height: 200px;
+  border: 1px solid #232323;
+  font-size: 18px;
+  padding: 20px;
+  color: #444;
+  border-radius: 10px;
+  resize: vertical;
+}
+
+.btn-siguiente {
+  background: #B51818;
+  color: white;
+  padding: 15px 40px;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 50px;
+  border: 3px solid #C90000;
+  box-shadow: 0px 13px 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  margin-top: 20px;
+}

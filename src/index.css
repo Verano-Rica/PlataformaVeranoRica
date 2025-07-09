@@ -35,3 +35,23 @@ code {
 .boton-icono i {
   font-size: 18px;
 }
+
+/*esto es un arreglo para quitar el click*/
+*:focus {
+  outline: none;
+}
+button, div, span, label {
+  caret-color: transparent;
+  user-select: none;
+}
+* {
+  caret-color: transparent !important;
+}
+
+input, textarea {
+  caret-color: auto !important;
+  user-select: text !important;
+}
+span, label, button, div {
+  user-select: none !important;
+}

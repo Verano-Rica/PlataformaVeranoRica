@@ -58,9 +58,6 @@ const FasesProceso = () => {
     <div className="contenedor-fases">
       <h2>Seguimiento de Fases Finales</h2>
       <LineaTiempo estadoProceso={estadoProceso} />
-      <p className="texto-fase">
-        Estado actual: <strong>{FASES_TEXTO[estadoProceso]}</strong>
-      </p>
 
       {renderFase()}
 

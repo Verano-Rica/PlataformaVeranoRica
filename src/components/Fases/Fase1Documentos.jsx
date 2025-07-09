@@ -1,86 +1,87 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import '../../styles/fasesProceso.css';
+import { FaSave } from 'react-icons/fa'; // al inicio del archivo
 
-const Fase1Documentos = ({ idUsuario }) => {
-  const [documentos, setDocumentos] = useState({
-    cv: null,
-    ine: null,
-    curp: null,
-    acta: null,
-    comprobante: null
-  });
-
-  const handleChange = (e, campo) => {
-    setDocumentos({ ...documentos, [campo]: e.target.files[0] });
-  };
+const Fase1Documentos = ({ idUsuario, actualizar }) => {
+  const [cv, setCv] = useState(null);
+  const [ine, setIne] = useState(null);
+  const [curp, setCurp] = useState(null);
+  const [acta, setActa] = useState(null);
+  const [comprobante, setComprobante] = useState(null);
 
   const handleSubmit = async () => {
-    const hayAlMenosUno = Object.values(documentos).some(doc => doc);
-    if (!hayAlMenosUno) {
-      Swal.fire('Advertencia', 'Debes subir al menos un documento', 'warning');
+    if (!cv || !ine || !curp || !acta || !comprobante) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Faltan documentos',
+        text: 'Por favor, sube todos los documentos antes de continuar.',
+      });
       return;
     }
 
     const formData = new FormData();
-    formData.append('id_usuario', idUsuario);
-    Object.entries(documentos).forEach(([clave, archivo]) => {
-      if (archivo) formData.append(clave, archivo);
-    });
+    formData.append('cv', cv);
+    formData.append('identificacion', ine);
+    formData.append('curp', curp);
+    formData.append('actaNacimiento', acta);
+    formData.append('comprobanteDomicilio', comprobante);
 
     try {
-      const res = await fetch('http://localhost:3001/api/fasefinal/guardar', {
+      const res = await fetch(`http://localhost:3001/api/fasefinal/documentos/${idUsuario}`, {
         method: 'POST',
         body: formData,
       });
 
-      const data = await res.json();
-
       if (res.ok) {
-        Swal.fire('Éxito', 'Documentos guardados correctamente', 'success');
+        Swal.fire({
+          icon: 'success',
+          title: 'Documentos guardados',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        actualizar({ documentosSubidos: true });
       } else {
-        Swal.fire('Error', data.error || 'No se pudieron guardar los documentos', 'error');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al guardar',
+          text: 'Intenta nuevamente.',
+        });
       }
     } catch (error) {
-      Swal.fire('Error', 'Fallo en la petición al servidor', 'error');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error de conexión',
+        text: 'No se pudo conectar con el servidor.',
+      });
     }
   };
 
   return (
-    <div className="contenedor-fase">
-      <h3 className="titulo-fase">Subir documentos</h3>
+    <div className="contenedor-documentos">
+      <h3 className="titulo-subir">Subir documentos</h3>
 
-      <div className="grupo-campo">
-        <div className="numero-circulo">1</div>
-        <label className="label-documento">CV:</label>
-        <input className="input-documento" type="file" onChange={e => handleChange(e, 'cv')} />
-      </div>
+      {[
+        { num: 1, label: 'CV', onChange: setCv },
+        { num: 2, label: 'IDENTIFICACIÓN', onChange: setIne },
+        { num: 3, label: 'CURP', onChange: setCurp },
+        { num: 4, label: 'ACTA DE NACIMIENTO', onChange: setActa },
+        { num: 5, label: 'COMPROBANTE DE DOMICILIO', onChange: setComprobante }
+      ].map((item) => (
+        <div className="campo-doc" key={item.num}>
+          <span className="numero-circulo">{item.num}</span>
+          <label className="label-documento">{item.label}:</label>
+          <input type="file" className="input-documento" onChange={(e) => item.onChange(e.target.files[0])} />
+        </div>
+        
+      ))}
 
-      <div className="grupo-campo">
-        <div className="numero-circulo">2</div>
-        <label className="label-documento">IDENTIFICACIÓN:</label>
-        <input className="input-documento" type="file" onChange={e => handleChange(e, 'ine')} />
-      </div>
-
-      <div className="grupo-campo">
-        <div className="numero-circulo">3</div>
-        <label className="label-documento">CURP:</label>
-        <input className="input-documento" type="file" onChange={e => handleChange(e, 'curp')} />
-      </div>
-
-      <div className="grupo-campo">
-        <div className="numero-circulo">4</div>
-        <label className="label-documento">ACTA DE NACIMIENTO:</label>
-        <input className="input-documento" type="file" onChange={e => handleChange(e, 'acta')} />
-      </div>
-
-      <div className="grupo-campo">
-        <div className="numero-circulo">5</div>
-        <label className="label-documento">COMPROBANTE DE DOMICILIO:</label>
-        <input className="input-documento" type="file" onChange={e => handleChange(e, 'comprobante')} />
-      </div>
-
-      <button className="boton-siguiente" onClick={handleSubmit}>Siguiente</button>
+<div className="contenedor-boton-guardar">
+  <button className="boton-siguiente" onClick={handleSubmit}>
+    <FaSave style={{ marginRight: '8px' }} />
+    Guardar
+  </button>
+</div>
     </div>
   );
 };
