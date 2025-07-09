@@ -7,7 +7,7 @@ export const FASES = {
   FASE1: 5,
   FASE2: 6,
   FASE3: 7,
-  FASE4: 8,
+  // FASE4: 8,
   RECHAZADO: 9
 };
 
@@ -20,6 +20,6 @@ export const FASES_TEXTO = {
   5: 'Fase 1 completada',
   6: 'Fase 2 completada',
   7: 'Fase 3 completada',
-  8: 'Fase 4 completada',
+  // 8: 'Fase 4 completada',
   9: 'Rechazado'
 };

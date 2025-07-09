@@ -14,7 +14,8 @@ const LineaTiempo = ({ estadoProceso }) => {
       {fases.map((fase, index) => {
         const completado = estadoProceso >= fase.estado;
         const mostrarLinea = index < fases.length - 1;
-        const siguienteCompletado = estadoProceso >= fases[index + 1]?.estado;
+
+        const lineaCompletada = estadoProceso >= fases[index + 1]?.estado;
 
         return (
           <div className="fase-con-linea" key={index}>
@@ -22,9 +23,8 @@ const LineaTiempo = ({ estadoProceso }) => {
               <div className={`circulo ${completado ? 'completado' : ''}`}>
                 {index + 1}
               </div>
-
               {mostrarLinea && (
-                <div className={`linea-horizontal ${siguienteCompletado ? 'completado' : ''}`}></div>
+                <div className={`linea-horizontal ${lineaCompletada ? 'completado' : ''}`}></div>
               )}
             </div>
             <div className="nombre-fase">PASO {index + 1}</div>

@@ -254,3 +254,31 @@
   .boton-siguiente:hover {
     background-color: #9d1414;
   }
+.panel-usuario {
+  display: flex;
+  min-height: 100vh;
+}
+
+.contenido-principal {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* parte del titulo */
+.titulo-header-unido {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  color: white;
+  white-space: nowrap;
+}
+
+.programa-normal {
+  font-weight: 400;
+}
+
+.verano-negritas {
+  font-weight: 700;
+  text-transform: uppercase;
+}
