@@ -44,6 +44,11 @@ const evaluacionRoutes = require('./routes/Admin/evaluacion');
 const reporteEvaluacionesRoutes = require('./routes/Admin/reporteEvaluaciones');
 
 
+
+// Archivos públicos de documentos
+app.use('/uploads/fase_final', express.static(path.join(__dirname, 'uploads/fase_final')));
+// 
+
 app.use('/api/fasefinal', require('./routes/faseFinal'));
 app.use('/api/admin/reporte-evaluaciones', reporteEvaluacionesRoutes);
 app.use('/api/evaluacion', require('./routes/Admin/evaluacion'));

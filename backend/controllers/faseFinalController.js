@@ -120,4 +120,15 @@ exports.guardarDisponibilidad = (req, res) => {
     });
   });
 };
+//Obtener vista final
+exports.obtenerVistaFaseFinalCompleta = (req, res) => {
+  const query = 'SELECT * FROM vista_fase_final_completa';
 
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error al consultar la vista completa:', err);
+      return res.status(500).json({ error: 'Error al obtener datos completos' });
+    }
+    res.json(results);
+  });
+};

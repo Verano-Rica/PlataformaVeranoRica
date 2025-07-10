@@ -1,0 +1,24 @@
+.contenedor-fase-final {
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 20px;
+  margin: 40px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-family: 'Poppins', sans-serif;
+}
+
+.tabla-fase-final {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-fase-final th, .tabla-fase-final td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+.tabla-fase-final th {
+  background-color: #b51818;
+  color: white;
+}

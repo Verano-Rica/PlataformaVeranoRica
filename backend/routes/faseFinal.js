@@ -20,7 +20,7 @@ const safeUpload = upload.fields([
   { name: 'comprobante_domicilio' }
 ]);
 
-// Ruta para obtener los datos
+// Ruta para obtener los datos por ID de usuario
 router.get('/:id', faseFinalController.obtenerFaseFinal);
 
 // Ruta para guardar documentos (Fase 1) o talla (Fase 2)
@@ -34,6 +34,14 @@ router.post('/guardar', (req, res, next) => {
     next();
   });
 }, faseFinalController.guardarFaseFinal);
+
+// Ruta para guardar disponibilidad (Fase 3)
 router.post('/disponibilidad', faseFinalController.guardarDisponibilidad);
+
+//  Ruta para obtener TODOS los datos completos de fase final
+// router.get('/datos/completos', faseFinalController.obtenerFaseFinalCompleta);
+router.get('/vista/completa', faseFinalController.obtenerVistaFaseFinalCompleta);
+
+
 
 module.exports = router;

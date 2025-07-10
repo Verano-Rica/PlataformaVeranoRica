@@ -282,3 +282,32 @@
   font-weight: 700;
   text-transform: uppercase;
 }
+
+.tabla-resultados {
+  margin-top: 30px;
+  overflow-x: auto;
+}
+
+.tabla-resultados table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.tabla-resultados th, .tabla-resultados td {
+  padding: 10px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.tabla-resultados th {
+  background-color: #b51818;
+  color: white;
+  white-space: nowrap;
+}
+
+.tabla-resultados td {
+  white-space: nowrap;
+}

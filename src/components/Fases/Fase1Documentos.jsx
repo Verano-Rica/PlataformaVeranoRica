@@ -21,6 +21,7 @@ const Fase1Documentos = ({ idUsuario, actualizar }) => {
     }
 
     const formData = new FormData();
+    formData.append('id_usuario', idUsuario);
     formData.append('cv', cv);
     formData.append('identificacion', ine);
     formData.append('curp', curp);
