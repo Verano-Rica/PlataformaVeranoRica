@@ -11,6 +11,10 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import '../../styles/agendados.css';
 import axios from 'axios';
+import { FaFilePdf } from 'react-icons/fa';
+import { FaBell } from 'react-icons/fa';
+
+
 
 
 const UsuariosFaseFinal = () => {
@@ -100,6 +104,7 @@ const UsuariosFaseFinal = () => {
                 <th>Disponibilidad</th>
                 <th>Comentarios</th>
                 <th>CV</th>
+                <th>Notificar</th>
               </tr>
             </thead>
             <tbody>
@@ -107,20 +112,92 @@ const UsuariosFaseFinal = () => {
                 <tr key={u.id_usuario}>
                   <td>{u.nombre_completo}</td>
                   <td>{u.correo}</td>
-                  <td>{u.ine_postulante}</td>
-                  <td>{u.curp_postulante}</td>
-                  <td>{u.acta_postulante}</td>
-                  <td>{u.comprobante_domicilio_postulante}</td>
-                  <td>{u.talla_playera}</td>
-                  <td>{u.disponibilidad_general}</td>
-                  <td>{u.comentarios_adicionales || '-'}</td>
-                  <td>
-                    {u.cv_archivo ? (
-                      <a href={`http://localhost:3001/uploads/${u.cv_archivo}`} target="_blank" rel="noopener noreferrer">
-                        Ver CV
-                      </a>
-                    ) : 'No disponible'}
-                  </td>
+                  <td style={{ textAlign: 'center' }}>
+  {u.ine_postulante ? (
+    <a href={`http://localhost:3001/uploads/fase_final/${u.ine_postulante}`} target="_blank" rel="noopener noreferrer" title="Ver INE">
+      <FaFilePdf style={{ color: '#878787', fontSize: '20px' }} />
+    </a>
+  ) : '—'}
+</td>
+
+<td style={{ textAlign: 'center' }}>
+  {u.curp_postulante ? (
+    <a href={`http://localhost:3001/uploads/fase_final/${u.curp_postulante}`} target="_blank" rel="noopener noreferrer" title="Ver CURP">
+      <FaFilePdf style={{ color: '#878787', fontSize: '20px' }} />
+    </a>
+  ) : '—'}
+</td>
+
+<td style={{ textAlign: 'center' }}>
+  {u.acta_postulante ? (
+    <a href={`http://localhost:3001/uploads/fase_final/${u.acta_postulante}`} target="_blank" rel="noopener noreferrer" title="Ver Acta">
+      <FaFilePdf style={{ color: '#878787', fontSize: '20px' }} />
+    </a>
+  ) : '—'}
+</td>
+
+<td style={{ textAlign: 'center' }}>
+  {u.comprobante_domicilio_postulante ? (
+    <a href={`http://localhost:3001/uploads/fase_final/${u.comprobante_domicilio_postulante}`} target="_blank" rel="noopener noreferrer" title="Ver Comprobante">
+      <FaFilePdf style={{ color: '#878787', fontSize: '20px' }} />
+    </a>
+  ) : '—'}
+</td>
+        
+                  <td style={{ textAlign: 'center' }}>{u.talla_playera}</td>
+                  <td style={{ textAlign: 'center' }}>{u.disponibilidad_general}</td>
+                  <td style={{ textAlign: 'center' }}>{u.comentarios_adicionales || '-'}</td>
+                  <td style={{ textAlign: 'center' }}>
+  {u.cv_archivo ? (
+    <a href={`http://localhost:3001/uploads/${u.cv_archivo}`} target="_blank" rel="noopener noreferrer" title="Ver CV">
+      <FaFilePdf style={{ color: '878787', fontSize: '20px' }} />
+    </a>
+  ) : '—'}
+</td>
+<td style={{ textAlign: 'center' }}>
+  <a
+    href={`https://mail.google.com/mail/?view=cm&to=${u.correo}&su=Evaluaciones%20psicométricas%20y%20documentos%20pendientes&body=${encodeURIComponent(`Buenos días ${u.nombre_completo}, a continuación te comparto tus evaluaciones y es importante que puedas reunir los demás documentos por favor.
+
+Te comparto la primer evaluación:
+Proporciona al examinado una contraseña para su prueba en la siguiente dirección:
+https://podium.midot.com/am/
+Contraseña: afeqw5
+
+Te comparto la segunda evaluación:
+Hola. Tal como lo platicamos, te dejo las instrucciones para que puedas aplicar los siguientes pasos y comenzar el proceso de selección con nosotros.
+
+Te recomiendo lo siguiente:
+
+- Apagar el celular
+- Evitar interrupciones
+- Tener internet fluido
+- Evita hacer las evaluaciones en un equipo móvil
+
+Inicia el proceso de selección con nosotros, siguiendo estas instrucciones:
+
+1. Ingresa a https://evaluatest.com/Core/Evaluate/IUEvaluacion/HomeLoginCandidatos.asp
+2. Presiona el botón de "Registrarse"
+3. Ingresa los datos que te soliciten
+4. Localiza el botón que dice “Ingresar” y da click
+5. El sistema te pedirá un código y deberás colocar el siguiente:
+
+becprimerempleo2025
+
+6. Realiza las evaluaciones que el sistema te solicita hasta que todas tengan el estatus de “Finalizado”
+7. Confirma que terminaste la evaluación
+
+Sigo a tus órdenes para lo que requieras.
+
+Saludos.`)}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    title="Enviar correo por Gmail"
+  >
+    <FaBell style={{ color: '#878787', fontSize: '20px' }} />
+  </a>
+</td>
+
+
                 </tr>
               ))}
             </tbody>

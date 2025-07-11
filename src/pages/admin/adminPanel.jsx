@@ -14,9 +14,8 @@ function AdminPanel() {
   const [menuAbierto, setMenuAbierto] = useState(false);
   const [totales, setTotales] = useState({ registrados: 0, seleccionados: 0 });
   const navigate = useNavigate();
- const admin = JSON.parse(localStorage.getItem('admin')) || {};
-const nombre = `Bienvenido(a): ${admin.nombre || 'Administrador'}`;
-
+  const admin = JSON.parse(localStorage.getItem('admin')) || {};
+  const nombre = `Bienvenido(a): ${admin.nombre || 'Administrador'}`;
 
   useEffect(() => {
     axios.get('http://localhost:3001/api/postulantes/totales')
@@ -25,7 +24,6 @@ const nombre = `Bienvenido(a): ${admin.nombre || 'Administrador'}`;
   }, []);
 
   const toggleMenu = () => setMenuAbierto(!menuAbierto);
-
   const handleLogout = () => {
     window.location.href = '/';
   };
@@ -61,59 +59,61 @@ const nombre = `Bienvenido(a): ${admin.nombre || 'Administrador'}`;
           <img src={logoExperiencia} alt="Logo Experiencia" className="logo-central" />
 
           <div className="botones-principales">
-                        {/* Agendados */}
-            <div className="boton-seccion">
-              <div className="circle-4">1</div>
-              <p className="agendar-entrevista-">POSTULANTES AGENDADOS:</p>
-              <div className="rectangle-7" onClick={() => navigate('/admin/usuarios-agendados')}>
-                <img src={iconoEntrevista} alt="Entrevista" className="assignment-icon-1" />
+
+            {/* Fila 1 */}
+            <div className="fila-botones">
+              <div className="boton-seccion">
+                <div className="circle-4">1</div>
+                <p className="agendar-entrevista-">POSTULANTES AGENDADOS:</p>
+                <div className="rectangle-7" onClick={() => navigate('/admin/usuarios-agendados')}>
+                  <img src={iconoEntrevista} alt="Entrevista" className="assignment-icon-1" />
+                </div>
+              </div>
+
+              <div className="boton-seccion">
+                <div className="circle-1">2</div>
+                <p className="informaci-n-">EVALUACION ENTREVISTA:</p>
+                <div className="rectangle-6" onClick={() => navigate('/admin/evaluacion/:id')}>
+                  <img src={iconoInfo} alt="Información" className="assignment-icon-1" />
+                </div>
+              </div>
+
+              <div className="boton-seccion">
+                <div className="circle-5">3</div>
+                <p className="proyectos-">PROCESO SELECCIÓN POSTULANTES:</p>
+                <div className="rectangle-8" onClick={() => navigate('/admin/postulantes')}>
+                  <img src={iconoProyectos} alt="Proyectos" className="assignment-icon-1" />
+                </div>
               </div>
             </div>
 
-            {/* Fases */}
-            <div className="boton-seccion">
-              <div className="circle-1">2</div>
-              <p className="informaci-n-">EVALUACION ENTREVISTA:</p>
-              <div className="rectangle-6" onClick={() => navigate('/admin/evaluacion/:id')}>
-                <img src={iconoInfo} alt="Información" className="assignment-icon-1" />
+            {/* Fila 2 */}
+            <div className="fila-botones">
+              <div className="boton-seccion">
+                <div className="circle-6">4</div>
+                <p className="resultados-">REPORTE EVALUACIONES:</p>
+                <div className="rectangle-9" onClick={() => navigate('/admin/evaluaciones')}>
+                  <img src={iconoResultados} alt="Resultados" className="assignment-icon-1" />
+                </div>
+              </div>
+
+              <div className="boton-seccion">
+                <div className="circle-6">5</div>
+                <p className="resultados-">RESUMEN POSTULANTES:</p>
+                <div className="rectangle-9" onClick={() => navigate('/admin/Vistapostulantes')}>
+                  <img src={iconoResultados} alt="Resultados" className="assignment-icon-1" />
+                </div>
+              </div>
+
+              <div className="boton-seccion">
+                <div className="circle-6">6</div>
+                <p className="resultados-">POSTULANTES FASE FINAL:</p>
+                <div className="rectangle-9" onClick={() => navigate('/admin/fasefinal')}>
+                  <img src={iconoResultados} alt="Resultados" className="assignment-icon-1" />
+                </div>
               </div>
             </div>
 
-
-
-            {/* Registrados */}
-            <div className="boton-seccion">
-              <div className="circle-5">3</div>
-              <p className="proyectos-">PROCESO SELECCIÓN POSTULANTES:</p>
-              <div className="rectangle-8" onClick={() => navigate('/admin/postulantes')}>
-                <img src={iconoProyectos} alt="Proyectos" className="assignment-icon-1" />
-              </div>
-            </div>
-
-            {/* Selección */}
-            <div className="boton-seccion">
-              <div className="circle-6">4</div>
-              <p className="resultados-">REPORTE EVALUACIONES:</p>
-              <div className="rectangle-9" onClick={() => navigate('/admin/evaluaciones')}>
-                <img src={iconoResultados} alt="Resultados" className="assignment-icon-1" />
-              </div>
-            </div>
-            {/* Selección */}
-            <div className="boton-seccion">
-              <div className="circle-6">5</div>
-              <p className="resultados-">RESUMEN POSTULANTES:</p>
-              <div className="rectangle-9" onClick={() => navigate('/admin/Vistapostulantes')}>
-                <img src={iconoResultados} alt="Resultados" className="assignment-icon-1" />
-              </div>
-            </div>
-            {/* Ver fase final */}
-            <div className="boton-seccion">
-              <div className="circle-6">6</div>
-              <p className="resultados-">POSTULANTES FASE FINAL:</p>
-              <div className="rectangle-9" onClick={() => navigate('/admin/fasefinal')}>
-                <img src={iconoResultados} alt="Resultados" className="assignment-icon-1" />
-              </div>
-            </div>
           </div>
         </main>
 

@@ -410,3 +410,16 @@ html, body {
   font-weight: bold;
 }
 
+.fila-botones {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.botones-principales {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
