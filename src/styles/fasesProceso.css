@@ -311,3 +311,11 @@
 .tabla-resultados td {
   white-space: nowrap;
 }
+.fase-final-gracias {
+  text-align: center;
+  padding: 40px;
+}
+
+.icono-final {
+  margin-bottom: 20px;
+}

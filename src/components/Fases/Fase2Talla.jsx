@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import '../../styles/fasesProceso.css';
 
-const Fase2Talla = ({ datos, actualizar, idUsuario }) => {
+const Fase2Talla = ({ datos, actualizar, idUsuario, actualizarEstado }) => {
   const [talla, setTalla] = useState('');
 
   useEffect(() => {
@@ -30,6 +30,7 @@ const Fase2Talla = ({ datos, actualizar, idUsuario }) => {
       if (res.ok) {
         Swal.fire('Éxito', 'Talla guardada correctamente.', 'success');
         actualizar({ talla_playera: talla });
+        actualizarEstado(); // ✅ actualiza la línea del tiempo
       } else {
         Swal.fire('Error', 'Ocurrió un error al guardar.', 'error');
       }

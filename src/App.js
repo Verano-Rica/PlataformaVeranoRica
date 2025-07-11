@@ -22,6 +22,7 @@ import EvaluacionEntrevista from './pages/admin/EvaluacionEntrevista'; // Asegú
 import VistaEvaluaciones from './pages/admin/VistaEvaluaciones';
 import BuscarEntrevistas from './pages/admin/BuscarEntrevistas'; // Importar tu vista
 import FasesProceso from './pages/usuario/FasesProceso';
+import UsuariosFaseFinal from './pages/admin/UsuariosFaseFinal';
 
 
 
@@ -55,6 +56,8 @@ function App() {
         <Route path="/admin/buscar-evaluacion" element={<BuscarEntrevistas />} />
         
         <Route path="/usuario/fases-proceso" element={<FasesProceso/>} />
+        <Route path="/admin/fasefinal" element={<UsuariosFaseFinal />} />
+
 
 
 

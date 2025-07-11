@@ -38,6 +38,18 @@
 .circulo.completado {
   background-color: #55ff00;
 }
+.circulo.actual {
+  background-color: white;
+  border: 4px solid #b51818;
+  color: #b51818;
+  font-weight: bold;
+}
+
+.circulo {
+  background-color: #e0e0e0; /* gris claro por defecto */
+  border: 4px solid #bfbfbf; /* gris medio */
+  color: black;
+}
 
 .linea-horizontal {
   height: 12px;

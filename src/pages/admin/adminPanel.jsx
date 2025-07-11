@@ -106,6 +106,14 @@ const nombre = `Bienvenido(a): ${admin.nombre || 'Administrador'}`;
                 <img src={iconoResultados} alt="Resultados" className="assignment-icon-1" />
               </div>
             </div>
+            {/* Ver fase final */}
+            <div className="boton-seccion">
+              <div className="circle-6">6</div>
+              <p className="resultados-">POSTULANTES FASE FINAL:</p>
+              <div className="rectangle-9" onClick={() => navigate('/admin/fasefinal')}>
+                <img src={iconoResultados} alt="Resultados" className="assignment-icon-1" />
+              </div>
+            </div>
           </div>
         </main>
 

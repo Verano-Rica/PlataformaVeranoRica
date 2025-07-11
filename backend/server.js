@@ -45,6 +45,10 @@ const reporteEvaluacionesRoutes = require('./routes/Admin/reporteEvaluaciones');
 
 
 
+
+//para la fase final
+app.use('/api/fasefinalcompletada', require('./routes/Admin/faseFinalCompletada'));
+
 // Archivos públicos de documentos
 app.use('/uploads/fase_final', express.static(path.join(__dirname, 'uploads/fase_final')));
 // 

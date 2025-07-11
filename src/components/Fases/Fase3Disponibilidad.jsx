@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import '../../styles/fase3.css';
 
-const Fase3Disponibilidad = ({ datos, actualizar, idUsuario }) => {
+const Fase3Disponibilidad = ({ datos, actualizar, idUsuario, actualizarEstado }) => {
   const [disponibilidad, setDisponibilidad] = useState('');
+  const [comentarios, setComentarios] = useState('');
 
   useEffect(() => {
     if (datos?.disponibilidad_general) {
@@ -24,6 +25,7 @@ const Fase3Disponibilidad = ({ datos, actualizar, idUsuario }) => {
         body: JSON.stringify({
           id_usuario: idUsuario,
           disponibilidad_general: disponibilidad,
+          comentarios: comentarios, // puedes guardar esto si lo tienes en la BD
         }),
       });
 
@@ -31,7 +33,7 @@ const Fase3Disponibilidad = ({ datos, actualizar, idUsuario }) => {
       if (res.ok) {
         Swal.fire('Éxito', data.message, 'success');
         actualizar({ disponibilidad_general: disponibilidad });
-        setTimeout(() => window.location.reload(), 1500);
+        actualizarEstado(); // ✅ actualiza línea del tiempo
       } else {
         Swal.fire('Error', data.error || 'Error al guardar', 'error');
       }
@@ -71,6 +73,8 @@ const Fase3Disponibilidad = ({ datos, actualizar, idUsuario }) => {
           <textarea
             className="comentarios"
             placeholder="Escribe los detalles aquí..."
+            value={comentarios}
+            onChange={(e) => setComentarios(e.target.value)}
           ></textarea>
 
           <button onClick={guardarDisponibilidad} className="btn-siguiente">

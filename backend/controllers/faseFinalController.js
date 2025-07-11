@@ -20,13 +20,13 @@ exports.guardarFaseFinal = (req, res) => {
   const archivos = req.files || {};
   const talla_playera = req.body.talla_playera || null;
 
-  const ine_nombre = archivos.ine?.[0]?.filename || '';
-  const curp_nombre = archivos.curp?.[0]?.filename || '';
-  const acta_nombre = archivos.acta?.[0]?.filename || '';
-  const comprobante_domicilio_nombre = archivos.comprobante_domicilio?.[0]?.filename || '';
+  const ine = archivos.ine?.[0]?.filename || '';
+  const curp = archivos.curp?.[0]?.filename || '';
+  const acta = archivos.acta?.[0]?.filename || '';
+  const comprobante = archivos.comprobante_domicilio?.[0]?.filename || '';
 
   // 👉 CASO 1: Solo guardar TALLA (Fase 2)
-  if (talla_playera && !ine_nombre && !curp_nombre && !acta_nombre && !comprobante_domicilio_nombre) {
+  if (talla_playera && !ine && !curp && !acta && !comprobante) {
     const query = `
       UPDATE fase_final_confirmacion
       SET talla_playera = ?
@@ -51,25 +51,25 @@ exports.guardarFaseFinal = (req, res) => {
   }
 
   // 👉 CASO 2: Guardar documentos (Fase 1)
-  if (!ine_nombre && !curp_nombre && !acta_nombre && !comprobante_domicilio_nombre) {
+  if (!ine && !curp && !acta && !comprobante) {
     return res.status(400).json({ error: 'No se subió ningún documento ni talla' });
   }
 
   const query = `
     INSERT INTO fase_final_confirmacion (
-      id_usuario, ine_nombre, curp_nombre, acta_nombre, comprobante_domicilio_nombre
+      id_usuario, ine_postulante, curp_postulante, acta_postulante, comprobante_domicilio_postulante
     )
     VALUES (?, ?, ?, ?, ?)
     ON DUPLICATE KEY UPDATE
-      ine_nombre = VALUES(ine_nombre),
-      curp_nombre = VALUES(curp_nombre),
-      acta_nombre = VALUES(acta_nombre),
-      comprobante_domicilio_nombre = VALUES(comprobante_domicilio_nombre)
+      ine_postulante = VALUES(ine_postulante),
+      curp_postulante = VALUES(curp_postulante),
+      acta_postulante = VALUES(acta_postulante),
+      comprobante_domicilio_postulante = VALUES(comprobante_domicilio_postulante)
   `;
 
   db.query(
     query,
-    [id_usuario, ine_nombre, curp_nombre, acta_nombre, comprobante_domicilio_nombre],
+    [id_usuario, ine, curp, acta, comprobante],
     (err) => {
       if (err) {
         console.error('Error al guardar documentos de fase 1:', err);
@@ -91,7 +91,7 @@ exports.guardarFaseFinal = (req, res) => {
 
 // Guardar o actualizar disponibilidad de fase 3
 exports.guardarDisponibilidad = (req, res) => {
-  const { id_usuario, disponibilidad_general } = req.body;
+  const { id_usuario, disponibilidad_general, comentarios_adicionales } = req.body;
 
   if (!disponibilidad_general) {
     return res.status(400).json({ error: 'Debe indicar su disponibilidad' });
@@ -99,11 +99,11 @@ exports.guardarDisponibilidad = (req, res) => {
 
   const query = `
     UPDATE fase_final_confirmacion 
-    SET disponibilidad_general = ? 
+    SET disponibilidad_general = ?, comentarios_adicionales = ?
     WHERE id_usuario = ?
   `;
 
-  db.query(query, [disponibilidad_general, id_usuario], (err) => {
+  db.query(query, [disponibilidad_general, comentarios_adicionales || null, id_usuario], (err) => {
     if (err) {
       console.error('Error al guardar disponibilidad:', err);
       return res.status(500).json({ error: 'Error al guardar disponibilidad' });
@@ -120,7 +120,8 @@ exports.guardarDisponibilidad = (req, res) => {
     });
   });
 };
-//Obtener vista final
+
+// Obtener vista final
 exports.obtenerVistaFaseFinalCompleta = (req, res) => {
   const query = 'SELECT * FROM vista_fase_final_completa';
 
@@ -132,3 +133,4 @@ exports.obtenerVistaFaseFinalCompleta = (req, res) => {
     res.json(results);
   });
 };
+
